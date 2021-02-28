@@ -152,6 +152,226 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-HTML5-draggable属性" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/02/28/HTML5-draggable%E5%B1%9E%E6%80%A7/">HTML5&amp;JS-draggable属性&amp;dragEvent</a>
+    </h1>
+  
+
+        
+        <a href="/2021/02/28/HTML5-draggable%E5%B1%9E%E6%80%A7/" class="archive-article-date">
+  	<time datetime="2021-02-28T05:51:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-28</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="drag事件"><a href="#drag事件" class="headerlink" title="drag事件"></a>drag事件</h4><p>   当<strong>元素</strong>或者<strong>选择的文本</strong>被拖动时触发 drag 事件,并且在拖拽未结束之前每隔几百毫秒触发一次drag事件</p>
+<h4 id="dragstart事件"><a href="#dragstart事件" class="headerlink" title="dragstart事件"></a>dragstart事件</h4><p>   dragstart：用户开始拖拉时，在被拖拉的节点上触发，该事件的target属性是被拖拉的节点。通常应该在这个事件的监听函数中，指定拖拉的数据。</p>
+<h4 id="dragend事件"><a href="#dragend事件" class="headerlink" title="dragend事件"></a>dragend事件</h4><p>   dragend：拖拉结束时（释放鼠标键或按下 ESC 键）在被拖拉的节点上触发，该事件的target属性是被拖拉的节点。它与dragstart事件，在同一个节点上触发。<strong>不管拖拉是否跨窗口，或者中途被取消，dragend事件总是会触发的</strong>。</p>
+<h4 id="dragenter事件"><a href="#dragenter事件" class="headerlink" title="dragenter事件"></a>dragenter事件</h4><p>   dragenter：拖拉进入当前节点时，在当前节点上触发一次，该事件的<strong>target属性是当前节点</strong>。通常应该在这个事件的监听函数中，指定是否允许在当前节点放下（drop）拖拉的数据。如果当前节点没有该事件的监听函数，或者监听函数不执行任何操作，就意味着不允许在当前节点放下数据。在视觉上显示拖拉进入当前节点，也是在这个事件的监听函数中设置。</p>
+<h4 id="dragover事件"><a href="#dragover事件" class="headerlink" title="dragover事件"></a>dragover事件</h4><p>   dragover：拖拉到当前节点上方时，在当前节点上持续触发（相隔几百毫秒），该事件的<strong>target属性是当前节点</strong>。该事件与dragenter事件的区别是，dragenter事件在进入该节点时触发，然后只要没有离开这个节点，dragover事件会持续触发。</p>
+<h4 id="dragleave事件"><a href="#dragleave事件" class="headerlink" title="dragleave事件"></a>dragleave事件</h4><p>   dragleave：拖拉操作离开当前节点范围时，在当前节点上触发，<strong>该事件的target属性是当前节点</strong>。如果要在视觉上显示拖拉离开操作当前节点，就在这个事件的监听函数中设置。</p>
+<h4 id="dragEvent"><a href="#dragEvent" class="headerlink" title="dragEvent"></a>dragEvent</h4><p>   用于表示拖、放交互的DOM event接口</p>
+<h5 id="属性-amp-方法"><a href="#属性-amp-方法" class="headerlink" title="属性&amp;方法"></a>属性&amp;方法</h5><ul>
+<li><p>dataTransfer(只读) ：保存着拖拽操作中的数据，dataTransfer的对象（其中保存着数据）</p>
+<ul>
+<li><p>dataTransfer中包含的属性</p>
+<ul>
+<li><p>dropEffect：表示拖放过程中给用户的反馈，会影响拖拽过程中鼠标光标的手势，似如hover的鼠标手势变化</p>
+<ul>
+<li><p>值:</p>
+<ul>
+<li><p>none(默认):可能禁止拖拽（说可能是因为，还与effectAllow又关）</p>
+</li>
+<li><p>move:将元素移动到新位置</p>
+</li>
+<li><p>copy:新位置产生原元素的副本</p>
+</li>
+<li><p>link:新位置产生原项目的链接</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>effectAllow：允许dropEffect的行为发生</p>
+<ul>
+<li><p>值</p>
+<ul>
+<li><p>uninitialized(效果没有设置时的默认值&lt;=&gt;all)</p>
+</li>
+<li><p>none 此项表示不允许放下</p>
+</li>
+<li><p>copy源项目的复制项可能会出现在新位置。</p>
+</li>
+<li><p>copyLink允许 copy 或者 link 操作。</p>
+</li>
+<li><p>copyMove允许 copy 或者 move 操作。</p>
+</li>
+<li><p>link可以在新地方建立与源的链接。</p>
+</li>
+<li><p>linkMove允许 link 或者 move 操作。</p>
+</li>
+<li><p>move一个项目可能被移动到新位置</p>
+</li>
+<li><p>all允许所有的操作。</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>setData:[ function ]用于存储拖拽时想要存储的数据</p>
+ <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* @params:</span></span><br><span class="line"><span class="comment">          arg1[String]:要存储的数据的数据类型：如果数据类型不存在,将数据存储到列表的最后一项，使得 types 列表中的最后一个项目将是新类型。</span></span><br><span class="line"><span class="comment">          arg2[String]:要存储的数据</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">dataTransfer.setData(arg1,arg2);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>getData:[function]用于获取存储的数据</p>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dataTransfer.getData(<span class="string">&#x27;dataName&#x27;</span>);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">HTML5新特性</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">dragEvent</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/02/28/HTML5-draggable%E5%B1%9E%E6%80%A7/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-JS-数组-函数的使用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/02/28/JS-%E6%95%B0%E7%BB%84-%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8/">JS-数组-函数的使用</a>
+    </h1>
+  
+
+        
+        <a href="/2021/02/28/JS-%E6%95%B0%E7%BB%84-%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8/" class="archive-article-date">
+  	<time datetime="2021-02-28T01:59:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-28</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="slice"><a href="#slice" class="headerlink" title="slice"></a>slice</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 简单的使用slice截取数组 */</span></span><br><span class="line">    <span class="keyword">let</span> ary = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>];</span><br><span class="line">    <span class="comment">/* 两个参数的含义：起始下标：1（包含1），结束下标：2（不包含下标2） */</span></span><br><span class="line">    <span class="keyword">let</span> newAry = ary.slice(<span class="number">1</span>,<span class="number">2</span>);</span><br><span class="line">    <span class="built_in">console</span>.log(newAry);<span class="comment">//[2]</span></span><br><span class="line">    <span class="built_in">console</span>.log(ary);<span class="comment">//[1,2,3,4,5],说明slice函数并不修改原数组，只是复制了结果</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 无参数：含义截取整个数组 */</span></span><br><span class="line">    ary.slice();<span class="comment">//[1,2,3,4,5]</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 只有一个参数:表示从下标2开始截取（包含下标2）到结束 */</span></span><br><span class="line">    ary.slice(<span class="number">2</span>);<span class="comment">//[3, 4, 5]</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="splice-实现数组的增删改"><a href="#splice-实现数组的增删改" class="headerlink" title="splice-实现数组的增删改"></a>splice-实现数组的增删改</h3><h5 id="splice-实现数组的删除"><a href="#splice-实现数组的删除" class="headerlink" title="splice-实现数组的删除"></a>splice-实现数组的删除</h5><pre><code>    <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">let</span> ary = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>];</span><br><span class="line"><span class="comment">/* 两个参数的含义：从哪个下标开始截取；截取几个元素 */</span></span><br><span class="line"><span class="keyword">let</span> newA = ary.splice(<span class="number">0</span>,<span class="number">2</span>);</span><br><span class="line"><span class="built_in">console</span>.log(ary);<span class="comment">//[3,4,5]，发现原数组被改变，删除了[1,2]</span></span><br><span class="line"><span class="built_in">console</span>.log(newA);<span class="comment">//[1,2]</span></span><br></pre></td></tr></table></figure>
+</code></pre>
+<h6 id="应用：删除结点元素"><a href="#应用：删除结点元素" class="headerlink" title="应用：删除结点元素"></a>应用：删除结点元素</h6><h5 id="splice-实现数组的增加（替换操作）"><a href="#splice-实现数组的增加（替换操作）" class="headerlink" title="splice-实现数组的增加（替换操作）"></a>splice-实现数组的增加（替换操作）</h5><pre><code>    <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">let</span> ary = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>];</span><br><span class="line"><span class="keyword">let</span> ary2 = [<span class="string">&#x27;a&#x27;</span>,<span class="string">&#x27;b&#x27;</span>,<span class="string">&#x27;c&#x27;</span>,<span class="string">&#x27;d&#x27;</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 在头部追加：前两个参数的含义不变，之后的参数为新增的元素内容，从原数组的头部插入（因为第一个参数为0） */</span></span><br><span class="line"><span class="keyword">let</span> newA = ary.splice(<span class="number">0</span>,<span class="number">2</span>,<span class="string">&#x27;x1&#x27;</span>,<span class="string">&#x27;x2&#x27;</span>,<span class="string">&#x27;x3&#x27;</span>);</span><br><span class="line"><span class="comment">/* 在插入的同时进行了删除 */</span></span><br><span class="line"><span class="built_in">console</span>.log(ary);<span class="comment">//[&quot;x1&quot;, &quot;x2&quot;, &quot;x3&quot;, 3, 4, 5]</span></span><br><span class="line"><span class="built_in">console</span>.log(newA);<span class="comment">//[1, 2]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* 在特定位置追加:在2-3数字之间的位置追加 */</span></span><br><span class="line"><span class="keyword">let</span> ary3 = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>];</span><br><span class="line">ary3.splice(<span class="number">2</span>,<span class="number">0</span>,<span class="string">&#x27;a&#x27;</span>,<span class="string">&#x27;b&#x27;</span>);</span><br><span class="line"><span class="built_in">console</span>.log(ary3);<span class="comment">//[1, 2, &quot;a&quot;, &quot;b&quot;, 3, 4, 5]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* 在末尾增加 */</span></span><br><span class="line">ary3.splice(ary3.length,<span class="number">0</span>,<span class="string">&#x27;cc&#x27;</span>);</span><br><span class="line"><span class="built_in">console</span>.log(ary3);<span class="comment">// [1, 2, &quot;a&quot;, &quot;b&quot;, 3, 4, 5, &quot;cc&quot;]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* 替换操作 ：把ary2中的b替换为2*/</span></span><br><span class="line"><span class="keyword">let</span> newA2 = ary2.splice(<span class="number">1</span>,<span class="number">1</span>,<span class="number">2</span>);</span><br><span class="line"><span class="built_in">console</span>.log(newA2);<span class="comment">//输出被删除的元素[&quot;b&quot;]</span></span><br><span class="line"><span class="built_in">console</span>.log(ary2);<span class="comment">//[&quot;a&quot;, 2, &quot;c&quot;, &quot;d&quot;]</span></span><br></pre></td></tr></table></figure>
+</code></pre>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">JS 数组</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/02/28/JS-%E6%95%B0%E7%BB%84-%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-css3-弹性盒布局" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -451,6 +671,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">css3</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">HTML5新特性</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">JS 数组</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">dragEvent</a>
               </li>
             
             <div class="clearfix"></div>
