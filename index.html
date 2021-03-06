@@ -152,6 +152,467 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-异步编程与Promise-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/03/06/%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B%E4%B8%8EPromise-1/">异步编程与Promise</a>
+    </h1>
+  
+
+        
+        <a href="/2021/03/06/%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B%E4%B8%8EPromise-1/" class="archive-article-date">
+  	<time datetime="2021-03-06T00:25:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-06</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="异步编程"><a href="#异步编程" class="headerlink" title="异步编程"></a>异步编程</h3><p>由于JS是单线程的，如果线程运行的时候发生阻塞，对用户来说是不好的体验，为了解决这个问题，就出现了异步编程：当发现一个需要较长时间执行的任务，就把这个任务交给一个模块去管理，完成后放入到任务队列中。当主线程执行完了自己的同步代码（依次按序执行的），就会不断的询问任务队列中是否有完成的任务</p>
+<ul>
+<li>通过异步加载图片来体验任务操作<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">let</span> img = <span class="keyword">new</span> Image();<span class="comment">//imgDOM</span></span><br><span class="line">    <span class="keyword">let</span> img = <span class="keyword">new</span> Image();<span class="comment">//imgDOM</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">loadImg</span>(<span class="params">src,resolve,reject</span>)</span>&#123;</span><br><span class="line">        img.src = src;</span><br><span class="line">        img.onload = resolve;</span><br><span class="line">        img.onerror = reject;</span><br><span class="line">    &#125;</span><br><span class="line">    loadImg(<span class="string">&quot;1.jpg&quot;</span>,<span class="function">()=&gt;</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;图片加载完成&#x27;</span>);</span><br><span class="line">    &#125;,<span class="function">()=&gt;</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;图片加载失败&#x27;</span>);</span><br><span class="line">    &#125;);<span class="comment">//由于需要通过路径来加载一个图片，需要一定时间来完成，所以异步</span></span><br><span class="line">    <span class="built_in">console</span>.dir(img);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+最后的结果</li>
+</ul>
+<img src="/img/异步-1.png"/>
+
+<ul>
+<li>通过定时器来体验异步任务操作</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//封装一个定时器</span></span><br><span class="line"> <span class="function"><span class="keyword">function</span> <span class="title">interval</span>(<span class="params">callback,delay</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> id = <span class="built_in">setInterval</span>(<span class="function">()=&gt;</span>callback(id),delay)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"> interval(<span class="function">(<span class="params">id</span>)=&gt;</span>&#123;</span><br><span class="line">        <span class="comment">/* 实现div右移 */</span></span><br><span class="line">        <span class="keyword">let</span> div = <span class="built_in">document</span>.querySelector(<span class="string">&#x27;div&#x27;</span>);</span><br><span class="line">        <span class="comment">//Window.getComputedStyle()方法返回的style是一个实时的 CSSStyleDeclaration 对象，当元素的样式更改时，它会自动更新本身。</span></span><br><span class="line">        <span class="keyword">let</span> left = <span class="built_in">Number</span>.parseInt(getComputedStyle(div).left);</span><br><span class="line">        div.style.left = left+<span class="number">100</span>+<span class="string">&#x27;px&#x27;</span>;</span><br><span class="line">        <span class="keyword">if</span>(left &gt; <span class="number">300</span>)&#123;</span><br><span class="line">            <span class="built_in">clearInterval</span>(id);<span class="comment">//停止移动</span></span><br><span class="line">            interval(<span class="function">(<span class="params">id</span>)=&gt;</span>&#123;<span class="comment">//让div 逐渐消失</span></span><br><span class="line">                <span class="keyword">let</span> width = <span class="built_in">Number</span>.parseInt(getComputedStyle(div).width);</span><br><span class="line">                div.style.width = width-<span class="number">10</span>+<span class="string">&#x27;px&#x27;</span>;</span><br><span class="line">                <span class="keyword">if</span>(width == <span class="number">0</span>)</span><br><span class="line">                    <span class="built_in">clearInterval</span>(id)</span><br><span class="line">            &#125;,<span class="number">100</span>)</span><br><span class="line">        &#125;</span><br><span class="line">            </span><br><span class="line">    &#125;,<span class="number">600</span>)</span><br></pre></td></tr></table></figure>
+<p>最后的结果</p>
+<img src="/img/定时器-1.gif" width="80%"/>
+
+<p>但是这样写后会发现，嵌套的定时器显得代码混乱，所以后来的Promise会使代码更加整洁，但是内部的原理不变</p>
+<h4 id="任务排列"><a href="#任务排列" class="headerlink" title="任务排列"></a>任务排列</h4><p>顾名思义：任务队列，队列是一个先进先出的数据结构，所以任务调出的顺序取决于任务调入的顺序</p>
+<ul>
+<li>通过文件加载来体验任务顺序</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 1.js */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">first</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;first&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* 2.js */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">second</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    first();</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;second&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//现在我要加载两个文件（加载文件需要异步操作），但是2.js依赖于1.js</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">fileLoad</span>(<span class="params">src,resolve = <span class="literal">null</span></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">let</span> script = <span class="built_in">document</span>.createElement(<span class="string">&#x27;script&#x27;</span>);</span><br><span class="line">        script.src = src;</span><br><span class="line">        <span class="built_in">document</span>.body.appendChild(script);</span><br><span class="line">        script.onload = resolve;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/* 希望1.js先加载完进入任务队列 */</span></span><br><span class="line">    fileLoad(<span class="string">&quot;1.js&quot;</span>);</span><br><span class="line">    fileLoad(<span class="string">&quot;2.js&quot;</span>,<span class="function">()=&gt;</span>&#123;</span><br><span class="line">        second();</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>但是有时候也会出现2.js先加载的情况，导致</p>
+<img src="/img/文件异步-1.png"/>
+
+<p>为了解决这个问题，我可以</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fileLoad</span>(<span class="params">src,resolve = <span class="literal">null</span></span>)</span>&#123;</span><br><span class="line">      <span class="keyword">let</span> script = <span class="built_in">document</span>.createElement(<span class="string">&#x27;script&#x27;</span>);</span><br><span class="line">      script.src = src;</span><br><span class="line">      <span class="built_in">document</span>.body.appendChild(script);</span><br><span class="line">      script.onload = resolve;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">/* 先加载1.js 加载完成后执行onload事件 */</span></span><br><span class="line">  fileLoad(<span class="string">&quot;1.js&quot;</span>,<span class="function">()=&gt;</span>&#123;</span><br><span class="line">      <span class="comment">/* 1.js onload事件：加载2.js */</span></span><br><span class="line">      fileLoad(<span class="string">&quot;2.js&quot;</span>,<span class="function">()=&gt;</span>&#123;</span><br><span class="line">      second();</span><br><span class="line">  &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>结果</p>
+<img src="/img/文件异步-2.png"/>
+
+<p>但是我们会看到，问题虽然解决了，但是出现了大量的嵌套，代码混乱，所以后来的Promise会使代码更加整洁</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">异步编程</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Promise</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/03/06/%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B%E4%B8%8EPromise-1/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-JS-对象的解构与属性增删改查" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/03/06/JS-%E5%AF%B9%E8%B1%A1%E7%9A%84%E8%A7%A3%E6%9E%84%E4%B8%8E%E5%B1%9E%E6%80%A7%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5/">JS-对象的解构与属性增删改查</a>
+    </h1>
+  
+
+        
+        <a href="/2021/03/06/JS-%E5%AF%B9%E8%B1%A1%E7%9A%84%E8%A7%A3%E6%9E%84%E4%B8%8E%E5%B1%9E%E6%80%A7%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5/" class="archive-article-date">
+  	<time datetime="2021-03-06T00:05:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-06</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="对象使用解构"><a href="#对象使用解构" class="headerlink" title="对象使用解构"></a>对象使用解构</h4><h5 id="多层对象的解构操作"><a href="#多层对象的解构操作" class="headerlink" title="多层对象的解构操作"></a>多层对象的解构操作</h5>   <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">//现在我想要单独把subs（嵌套的对象）取出来</span></span><br><span class="line"><span class="keyword">let</span> obj = &#123; <span class="attr">name</span>:<span class="string">&#x27;obj&#x27;</span>,<span class="attr">subs</span>:&#123; <span class="attr">title</span>:<span class="string">&#x27;d&#x27;</span> &#125; &#125;;</span><br><span class="line"><span class="keyword">let</span> &#123; name,<span class="attr">subs</span>:&#123; title &#125; &#125;=obj;</span><br><span class="line"><span class="built_in">console</span>.log(name,title);<span class="comment">//obj d</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h5 id="对象的解构的默认值实现合并的操作"><a href="#对象的解构的默认值实现合并的操作" class="headerlink" title="对象的解构的默认值实现合并的操作"></a>对象的解构的默认值实现合并的操作</h5><p>   比如说我想实现一个函数，在我没有传递参数的时候，函数运行时使用默认值，传递参数后，覆盖默认值</p>
+   <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">   <span class="function"><span class="keyword">function</span> <span class="title">f1</span>(<span class="params">options = &#123;&#125;</span>)</span>&#123;<span class="comment">//注意：此处一定要初始化形参为为空对象否则 f1不传递参数时会报错：TypeError: Cannot read property &#x27;width&#x27; of undefined</span></span><br><span class="line">    <span class="keyword">let</span> &#123; width=<span class="number">100</span>,height=<span class="number">200</span> &#125; = options;</span><br><span class="line">    <span class="built_in">console</span>.log(width,height);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">f1();<span class="comment">//100 200</span></span><br><span class="line">f1(&#123; <span class="attr">width</span>:<span class="number">1</span> &#125;);<span class="comment">//1 200</span></span><br><span class="line">f1(&#123; <span class="attr">width</span>:<span class="number">300</span>,<span class="attr">height</span>:<span class="number">20</span> &#125;);<span class="comment">//300 20</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h5 id="对象属性的增加和删除"><a href="#对象属性的增加和删除" class="headerlink" title="对象属性的增加和删除"></a>对象属性的增加和删除</h5>   <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//增加</span></span><br><span class="line">obj.name = <span class="string">&#x27;xxx&#x27;</span>;</span><br><span class="line">obj[<span class="string">&quot;name&quot;</span>] = <span class="string">&#x27;xx&#x27;</span></span><br><span class="line"><span class="comment">//删除</span></span><br><span class="line"><span class="keyword">delete</span> obj.name</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h5 id="检测属性"><a href="#检测属性" class="headerlink" title="检测属性"></a>检测属性</h5>   <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">obj.hasOwnProperty(<span class="string">&#x27;age&#x27;</span>);<span class="comment">//判断当前对象上（不涉及原型链）有没有属性</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//包含原型链：in 关键词</span></span><br><span class="line"><span class="string">&quot;属性&quot;</span> <span class="keyword">in</span> obj</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JS对象</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">解构</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/03/06/JS-%E5%AF%B9%E8%B1%A1%E7%9A%84%E8%A7%A3%E6%9E%84%E4%B8%8E%E5%B1%9E%E6%80%A7%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-JS-数组-函数的使用2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/03/04/JS-%E6%95%B0%E7%BB%84-%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A82/">JS-数组-函数的使用2</a>
+    </h1>
+  
+
+        
+        <a href="/2021/03/04/JS-%E6%95%B0%E7%BB%84-%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A82/" class="archive-article-date">
+  	<time datetime="2021-03-04T05:14:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="合并数组"><a href="#合并数组" class="headerlink" title="合并数组"></a>合并数组</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> ary = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>];</span><br><span class="line">ary.concat(ary); <span class="comment">//[1, 2, 3, 4, 1, 2, 3, 4]</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="数组内部移动复制"><a href="#数组内部移动复制" class="headerlink" title="数组内部移动复制"></a>数组内部移动复制</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> ary = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>];</span><br><span class="line"><span class="comment">/* 第一个参数：想要移动的位置</span></span><br><span class="line"><span class="comment">   第二个参数：决定移动的起始位置（包括）</span></span><br><span class="line"><span class="comment">   第三个参数：决定移动的结束位置（不包括）</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">ary.copyWithin(<span class="number">3</span>, <span class="number">0</span>, <span class="number">2</span>); <span class="comment">//[1, 2, 3, 1, 2]</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="查找元素基本使用"><a href="#查找元素基本使用" class="headerlink" title="查找元素基本使用"></a>查找元素基本使用</h4><ul>
+<li>ary.indexOf 和 ary.lastIndexOf</li>
+</ul>
+<pre><code><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">ary.indexOf(<span class="number">2</span>);<span class="comment">//寻找2的下标值</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//return 1</span></span><br><span class="line">ary.indexOf(<span class="number">88</span>);<span class="comment">//寻找 88 的下标值，找不到返回-1</span></span><br><span class="line"><span class="comment">// -1</span></span><br><span class="line">ary.lastIndexOf(<span class="number">3</span>,-<span class="number">4</span>);<span class="comment">//与 indexOf 正好相反</span></span><br><span class="line"><span class="comment">//-1</span></span><br><span class="line">ary.lastIndexOf(<span class="number">3</span>,<span class="number">0</span>);<span class="comment">//与 indexOf 正好相反</span></span><br><span class="line"><span class="comment">//-1</span></span><br><span class="line">ary.lastIndexOf(<span class="number">3</span>,<span class="number">2</span>);<span class="comment">//与 indexOf 正好相反</span></span><br><span class="line"><span class="comment">//2</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</code></pre>
+<h4 id="数组中是否拥有某元素"><a href="#数组中是否拥有某元素" class="headerlink" title="数组中是否拥有某元素"></a>数组中是否拥有某元素</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">方式一：<span class="keyword">if</span>(ary.indexOf(<span class="number">2</span>)!=-<span class="number">1</span>)<span class="comment">//有</span></span><br><span class="line">方式二：ary.includes(<span class="number">2</span>)<span class="comment">//true</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="更加高效的元素查找"><a href="#更加高效的元素查找" class="headerlink" title="更加高效的元素查找"></a>更加高效的元素查找</h4><p>问题：当我们想要查找数组中是否存在一个引用类型时，用 includes 行吗？：NO</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = [&#123; <span class="attr">name</span>: <span class="string">&quot;w&quot;</span> &#125;, &#123; <span class="attr">name</span>: <span class="string">&quot;s&quot;</span> &#125;];</span><br><span class="line"></span><br><span class="line">a.includes(&#123; <span class="attr">name</span>: <span class="string">&quot;w&quot;</span> &#125;); <span class="comment">//false</span></span><br><span class="line"><span class="comment">//因为include会根据传入的参数去比较是否相同，而引用类型的比较相等的条件是内存地址相等，实参&#123;name:&#x27;w&#x27;&#125;实际上是一个新的地址</span></span><br></pre></td></tr></table></figure>
+
+<p>那么如何检索引用类型？</p>
+<h4 id="检索引用类型：find-function-amp-findIndex"><a href="#检索引用类型：find-function-amp-findIndex" class="headerlink" title="检索引用类型：find(function) &amp; findIndex"></a>检索引用类型：find(function) &amp; findIndex</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = [&#123; <span class="attr">name</span>: <span class="string">&quot;w&quot;</span> &#125;, &#123; <span class="attr">name</span>: <span class="string">&quot;s&quot;</span> &#125;];</span><br><span class="line">a.find(<span class="function"><span class="keyword">function</span> (<span class="params">item</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;); <span class="comment">//当函数中的返回体为真就返回第一个符合函数条件的值（find是禁止贪婪的）</span></span><br><span class="line"></span><br><span class="line">a.find(<span class="function"><span class="keyword">function</span>(<span class="params">item</span>)</span></span><br><span class="line"><span class="function">    </span>&#123; </span><br><span class="line">        <span class="keyword">return</span> item.name==<span class="string">&#x27;w&#x27;</span>;&#125;</span><br><span class="line">    )</span><br><span class="line"><span class="comment">// console:&#123;name: &quot;w&quot;&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//若找不到 返回undefined</span></span><br><span class="line">a.find(<span class="function"><span class="keyword">function</span>(<span class="params">item</span>)</span></span><br><span class="line"><span class="function">    </span>&#123; <span class="keyword">return</span> item.name==<span class="number">2</span>;&#125;</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line"><span class="comment">//如果想要获取到其下标则用findIndex</span></span><br><span class="line">a.findIndex(<span class="function"><span class="keyword">function</span>(<span class="params">item</span>)</span>&#123; <span class="keyword">return</span> item.name==<span class="string">&#x27;w&#x27;</span>;&#125;)</span><br><span class="line"><span class="comment">//0</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li>find 原理<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Myfind</span> (<span class="params">callback</span>)</span>&#123; <span class="keyword">for</span>(<span class="keyword">let</span> i <span class="keyword">of</span> ary)&#123;<span class="keyword">if</span>(callback(i)) <span class="keyword">return</span> i;&#125;<span class="comment">//return undefined;</span></span><br><span class="line">    &#125;</span><br><span class="line">    写在原型上：</span><br><span class="line">    <span class="built_in">Array</span>.prototype.MyFind = <span class="function"><span class="keyword">function</span> (<span class="params">callback</span>)</span>&#123; <span class="keyword">for</span>(<span class="keyword">let</span> i <span class="keyword">of</span> <span class="built_in">this</span>)&#123;<span class="keyword">if</span>(callback(i)) <span class="keyword">return</span> i;&#125;<span class="keyword">return</span> <span class="literal">undefined</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">JS</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">数组函数的使用</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/03/04/JS-%E6%95%B0%E7%BB%84-%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A82/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-ES6-类的秘密-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/03/01/ES6-%E7%B1%BB%E7%9A%84%E7%A7%98%E5%AF%86-1/">ES6-类的秘密-1</a>
+    </h1>
+  
+
+        
+        <a href="/2021/03/01/ES6-%E7%B1%BB%E7%9A%84%E7%A7%98%E5%AF%86-1/" class="archive-article-date">
+  	<time datetime="2021-03-01T00:31:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-01</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Class的初识-声明一个类"><a href="#Class的初识-声明一个类" class="headerlink" title="Class的初识-声明一个类"></a>Class的初识-声明一个类</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span></span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> user = <span class="keyword">new</span> User();</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>构造函数</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">arg1</span>)</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>.arg1 = arg1;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> user = <span class="keyword">new</span> User(<span class="string">&#x27;哈哈&#x27;</span>);</span><br></pre></td></tr></table></figure>
+<h4 id="见识了javascript中的类，可以发现有了类之后面向对象的编程更加直观明了，那么Class的原理是否也如其他面向对象语言一样呢？"><a href="#见识了javascript中的类，可以发现有了类之后面向对象的编程更加直观明了，那么Class的原理是否也如其他面向对象语言一样呢？" class="headerlink" title="见识了javascript中的类，可以发现有了类之后面向对象的编程更加直观明了，那么Class的原理是否也如其他面向对象语言一样呢？"></a>见识了javascript中的类，可以发现有了类之后面向对象的编程更加直观明了，那么Class的原理是否也如其他面向对象语言一样呢？</h4></li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 类的声明 */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span></span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.dir(User);</span><br></pre></td></tr></table></figure>
+<img src="/img/class.png"/>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 函数的声明 */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Hser</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line"><span class="built_in">console</span>.dir(Hser);</span><br></pre></td></tr></table></figure>
+<img src="/img/function.png"/>
+
+<p>可以发现class和function的原型都是function，也就是说class底层的机制仍然是原型机制，可以说类就是函数。class 只是语法糖为了让类的声明与继承更加简洁清晰。</p>
+<h4 id="对象属性的声明"><a href="#对象属性的声明" class="headerlink" title="对象属性的声明"></a>对象属性的声明</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span></span>&#123;</span><br><span class="line"> outerProperty;<span class="comment">//注意，在此声明时不加let 等关键字</span></span><br><span class="line"> <span class="function"><span class="title">constructor</span>(<span class="params">innerProperty</span>)</span>&#123;</span><br><span class="line">     <span class="built_in">this</span>.innerProperty = innerProperty;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> user = <span class="keyword">new</span> User(<span class="string">&#x27;nihao&#x27;</span>);</span><br><span class="line"><span class="built_in">console</span>.log(user);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.getOwnPropertyNames(user));<span class="comment">//Object.getOwnPropertyNames:获得对象上的属性名（而非原型上的属性），以数组的形式返回</span></span><br><span class="line"><span class="comment">//[&quot;outerProperty&quot;, &quot;innerProperty&quot;]</span></span><br></pre></td></tr></table></figure>
+<p>user:<img src="/img/对象属性声明.png"/></p>
+<h4 id="class声明的方法不可遍历"><a href="#class声明的方法不可遍历" class="headerlink" title="class声明的方法不可遍历"></a>class声明的方法不可遍历</h4><ul>
+<li>先看一下函数中声明的方法<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">H</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    H.prototype.show = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* 声明H的对象 */</span></span><br><span class="line"><span class="keyword">let</span> h = <span class="keyword">new</span> H();</span><br><span class="line">h.a1 = <span class="string">&#x27;a1&#x27;</span>;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> key <span class="keyword">in</span> h)&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(key);<span class="comment">//循环输出 a1,show</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+但是有时我们遍历对象的属性并不想遍历到它的原型上的属性，该怎么办呢<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure></li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ES6</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Class</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/03/01/ES6-%E7%B1%BB%E7%9A%84%E7%A7%98%E5%AF%86-1/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-hexo-d部署到git失败的原因" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/02/28/hexo-d%E9%83%A8%E7%BD%B2%E5%88%B0git%E5%A4%B1%E8%B4%A5%E7%9A%84%E5%8E%9F%E5%9B%A0/">hexo d部署到git失败的原因</a>
+    </h1>
+  
+
+        
+        <a href="/2021/02/28/hexo-d%E9%83%A8%E7%BD%B2%E5%88%B0git%E5%A4%B1%E8%B4%A5%E7%9A%84%E5%8E%9F%E5%9B%A0/" class="archive-article-date">
+  	<time datetime="2021-02-28T13:17:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-28</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>我使用的是VPN，所以就有一个代理服务器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global http.proxy 代理地址:端口号</span><br><span class="line">git config --global https.proxy 代理地址:端口号</span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">hexo</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">git</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/02/28/hexo-d%E9%83%A8%E7%BD%B2%E5%88%B0git%E5%A4%B1%E8%B4%A5%E7%9A%84%E5%8E%9F%E5%9B%A0/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-HTML5-draggable属性" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -319,7 +780,7 @@
 </code></pre>
 <h6 id="应用：删除结点元素"><a href="#应用：删除结点元素" class="headerlink" title="应用：删除结点元素"></a>应用：删除结点元素</h6><h5 id="splice-实现数组的增加（替换操作）"><a href="#splice-实现数组的增加（替换操作）" class="headerlink" title="splice-实现数组的增加（替换操作）"></a>splice-实现数组的增加（替换操作）</h5><pre><code>    <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">let</span> ary = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>];</span><br><span class="line"><span class="keyword">let</span> ary2 = [<span class="string">&#x27;a&#x27;</span>,<span class="string">&#x27;b&#x27;</span>,<span class="string">&#x27;c&#x27;</span>,<span class="string">&#x27;d&#x27;</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 在头部追加：前两个参数的含义不变，之后的参数为新增的元素内容，从原数组的头部插入（因为第一个参数为0） */</span></span><br><span class="line"><span class="keyword">let</span> newA = ary.splice(<span class="number">0</span>,<span class="number">2</span>,<span class="string">&#x27;x1&#x27;</span>,<span class="string">&#x27;x2&#x27;</span>,<span class="string">&#x27;x3&#x27;</span>);</span><br><span class="line"><span class="comment">/* 在插入的同时进行了删除 */</span></span><br><span class="line"><span class="built_in">console</span>.log(ary);<span class="comment">//[&quot;x1&quot;, &quot;x2&quot;, &quot;x3&quot;, 3, 4, 5]</span></span><br><span class="line"><span class="built_in">console</span>.log(newA);<span class="comment">//[1, 2]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* 在特定位置追加:在2-3数字之间的位置追加 */</span></span><br><span class="line"><span class="keyword">let</span> ary3 = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>];</span><br><span class="line">ary3.splice(<span class="number">2</span>,<span class="number">0</span>,<span class="string">&#x27;a&#x27;</span>,<span class="string">&#x27;b&#x27;</span>);</span><br><span class="line"><span class="built_in">console</span>.log(ary3);<span class="comment">//[1, 2, &quot;a&quot;, &quot;b&quot;, 3, 4, 5]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* 在末尾增加 */</span></span><br><span class="line">ary3.splice(ary3.length,<span class="number">0</span>,<span class="string">&#x27;cc&#x27;</span>);</span><br><span class="line"><span class="built_in">console</span>.log(ary3);<span class="comment">// [1, 2, &quot;a&quot;, &quot;b&quot;, 3, 4, 5, &quot;cc&quot;]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* 替换操作 ：把ary2中的b替换为2*/</span></span><br><span class="line"><span class="keyword">let</span> newA2 = ary2.splice(<span class="number">1</span>,<span class="number">1</span>,<span class="number">2</span>);</span><br><span class="line"><span class="built_in">console</span>.log(newA2);<span class="comment">//输出被删除的元素[&quot;b&quot;]</span></span><br><span class="line"><span class="built_in">console</span>.log(ary2);<span class="comment">//[&quot;a&quot;, 2, &quot;c&quot;, &quot;d&quot;]</span></span><br></pre></td></tr></table></figure>
 </code></pre>
-
+<h5 id="splice-实现数组的清空"><a href="#splice-实现数组的清空" class="headerlink" title="splice-实现数组的清空"></a>splice-实现数组的清空</h5> <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">/* 清空数组的几种方式 */</span></span><br><span class="line">hd = [],<span class="comment">//不会影响其他</span></span><br><span class="line">hd.length = <span class="number">0</span>;<span class="comment">//若是复制的会影响原数值</span></span><br><span class="line">hd.splice(<span class="number">0</span>); || hd.splice(<span class="number">0</span>,hd.length);</span><br><span class="line"><span class="keyword">while</span>(hd.pop())&#123;&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
       
 
       
@@ -397,11 +858,41 @@
 
 <h3 id="弹性容器-Flex-container"><a href="#弹性容器-Flex-container" class="headerlink" title="弹性容器(Flex container)"></a>弹性容器(Flex container)</h3><p> 包含着弹性元素的父元素。通过设置 display 属性的值为 flex 或 inline-flex 来定义弹性容器。</p>
 <h3 id="弹性元素-Flex-item"><a href="#弹性元素-Flex-item" class="headerlink" title="弹性元素(Flex item)"></a>弹性元素(Flex item)</h3><p> 弹性容器的每个子元素都称为弹性元素。弹性容器直接包含的文本将被包覆成匿名弹性单元。</p>
-<h3 id="轴-Axis"><a href="#轴-Axis" class="headerlink" title="轴(Axis)"></a>轴(Axis)</h3><h3 id="flex-container的属性"><a href="#flex-container的属性" class="headerlink" title="flex container的属性"></a>flex container的属性</h3><h6 id="flex-direction-确立主轴方向"><a href="#flex-direction-确立主轴方向" class="headerlink" title="flex-direction: 确立主轴方向"></a>flex-direction: 确立主轴方向</h6><p>初始值：row 是否是继承属性：否<br>    row<br>        flex容器的主轴被定义为与文本方向相同。 主轴起点和主轴终点与内容方向相同。<br>    row-reverse<br>        表现和row相同，但是置换了主轴起点和主轴终点<br>    column<br>        flex容器的主轴和块轴相同。主轴起点与主轴终点和书写模式的前后点相同<br>    column-reverse<br>        表现和column相同，但是置换了主轴起点和主轴终点</p>
-<h6 id="justify-content-定义了在当前行上，弹性项目沿主轴如何排布。"><a href="#justify-content-定义了在当前行上，弹性项目沿主轴如何排布。" class="headerlink" title="justify-content:定义了在当前行上，弹性项目沿主轴如何排布。"></a>justify-content:定义了在当前行上，弹性项目沿主轴如何排布。</h6><ul>
-<li>start<br>从行首开始排列。每行<strong>第一个元素</strong>与行首对齐，同时所有后续的元素与前一个对齐。</li>
-<li>flex-start<br>从行首开始排列。每行第一个<strong>弹性元素</strong>与行首对齐，同时所有后续的弹性元素与前一个对齐。</li>
+<h3 id="flex-container的属性"><a href="#flex-container的属性" class="headerlink" title="flex container的属性"></a>flex container的属性</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="selector-tag">div</span>&#123;</span><br><span class="line">    <span class="attribute">display</span>:flex;<span class="comment">/* 定义一个弹性盒 */</span></span><br><span class="line">    <span class="attribute">flex-direction</span>:row;<span class="comment">/* 默认值 */</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="flex-direction-设置弹性元素的主轴上的排列方式-设置主轴的起始方向"><a href="#flex-direction-设置弹性元素的主轴上的排列方式-设置主轴的起始方向" class="headerlink" title="flex-direction: 设置弹性元素的主轴上的排列方式(设置主轴的起始方向)"></a>flex-direction: 设置弹性元素的主轴上的排列方式(设置主轴的起始方向)</h4><p>初始值：row 是否是继承属性：否</p>
+<ul>
+<li>row<br>   flex容器的主轴被定义为与文本方向相同。 主轴起点和主轴终点与内容方向相同。</li>
+<li>row-reverse<br>   表现和row相同，但是置换了主轴起点和主轴终点</li>
+<li>column<br>   flex容器的主轴和块轴相同。主轴起点与主轴终点和书写模式的前后点相同</li>
+<li>column-reverse<br>   表现和column相同，但是置换了主轴起点和主轴终点</li>
+</ul>
+<h6 id="弹性元素的溢出换行处理：通过设置flex-container的属性flex-wrap"><a href="#弹性元素的溢出换行处理：通过设置flex-container的属性flex-wrap" class="headerlink" title="弹性元素的溢出换行处理：通过设置flex container的属性flex-wrap"></a>弹性元素的溢出换行处理：通过设置flex container的属性flex-wrap</h6><ul>
+<li>不换行，整体缩小</li>
+</ul>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">div</span>&#123;</span><br><span class="line">    <span class="attribute">display</span>:flex;<span class="comment">/* 定义一个弹性盒 */</span></span><br><span class="line">    <span class="attribute">flex-direction</span>:row;<span class="comment">/* 默认值 */</span></span><br><span class="line">    <span class="attribute">flex-wrap</span>:nowrap;<span class="comment">/* 默认值 不换行，弹性元素整体缩小 */</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li>换行</li>
+</ul>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">div</span>&#123;</span><br><span class="line">    <span class="attribute">display</span>:flex;<span class="comment">/* 定义一个弹性盒 */</span></span><br><span class="line">    <span class="attribute">flex-direction</span>:row;<span class="comment">/* 默认值 */</span></span><br><span class="line">    <span class="attribute">flex-wrap</span>:wrap;<span class="comment">/* 换行，或wrap-reverse */</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h6 id="统一设置弹性元素的主轴上的排列方式与换行"><a href="#统一设置弹性元素的主轴上的排列方式与换行" class="headerlink" title="统一设置弹性元素的主轴上的排列方式与换行"></a>统一设置弹性元素的主轴上的排列方式与换行</h6><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">div</span>&#123;</span><br><span class="line">    <span class="comment">/* 相当于flex-direction和flex-wrap的合体 */</span></span><br><span class="line">    <span class="attribute">flex-flow</span>:column wrap;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="justify-content-定义了在当前行上，弹性项目沿主轴如何排布。"><a href="#justify-content-定义了在当前行上，弹性项目沿主轴如何排布。" class="headerlink" title="justify-content:定义了在当前行上，弹性项目沿主轴如何排布。"></a>justify-content:定义了在当前行上，弹性项目沿主轴如何排布。</h4><ul>
+<li><p>start<br>从行首开始排列。每行<strong>第一个元素</strong>与行首对齐，同时所有后续的元素与前一个对齐。</p>
+</li>
+<li><p>flex-start<br>从行首开始排列。每行第一个<strong>弹性元素</strong>与行首对齐，同时所有后续的弹性元素与前一个对齐。</p>
+</li>
+</ul>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="selector-tag">div</span>&#123;</span><br><span class="line">            <span class="attribute">width</span>:<span class="number">400px</span>;</span><br><span class="line">            <span class="attribute">height</span>: <span class="number">300px</span>;</span><br><span class="line">            <span class="attribute">border</span>: <span class="number">2px</span> solid grey;</span><br><span class="line">            <span class="attribute">display</span>: flex;</span><br><span class="line">            <span class="comment">/* 确定了主轴的开始方向 */</span></span><br><span class="line">            <span class="attribute">flex-direction</span>: row-reverse;</span><br><span class="line">            <span class="attribute">justify-content</span>:flex-start;<span class="comment">/* 弹性项目从主轴的开始方向排布 */</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="selector-tag">div</span> <span class="selector-tag">main</span>&#123;</span><br><span class="line">            <span class="attribute">width</span>: <span class="number">100px</span>;</span><br><span class="line">            <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line">            <span class="attribute">background</span>: indigo;</span><br><span class="line">            <span class="attribute">color</span>: white;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>效果排列</p>
+<img src="/img/决定主轴-1.png"/>
+
+<ul>
 <li>flex-end<br>从行尾开始排列。每行最后一个弹性元素与行尾对齐，其他元素将与后一个对齐。</li>
+</ul>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="selector-tag">div</span>&#123;</span><br><span class="line">            <span class="attribute">width</span>:<span class="number">400px</span>;</span><br><span class="line">            <span class="attribute">height</span>: <span class="number">300px</span>;</span><br><span class="line">            <span class="attribute">border</span>: <span class="number">2px</span> solid grey;</span><br><span class="line">            <span class="attribute">display</span>: flex;</span><br><span class="line">            <span class="comment">/* 确定了主轴的开始方向 */</span></span><br><span class="line">            <span class="attribute">flex-direction</span>: column;</span><br><span class="line">            <span class="attribute">justify-content</span>:flex-end;<span class="comment">/* 弹性项目从主轴的结束方向排布 */</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="selector-tag">div</span> <span class="selector-tag">main</span>&#123;</span><br><span class="line">            <span class="attribute">width</span>: <span class="number">100px</span>;</span><br><span class="line">            <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line">            <span class="attribute">background</span>: indigo;</span><br><span class="line">            <span class="attribute">color</span>: white;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<img src="/img/主轴中排列起始方向-1.png"/>
+
+<ul>
 <li>center</li>
 </ul>
 <p><strong>伸缩元素</strong>向每行中点排列。每行第一个元素到行首的距离将与每行最后一个元素到行尾的距离相同。</p>
@@ -683,6 +1174,46 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">dragEvent</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">ES6</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Class</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">JS对象</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">解构</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">JS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">数组函数的使用</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">异步编程</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Promise</a>
               </li>
             
             <div class="clearfix"></div>

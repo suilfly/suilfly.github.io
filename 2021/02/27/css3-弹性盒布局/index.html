@@ -16,10 +16,12 @@
 <meta property="og:description" content="弹性盒模型-加快了网站布局的速度传统设置布局后，如果某一天布局改变，如三个平分的块变成四个，能不能不改变css内容响应式布局？答，弹性盒模型 图中是一个 flex-direction 属性为 row的弹性容器，意味着其内的弹性项目将根据既定书写模式沿主轴水平排列，其方向为元素的文本流方向，在这个例子里，为从左到右。  弹性容器(Flex container) 包含着弹性元素的父元素。通过设置 di">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://example.com/img/flex-row.png">
+<meta property="og:image" content="http://example.com/img/决定主轴-1.png">
+<meta property="og:image" content="http://example.com/img/主轴中排列起始方向-1.png">
 <meta property="og:image" content="http://example.com/img/1.png">
 <meta property="og:image" content="http://example.com/img/align-items-center.png">
 <meta property="article:published_time" content="2021-02-27T11:48:06.000Z">
-<meta property="article:modified_time" content="2021-02-28T01:48:10.462Z">
+<meta property="article:modified_time" content="2021-03-06T03:27:50.059Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="css3">
 <meta name="twitter:card" content="summary">
@@ -184,11 +186,41 @@
 
 <h3 id="弹性容器-Flex-container"><a href="#弹性容器-Flex-container" class="headerlink" title="弹性容器(Flex container)"></a>弹性容器(Flex container)</h3><p> 包含着弹性元素的父元素。通过设置 display 属性的值为 flex 或 inline-flex 来定义弹性容器。</p>
 <h3 id="弹性元素-Flex-item"><a href="#弹性元素-Flex-item" class="headerlink" title="弹性元素(Flex item)"></a>弹性元素(Flex item)</h3><p> 弹性容器的每个子元素都称为弹性元素。弹性容器直接包含的文本将被包覆成匿名弹性单元。</p>
-<h3 id="轴-Axis"><a href="#轴-Axis" class="headerlink" title="轴(Axis)"></a>轴(Axis)</h3><h3 id="flex-container的属性"><a href="#flex-container的属性" class="headerlink" title="flex container的属性"></a>flex container的属性</h3><h6 id="flex-direction-确立主轴方向"><a href="#flex-direction-确立主轴方向" class="headerlink" title="flex-direction: 确立主轴方向"></a>flex-direction: 确立主轴方向</h6><p>初始值：row 是否是继承属性：否<br>    row<br>        flex容器的主轴被定义为与文本方向相同。 主轴起点和主轴终点与内容方向相同。<br>    row-reverse<br>        表现和row相同，但是置换了主轴起点和主轴终点<br>    column<br>        flex容器的主轴和块轴相同。主轴起点与主轴终点和书写模式的前后点相同<br>    column-reverse<br>        表现和column相同，但是置换了主轴起点和主轴终点</p>
-<h6 id="justify-content-定义了在当前行上，弹性项目沿主轴如何排布。"><a href="#justify-content-定义了在当前行上，弹性项目沿主轴如何排布。" class="headerlink" title="justify-content:定义了在当前行上，弹性项目沿主轴如何排布。"></a>justify-content:定义了在当前行上，弹性项目沿主轴如何排布。</h6><ul>
-<li>start<br>从行首开始排列。每行<strong>第一个元素</strong>与行首对齐，同时所有后续的元素与前一个对齐。</li>
-<li>flex-start<br>从行首开始排列。每行第一个<strong>弹性元素</strong>与行首对齐，同时所有后续的弹性元素与前一个对齐。</li>
+<h3 id="flex-container的属性"><a href="#flex-container的属性" class="headerlink" title="flex container的属性"></a>flex container的属性</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="selector-tag">div</span>&#123;</span><br><span class="line">    <span class="attribute">display</span>:flex;<span class="comment">/* 定义一个弹性盒 */</span></span><br><span class="line">    <span class="attribute">flex-direction</span>:row;<span class="comment">/* 默认值 */</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="flex-direction-设置弹性元素的主轴上的排列方式-设置主轴的起始方向"><a href="#flex-direction-设置弹性元素的主轴上的排列方式-设置主轴的起始方向" class="headerlink" title="flex-direction: 设置弹性元素的主轴上的排列方式(设置主轴的起始方向)"></a>flex-direction: 设置弹性元素的主轴上的排列方式(设置主轴的起始方向)</h4><p>初始值：row 是否是继承属性：否</p>
+<ul>
+<li>row<br>   flex容器的主轴被定义为与文本方向相同。 主轴起点和主轴终点与内容方向相同。</li>
+<li>row-reverse<br>   表现和row相同，但是置换了主轴起点和主轴终点</li>
+<li>column<br>   flex容器的主轴和块轴相同。主轴起点与主轴终点和书写模式的前后点相同</li>
+<li>column-reverse<br>   表现和column相同，但是置换了主轴起点和主轴终点</li>
+</ul>
+<h6 id="弹性元素的溢出换行处理：通过设置flex-container的属性flex-wrap"><a href="#弹性元素的溢出换行处理：通过设置flex-container的属性flex-wrap" class="headerlink" title="弹性元素的溢出换行处理：通过设置flex container的属性flex-wrap"></a>弹性元素的溢出换行处理：通过设置flex container的属性flex-wrap</h6><ul>
+<li>不换行，整体缩小</li>
+</ul>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">div</span>&#123;</span><br><span class="line">    <span class="attribute">display</span>:flex;<span class="comment">/* 定义一个弹性盒 */</span></span><br><span class="line">    <span class="attribute">flex-direction</span>:row;<span class="comment">/* 默认值 */</span></span><br><span class="line">    <span class="attribute">flex-wrap</span>:nowrap;<span class="comment">/* 默认值 不换行，弹性元素整体缩小 */</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li>换行</li>
+</ul>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">div</span>&#123;</span><br><span class="line">    <span class="attribute">display</span>:flex;<span class="comment">/* 定义一个弹性盒 */</span></span><br><span class="line">    <span class="attribute">flex-direction</span>:row;<span class="comment">/* 默认值 */</span></span><br><span class="line">    <span class="attribute">flex-wrap</span>:wrap;<span class="comment">/* 换行，或wrap-reverse */</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h6 id="统一设置弹性元素的主轴上的排列方式与换行"><a href="#统一设置弹性元素的主轴上的排列方式与换行" class="headerlink" title="统一设置弹性元素的主轴上的排列方式与换行"></a>统一设置弹性元素的主轴上的排列方式与换行</h6><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">div</span>&#123;</span><br><span class="line">    <span class="comment">/* 相当于flex-direction和flex-wrap的合体 */</span></span><br><span class="line">    <span class="attribute">flex-flow</span>:column wrap;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="justify-content-定义了在当前行上，弹性项目沿主轴如何排布。"><a href="#justify-content-定义了在当前行上，弹性项目沿主轴如何排布。" class="headerlink" title="justify-content:定义了在当前行上，弹性项目沿主轴如何排布。"></a>justify-content:定义了在当前行上，弹性项目沿主轴如何排布。</h4><ul>
+<li><p>start<br>从行首开始排列。每行<strong>第一个元素</strong>与行首对齐，同时所有后续的元素与前一个对齐。</p>
+</li>
+<li><p>flex-start<br>从行首开始排列。每行第一个<strong>弹性元素</strong>与行首对齐，同时所有后续的弹性元素与前一个对齐。</p>
+</li>
+</ul>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="selector-tag">div</span>&#123;</span><br><span class="line">            <span class="attribute">width</span>:<span class="number">400px</span>;</span><br><span class="line">            <span class="attribute">height</span>: <span class="number">300px</span>;</span><br><span class="line">            <span class="attribute">border</span>: <span class="number">2px</span> solid grey;</span><br><span class="line">            <span class="attribute">display</span>: flex;</span><br><span class="line">            <span class="comment">/* 确定了主轴的开始方向 */</span></span><br><span class="line">            <span class="attribute">flex-direction</span>: row-reverse;</span><br><span class="line">            <span class="attribute">justify-content</span>:flex-start;<span class="comment">/* 弹性项目从主轴的开始方向排布 */</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="selector-tag">div</span> <span class="selector-tag">main</span>&#123;</span><br><span class="line">            <span class="attribute">width</span>: <span class="number">100px</span>;</span><br><span class="line">            <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line">            <span class="attribute">background</span>: indigo;</span><br><span class="line">            <span class="attribute">color</span>: white;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>效果排列</p>
+<img src="/img/决定主轴-1.png"/>
+
+<ul>
 <li>flex-end<br>从行尾开始排列。每行最后一个弹性元素与行尾对齐，其他元素将与后一个对齐。</li>
+</ul>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="selector-tag">div</span>&#123;</span><br><span class="line">            <span class="attribute">width</span>:<span class="number">400px</span>;</span><br><span class="line">            <span class="attribute">height</span>: <span class="number">300px</span>;</span><br><span class="line">            <span class="attribute">border</span>: <span class="number">2px</span> solid grey;</span><br><span class="line">            <span class="attribute">display</span>: flex;</span><br><span class="line">            <span class="comment">/* 确定了主轴的开始方向 */</span></span><br><span class="line">            <span class="attribute">flex-direction</span>: column;</span><br><span class="line">            <span class="attribute">justify-content</span>:flex-end;<span class="comment">/* 弹性项目从主轴的结束方向排布 */</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="selector-tag">div</span> <span class="selector-tag">main</span>&#123;</span><br><span class="line">            <span class="attribute">width</span>: <span class="number">100px</span>;</span><br><span class="line">            <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line">            <span class="attribute">background</span>: indigo;</span><br><span class="line">            <span class="attribute">color</span>: white;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<img src="/img/主轴中排列起始方向-1.png"/>
+
+<ul>
 <li>center</li>
 </ul>
 <p><strong>伸缩元素</strong>向每行中点排列。每行第一个元素到行首的距离将与每行最后一个元素到行尾的距离相同。</p>
@@ -481,6 +513,46 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">dragEvent</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">ES6</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Class</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">JS对象</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">解构</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">JS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">数组函数的使用</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">异步编程</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Promise</a>
               </li>
             
             <div class="clearfix"></div>
