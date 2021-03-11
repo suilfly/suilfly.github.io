@@ -6,28 +6,33 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>css3-弹性盒布局 | Hexo</title>
+  <title>css3-弹性盒布局 | suilfly的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="弹性盒模型-加快了网站布局的速度传统设置布局后，如果某一天布局改变，如三个平分的块变成四个，能不能不改变css内容响应式布局？答，弹性盒模型 图中是一个 flex-direction 属性为 row的弹性容器，意味着其内的弹性项目将根据既定书写模式沿主轴水平排列，其方向为元素的文本流方向，在这个例子里，为从左到右。  弹性容器(Flex container) 包含着弹性元素的父元素。通过设置 di">
 <meta property="og:type" content="article">
 <meta property="og:title" content="css3-弹性盒布局">
 <meta property="og:url" content="http://example.com/2021/02/27/css3-%E5%BC%B9%E6%80%A7%E7%9B%92%E5%B8%83%E5%B1%80/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="suilfly的博客">
 <meta property="og:description" content="弹性盒模型-加快了网站布局的速度传统设置布局后，如果某一天布局改变，如三个平分的块变成四个，能不能不改变css内容响应式布局？答，弹性盒模型 图中是一个 flex-direction 属性为 row的弹性容器，意味着其内的弹性项目将根据既定书写模式沿主轴水平排列，其方向为元素的文本流方向，在这个例子里，为从左到右。  弹性容器(Flex container) 包含着弹性元素的父元素。通过设置 di">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://example.com/img/flex-row.png">
 <meta property="og:image" content="http://example.com/img/决定主轴-1.png">
 <meta property="og:image" content="http://example.com/img/主轴中排列起始方向-1.png">
+<meta property="og:image" content="http://example.com/img/主轴中排列起始方向-2.png">
+<meta property="og:image" content="http://example.com/img/主轴中排列起始方向-3.png">
 <meta property="og:image" content="http://example.com/img/1.png">
+<meta property="og:image" content="http://example.com/img/主轴中排列起始方向-4.png">
 <meta property="og:image" content="http://example.com/img/align-items-center.png">
+<meta property="og:image" content="http://example.com/img/多行交叉轴-1.png">
+<meta property="og:image" content="http://example.com/img/多行交叉轴-2.png">
 <meta property="article:published_time" content="2021-02-27T11:48:06.000Z">
-<meta property="article:modified_time" content="2021-03-06T03:27:50.059Z">
+<meta property="article:modified_time" content="2021-03-08T07:30:45.777Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="css3">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/img/flex-row.png">
   
-    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="suilfly的博客" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.png">
@@ -54,7 +59,7 @@
 <div class="intrude-less">
 	<header id="header" class="inner">
 		<a href="/" class="profilepic">
-			<img src="" class="js-avatar">
+			<img src="/img/header.jpg" class="js-avatar">
 		</a>
 		<hgroup>
 		  <h1 class="header-author"><a href="/"></a></h1>
@@ -88,7 +93,7 @@
 		<nav class="header-nav">
 			<div class="social">
 				
-					<a class="github" target="_blank" href="#" title="github"><i class="icon-github"></i></a>
+					<a class="github" target="_blank" href="https://github.com/suilfly" title="github"><i class="icon-github"></i></a>
 		        
 					<a class="weibo" target="_blank" href="#" title="weibo"><i class="icon-weibo"></i></a>
 		        
@@ -112,7 +117,7 @@
 	<div class="intrude-less">
 		<header id="header" class="inner">
 			<div class="profilepic">
-				<img src="" class="js-avatar">
+				<img src="/img/header.jpg" class="js-avatar">
 			</div>
 			<hgroup>
 			  <h1 class="header-author js-header-author"></h1>
@@ -129,7 +134,7 @@
 			<nav class="header-nav">
 				<div class="social">
 					
-						<a class="github" target="_blank" href="#" title="github"><i class="icon-github"></i></a>
+						<a class="github" target="_blank" href="https://github.com/suilfly" title="github"><i class="icon-github"></i></a>
 			        
 						<a class="weibo" target="_blank" href="#" title="weibo"><i class="icon-weibo"></i></a>
 			        
@@ -205,10 +210,7 @@
 <h6 id="统一设置弹性元素的主轴上的排列方式与换行"><a href="#统一设置弹性元素的主轴上的排列方式与换行" class="headerlink" title="统一设置弹性元素的主轴上的排列方式与换行"></a>统一设置弹性元素的主轴上的排列方式与换行</h6><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">div</span>&#123;</span><br><span class="line">    <span class="comment">/* 相当于flex-direction和flex-wrap的合体 */</span></span><br><span class="line">    <span class="attribute">flex-flow</span>:column wrap;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h4 id="justify-content-定义了在当前行上，弹性项目沿主轴如何排布。"><a href="#justify-content-定义了在当前行上，弹性项目沿主轴如何排布。" class="headerlink" title="justify-content:定义了在当前行上，弹性项目沿主轴如何排布。"></a>justify-content:定义了在当前行上，弹性项目沿主轴如何排布。</h4><ul>
-<li><p>start<br>从行首开始排列。每行<strong>第一个元素</strong>与行首对齐，同时所有后续的元素与前一个对齐。</p>
-</li>
-<li><p>flex-start<br>从行首开始排列。每行第一个<strong>弹性元素</strong>与行首对齐，同时所有后续的弹性元素与前一个对齐。</p>
-</li>
+<li>flex-start<br>从行首开始排列。每行第一个<strong>弹性元素</strong>与行首对齐，同时所有后续的弹性元素与前一个对齐。</li>
 </ul>
 <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="selector-tag">div</span>&#123;</span><br><span class="line">            <span class="attribute">width</span>:<span class="number">400px</span>;</span><br><span class="line">            <span class="attribute">height</span>: <span class="number">300px</span>;</span><br><span class="line">            <span class="attribute">border</span>: <span class="number">2px</span> solid grey;</span><br><span class="line">            <span class="attribute">display</span>: flex;</span><br><span class="line">            <span class="comment">/* 确定了主轴的开始方向 */</span></span><br><span class="line">            <span class="attribute">flex-direction</span>: row-reverse;</span><br><span class="line">            <span class="attribute">justify-content</span>:flex-start;<span class="comment">/* 弹性项目从主轴的开始方向排布 */</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="selector-tag">div</span> <span class="selector-tag">main</span>&#123;</span><br><span class="line">            <span class="attribute">width</span>: <span class="number">100px</span>;</span><br><span class="line">            <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line">            <span class="attribute">background</span>: indigo;</span><br><span class="line">            <span class="attribute">color</span>: white;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>效果排列</p>
@@ -224,10 +226,18 @@
 <li>center</li>
 </ul>
 <p><strong>伸缩元素</strong>向每行中点排列。每行第一个元素到行首的距离将与每行最后一个元素到行尾的距离相同。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="selector-tag">div</span>&#123;</span><br><span class="line">            <span class="attribute">width</span>:<span class="number">400px</span>;</span><br><span class="line">            <span class="attribute">height</span>: <span class="number">300px</span>;</span><br><span class="line">            <span class="attribute">border</span>: <span class="number">2px</span> solid grey;</span><br><span class="line">            <span class="attribute">display</span>: flex;</span><br><span class="line">            <span class="comment">/* 确定了主轴的开始方向 */</span></span><br><span class="line">            <span class="attribute">flex-direction</span>: row;</span><br><span class="line">            <span class="attribute">justify-content</span>:center;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="selector-tag">div</span> <span class="selector-tag">main</span>&#123;</span><br><span class="line">            <span class="attribute">width</span>: <span class="number">100px</span>;</span><br><span class="line">            <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line">            <span class="attribute">background</span>: indigo;</span><br><span class="line">            <span class="attribute">color</span>: white;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<img src="/img/主轴中排列起始方向-2.png"/>
+
+
 <ul>
-<li>left<br>伸缩元素一个挨一个在对齐容器得左边缘，如果属性的轴与内联轴不平行，则left的行为类似于start。</li>
-<li>right<br>元素以容器右边缘为基准，一个挨着一个对齐,如果属性轴与内联轴不平行，则right的行为类似于end。</li>
-<li>space-between<br>在每行上均匀分配弹性元素。相邻元素间距离相同。每行第一个元素与行首对齐(无间距)，每行最后一个元素与行尾对齐(无间距)。</li>
+<li>space-between</li>
+</ul>
+<p>在每行上均匀分配弹性元素。相邻元素间距离相同。每行第一个元素与行首对齐(无间距)，每行最后一个元素与行尾对齐(无间距)。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="selector-tag">div</span>&#123;</span><br><span class="line">            <span class="attribute">width</span>:<span class="number">400px</span>;</span><br><span class="line">            <span class="attribute">height</span>: <span class="number">300px</span>;</span><br><span class="line">            <span class="attribute">border</span>: <span class="number">2px</span> solid grey;</span><br><span class="line">            <span class="attribute">display</span>: flex;</span><br><span class="line">            <span class="comment">/* 确定了主轴的开始方向 */</span></span><br><span class="line">            <span class="attribute">flex-direction</span>: row;</span><br><span class="line">            <span class="attribute">justify-content</span>:space-between;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="selector-tag">div</span> <span class="selector-tag">main</span>&#123;</span><br><span class="line">            <span class="attribute">width</span>: <span class="number">100px</span>;</span><br><span class="line">            <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line">            <span class="attribute">background</span>: indigo;</span><br><span class="line">            <span class="attribute">color</span>: white;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<img src="/img/主轴中排列起始方向-3.png"/>
+
+<ul>
 <li>space-around<br>在每行上均匀分配弹性元素。相邻元素间距离相同。每行第一个元素到行首的距离和每行最后一个元素到行尾的距离将会是相邻元素之间距离的一半。</li>
 </ul>
 <img src="/img/1.png" width="80%"/>
@@ -235,14 +245,24 @@
 <ul>
 <li>space-evenly<br>flex项都沿着主轴均匀分布在指定的对齐容器中。相邻flex项之间的间距，主轴起始位置到第一个flex项的间距,，主轴结束位置到最后一个flex项的间距，都完全一样。</li>
 </ul>
-<h6 id="align-items-定义了在当前行上，弹性项目沿侧轴默认如何排布"><a href="#align-items-定义了在当前行上，弹性项目沿侧轴默认如何排布" class="headerlink" title="align-items 定义了在当前行上，弹性项目沿侧轴默认如何排布"></a>align-items 定义了在当前行上，弹性项目沿侧轴默认如何排布</h6><ul>
-<li>center<br>元素在侧轴居中。如果元素在侧轴上的高度高于其容器，那么在两个方向上溢出距离相同。<img src="/img/align-items-center.png"/>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="selector-tag">div</span>&#123;</span><br><span class="line">            <span class="attribute">width</span>:<span class="number">400px</span>;</span><br><span class="line">            <span class="attribute">height</span>: <span class="number">300px</span>;</span><br><span class="line">            <span class="attribute">border</span>: <span class="number">2px</span> solid grey;</span><br><span class="line">            <span class="attribute">display</span>: flex;</span><br><span class="line">            <span class="comment">/* 确定了主轴的开始方向 */</span></span><br><span class="line">            <span class="attribute">flex-direction</span>: row;</span><br><span class="line">            <span class="attribute">justify-content</span>:space-evenly;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="selector-tag">div</span> <span class="selector-tag">main</span>&#123;</span><br><span class="line">            <span class="attribute">width</span>: <span class="number">100px</span>;</span><br><span class="line">            <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line">            <span class="attribute">background</span>: indigo;</span><br><span class="line">            <span class="attribute">color</span>: white;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<img src="/img/主轴中排列起始方向-4.png"/>
 
-</li>
+<h6 id="align-items-定义了在当前行上，弹性项目沿侧轴（交叉轴）默认如何排布"><a href="#align-items-定义了在当前行上，弹性项目沿侧轴（交叉轴）默认如何排布" class="headerlink" title="align-items 定义了在当前行上，弹性项目沿侧轴（交叉轴）默认如何排布"></a>align-items 定义了在当前行上，弹性项目沿侧轴（交叉轴）默认如何排布</h6><ul>
+<li>center</li>
 </ul>
-<h6 id="flex-item的属性"><a href="#flex-item的属性" class="headerlink" title="flex item的属性"></a>flex item的属性</h6><ul>
-<li><p>align-self 定义了<strong>单个弹性项目</strong>在侧轴上应当如何对齐，这个定义会覆盖由 align-items 所确立的默认值。</p>
-</li>
+<p>元素在侧轴居中。如果元素在侧轴上的高度高于其容器，那么在两个方向上溢出距离相同。<br><img src="/img/align-items-center.png"/></p>
+<ul>
+<li>stretch</li>
+</ul>
+<p>在弹性元素没有设置高度或宽度（若设置了高宽度则以设置的为准）的时候，弹性元素沿着交叉轴的方向延伸</p>
+<h5 id="align-content-定义了在多行上，弹性项目沿侧轴（交叉轴）默认如何排布"><a href="#align-content-定义了在多行上，弹性项目沿侧轴（交叉轴）默认如何排布" class="headerlink" title="align-content 定义了在多行上，弹性项目沿侧轴（交叉轴）默认如何排布"></a>align-content 定义了在多行上，弹性项目沿侧轴（交叉轴）默认如何排布</h5><p>要注意的是多行交叉轴的起始位置</p>
+<img src="/img/多行交叉轴-1.png"/>
+
+
+<h4 id="flex-item的属性"><a href="#flex-item的属性" class="headerlink" title="flex item的属性"></a>flex item的属性</h4><h5 id="align-self-定义了单个弹性项目在交叉轴上应当如何对齐，这个定义会覆盖由-align-items-所确立的默认值。"><a href="#align-self-定义了单个弹性项目在交叉轴上应当如何对齐，这个定义会覆盖由-align-items-所确立的默认值。" class="headerlink" title="align-self 定义了单个弹性项目在交叉轴上应当如何对齐，这个定义会覆盖由 align-items 所确立的默认值。"></a>align-self 定义了<strong>单个弹性项目</strong>在交叉轴上应当如何对齐，这个定义会覆盖由 align-items 所确立的默认值。</h5><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#c</span>&#123;</span><br><span class="line">           <span class="attribute">width</span>: <span class="number">350px</span>;</span><br><span class="line">           <span class="attribute">height</span>: <span class="number">350px</span>;</span><br><span class="line">           <span class="attribute">border</span>: <span class="number">1px</span> solid black;</span><br><span class="line">           <span class="attribute">display</span>: flex;</span><br><span class="line">           <span class="attribute">justify-content</span>: center;</span><br><span class="line">           <span class="attribute">flex-wrap</span>: wrap;</span><br><span class="line"></span><br><span class="line">       &#125;</span><br><span class="line">       <span class="selector-id">#c</span>&gt;<span class="selector-tag">div</span>&#123;</span><br><span class="line">           <span class="attribute">width</span>: <span class="number">100px</span>;</span><br><span class="line">           <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line">           <span class="attribute">background-color</span>: bisque;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="selector-id">#c</span>&gt;<span class="selector-tag">div</span><span class="selector-pseudo">:first</span>-child&#123;</span><br><span class="line">           <span class="attribute">align-self</span>: center;</span><br><span class="line">       &#125;</span><br></pre></td></tr></table></figure>
+<p>效果显示：<img src="/img/多行交叉轴-2.png"/></p>
+<ul>
 <li><p>normal<br>这个关键字的效果取决于我们处在什么布局模式中：</p>
 <ul>
 <li>在绝对定位布局的静态位置上，效果和stretch一样。</li>
@@ -250,12 +270,18 @@
 <li>对于那些网格项目而言，效果和stretch一样，除了有部分比例或者一个固定大小的盒子的效果像start。<br>这个属性不适用于会计盒子和表格。</li>
 </ul>
 </li>
-<li><p>flex-start<br>元素向侧轴起点对齐。</p>
-</li>
-<li><p>flex-end<br>元素向侧轴终点对齐。</p>
+<li><p>flex-start</p>
 </li>
 </ul>
-
+<p>元素向侧轴起点对齐。</p>
+<ul>
+<li>flex-end</li>
+</ul>
+<p>元素向侧轴终点对齐。</p>
+<ul>
+<li>center</li>
+</ul>
+<h5 id="设置弹性元素在主轴上，对剩余空间的分配"><a href="#设置弹性元素在主轴上，对剩余空间的分配" class="headerlink" title="设置弹性元素在主轴上，对剩余空间的分配"></a>设置弹性元素在主轴上，对剩余空间的分配</h5>
       
 
       
@@ -554,6 +580,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Promise</a>
               </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">移动端</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Proxy</a>
+              </li>
             
             <div class="clearfix"></div>
           </ul>
@@ -635,7 +669,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
     
     	<section class="tools-section tools-section-me" q-show="aboutme">
   	  	
-  	  		<div class="aboutme-wrap" id="js-aboutme">很惭愧&lt;br&gt;&lt;br&gt;只做了一点微小的工作&lt;br&gt;谢谢大家</div>
+  	  		<div class="aboutme-wrap" id="js-aboutme">不断学习的鸽子</div>
   	  	
     	</section>
     

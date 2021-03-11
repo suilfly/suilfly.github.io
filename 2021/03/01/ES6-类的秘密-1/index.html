@@ -6,27 +6,27 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>ES6-类的秘密-1 | Hexo</title>
+  <title>ES6-类的秘密-1 | suilfly的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="Class的初识-声明一个类1234class User&amp;#123;&amp;#125;let user &#x3D; new User();  构造函数 123456class User&amp;#123;    constructor(arg1)&amp;#123;        this.arg1 &#x3D; arg1;    &amp;#125;&amp;#125;let user &#x3D; new User(&amp;#x27;哈哈&amp;#x27;); 见识了j">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ES6-类的秘密-1">
 <meta property="og:url" content="http://example.com/2021/03/01/ES6-%E7%B1%BB%E7%9A%84%E7%A7%98%E5%AF%86-1/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="suilfly的博客">
 <meta property="og:description" content="Class的初识-声明一个类1234class User&amp;#123;&amp;#125;let user &#x3D; new User();  构造函数 123456class User&amp;#123;    constructor(arg1)&amp;#123;        this.arg1 &#x3D; arg1;    &amp;#125;&amp;#125;let user &#x3D; new User(&amp;#x27;哈哈&amp;#x27;); 见识了j">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://example.com/img/class.png">
 <meta property="og:image" content="http://example.com/img/function.png">
 <meta property="og:image" content="http://example.com/img/对象属性声明.png">
 <meta property="article:published_time" content="2021-03-01T00:31:40.000Z">
-<meta property="article:modified_time" content="2021-03-01T01:45:04.777Z">
+<meta property="article:modified_time" content="2021-03-10T05:27:07.890Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="ES6">
 <meta property="article:tag" content="Class">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/img/class.png">
   
-    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="suilfly的博客" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.png">
@@ -53,7 +53,7 @@
 <div class="intrude-less">
 	<header id="header" class="inner">
 		<a href="/" class="profilepic">
-			<img src="" class="js-avatar">
+			<img src="/img/header.jpg" class="js-avatar">
 		</a>
 		<hgroup>
 		  <h1 class="header-author"><a href="/"></a></h1>
@@ -87,7 +87,7 @@
 		<nav class="header-nav">
 			<div class="social">
 				
-					<a class="github" target="_blank" href="#" title="github"><i class="icon-github"></i></a>
+					<a class="github" target="_blank" href="https://github.com/suilfly" title="github"><i class="icon-github"></i></a>
 		        
 					<a class="weibo" target="_blank" href="#" title="weibo"><i class="icon-weibo"></i></a>
 		        
@@ -111,7 +111,7 @@
 	<div class="intrude-less">
 		<header id="header" class="inner">
 			<div class="profilepic">
-				<img src="" class="js-avatar">
+				<img src="/img/header.jpg" class="js-avatar">
 			</div>
 			<hgroup>
 			  <h1 class="header-author js-header-author"></h1>
@@ -128,7 +128,7 @@
 			<nav class="header-nav">
 				<div class="social">
 					
-						<a class="github" target="_blank" href="#" title="github"><i class="icon-github"></i></a>
+						<a class="github" target="_blank" href="https://github.com/suilfly" title="github"><i class="icon-github"></i></a>
 			        
 						<a class="weibo" target="_blank" href="#" title="weibo"><i class="icon-weibo"></i></a>
 			        
@@ -193,13 +193,18 @@
 <img src="/img/function.png"/>
 
 <p>可以发现class和function的原型都是function，也就是说class底层的机制仍然是原型机制，可以说类就是函数。class 只是语法糖为了让类的声明与继承更加简洁清晰。</p>
-<h4 id="对象属性的声明"><a href="#对象属性的声明" class="headerlink" title="对象属性的声明"></a>对象属性的声明</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span></span>&#123;</span><br><span class="line"> outerProperty;<span class="comment">//注意，在此声明时不加let 等关键字</span></span><br><span class="line"> <span class="function"><span class="title">constructor</span>(<span class="params">innerProperty</span>)</span>&#123;</span><br><span class="line">     <span class="built_in">this</span>.innerProperty = innerProperty;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> user = <span class="keyword">new</span> User(<span class="string">&#x27;nihao&#x27;</span>);</span><br><span class="line"><span class="built_in">console</span>.log(user);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.getOwnPropertyNames(user));<span class="comment">//Object.getOwnPropertyNames:获得对象上的属性名（而非原型上的属性），以数组的形式返回</span></span><br><span class="line"><span class="comment">//[&quot;outerProperty&quot;, &quot;innerProperty&quot;]</span></span><br></pre></td></tr></table></figure>
+<h4 id="对象属性的声明"><a href="#对象属性的声明" class="headerlink" title="对象属性的声明"></a>对象属性的声明</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span></span>&#123;</span><br><span class="line"> outerProperty;<span class="comment">//注意，在此声明时不加let 等关键字</span></span><br><span class="line"> <span class="function"><span class="title">constructor</span>(<span class="params">innerProperty</span>)</span>&#123;</span><br><span class="line">     <span class="built_in">this</span>.innerProperty = innerProperty;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> user = <span class="keyword">new</span> User(<span class="string">&#x27;nihao&#x27;</span>);</span><br><span class="line"><span class="built_in">console</span>.log(user);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.getOwnPropertyNames(user));<span class="comment">//Object.getOwnPropertyNames:获得对象上的属性名（而非原型上的属性），以数组的形式返回</span></span><br><span class="line"><span class="comment">//[&quot;outerProperty&quot;, &quot;innerProperty&quot;]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* 可见构造器函数不是必需的，且show方法会放到User2的原型中 */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User2</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="title">show</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;show&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>user:<img src="/img/对象属性声明.png"/></p>
+<h4 id="严格模式下this的不同"><a href="#严格模式下this的不同" class="headerlink" title="严格模式下this的不同"></a>严格模式下this的不同</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line">    <span class="function"><span class="title">show</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">`show:<span class="subst">$&#123;<span class="built_in">this</span>&#125;</span>`</span>);<span class="comment">//this指向：User</span></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">`test:<span class="subst">$&#123;<span class="built_in">this</span>&#125;</span>`</span>);<span class="comment">//undefined</span></span><br><span class="line">        &#125;</span><br><span class="line">        test();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
 <h4 id="class声明的方法不可遍历"><a href="#class声明的方法不可遍历" class="headerlink" title="class声明的方法不可遍历"></a>class声明的方法不可遍历</h4><ul>
 <li>先看一下函数中声明的方法<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">H</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    H.prototype.show = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* 声明H的对象 */</span></span><br><span class="line"><span class="keyword">let</span> h = <span class="keyword">new</span> H();</span><br><span class="line">h.a1 = <span class="string">&#x27;a1&#x27;</span>;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> key <span class="keyword">in</span> h)&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(key);<span class="comment">//循环输出 a1,show</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-但是有时我们遍历对象的属性并不想遍历到它的原型上的属性，该怎么办呢<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure></li>
+但是有时我们遍历对象的属性并不想遍历到它的原型上的属性，该怎么办呢<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="静态访问"><a href="#静态访问" class="headerlink" title="静态访问"></a>静态访问</h4></li>
 </ul>
-
+<h5 id="静态属性"><a href="#静态属性" class="headerlink" title="静态属性"></a>静态属性</h5><p>静态属性即为类设置属性，而不是为生成的对象设置,在 class 中为属性添加 static 关键字即声明为静态属性</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 可以把为所有对象使用的值定义为静态属性 */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span></span>&#123;</span><br><span class="line">    <span class="keyword">static</span> state = <span class="string">&#x27;ok&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h5 id="静态方法"><a href="#静态方法" class="headerlink" title="静态方法"></a>静态方法</h5>
       
 
       
@@ -502,6 +507,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Promise</a>
               </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">移动端</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Proxy</a>
+              </li>
             
             <div class="clearfix"></div>
           </ul>
@@ -583,7 +596,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
     
     	<section class="tools-section tools-section-me" q-show="aboutme">
   	  	
-  	  		<div class="aboutme-wrap" id="js-aboutme">很惭愧&lt;br&gt;&lt;br&gt;只做了一点微小的工作&lt;br&gt;谢谢大家</div>
+  	  		<div class="aboutme-wrap" id="js-aboutme">不断学习的鸽子</div>
   	  	
     	</section>
     

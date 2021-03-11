@@ -6,23 +6,23 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>JS-对象的解构与属性增删改查 | Hexo</title>
+  <title>JS-对象-1 | suilfly的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="对象使用解构多层对象的解构操作   123456&#x2F;&#x2F;现在我想要单独把subs（嵌套的对象）取出来let obj &#x3D; &amp;#123; name:&amp;#x27;obj&amp;#x27;,subs:&amp;#123; title:&amp;#x27;d&amp;#x27; &amp;#125; &amp;#125;;let &amp;#123; name,subs:&amp;#123; title &amp;#125; &amp;#125;&#x3D;obj;console.log(name">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JS-对象的解构与属性增删改查">
+<meta property="og:title" content="JS-对象-1">
 <meta property="og:url" content="http://example.com/2021/03/06/JS-%E5%AF%B9%E8%B1%A1%E7%9A%84%E8%A7%A3%E6%9E%84%E4%B8%8E%E5%B1%9E%E6%80%A7%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="suilfly的博客">
 <meta property="og:description" content="对象使用解构多层对象的解构操作   123456&#x2F;&#x2F;现在我想要单独把subs（嵌套的对象）取出来let obj &#x3D; &amp;#123; name:&amp;#x27;obj&amp;#x27;,subs:&amp;#123; title:&amp;#x27;d&amp;#x27; &amp;#125; &amp;#125;;let &amp;#123; name,subs:&amp;#123; title &amp;#125; &amp;#125;&#x3D;obj;console.log(name">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-03-06T00:05:49.000Z">
-<meta property="article:modified_time" content="2021-03-06T00:13:29.378Z">
+<meta property="article:modified_time" content="2021-03-06T06:37:51.520Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="JS对象">
 <meta property="article:tag" content="解构">
 <meta name="twitter:card" content="summary">
   
-    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="suilfly的博客" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.png">
@@ -49,7 +49,7 @@
 <div class="intrude-less">
 	<header id="header" class="inner">
 		<a href="/" class="profilepic">
-			<img src="" class="js-avatar">
+			<img src="/img/header.jpg" class="js-avatar">
 		</a>
 		<hgroup>
 		  <h1 class="header-author"><a href="/"></a></h1>
@@ -83,7 +83,7 @@
 		<nav class="header-nav">
 			<div class="social">
 				
-					<a class="github" target="_blank" href="#" title="github"><i class="icon-github"></i></a>
+					<a class="github" target="_blank" href="https://github.com/suilfly" title="github"><i class="icon-github"></i></a>
 		        
 					<a class="weibo" target="_blank" href="#" title="weibo"><i class="icon-weibo"></i></a>
 		        
@@ -107,7 +107,7 @@
 	<div class="intrude-less">
 		<header id="header" class="inner">
 			<div class="profilepic">
-				<img src="" class="js-avatar">
+				<img src="/img/header.jpg" class="js-avatar">
 			</div>
 			<hgroup>
 			  <h1 class="header-author js-header-author"></h1>
@@ -124,7 +124,7 @@
 			<nav class="header-nav">
 				<div class="social">
 					
-						<a class="github" target="_blank" href="#" title="github"><i class="icon-github"></i></a>
+						<a class="github" target="_blank" href="https://github.com/suilfly" title="github"><i class="icon-github"></i></a>
 			        
 						<a class="weibo" target="_blank" href="#" title="weibo"><i class="icon-weibo"></i></a>
 			        
@@ -163,7 +163,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      JS-对象的解构与属性增删改查
+      JS-对象-1
     </h1>
   
 
@@ -176,11 +176,14 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="对象使用解构"><a href="#对象使用解构" class="headerlink" title="对象使用解构"></a>对象使用解构</h4><h5 id="多层对象的解构操作"><a href="#多层对象的解构操作" class="headerlink" title="多层对象的解构操作"></a>多层对象的解构操作</h5>   <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">//现在我想要单独把subs（嵌套的对象）取出来</span></span><br><span class="line"><span class="keyword">let</span> obj = &#123; <span class="attr">name</span>:<span class="string">&#x27;obj&#x27;</span>,<span class="attr">subs</span>:&#123; <span class="attr">title</span>:<span class="string">&#x27;d&#x27;</span> &#125; &#125;;</span><br><span class="line"><span class="keyword">let</span> &#123; name,<span class="attr">subs</span>:&#123; title &#125; &#125;=obj;</span><br><span class="line"><span class="built_in">console</span>.log(name,title);<span class="comment">//obj d</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+        <h3 id="对象使用解构"><a href="#对象使用解构" class="headerlink" title="对象使用解构"></a>对象使用解构</h3><h5 id="多层对象的解构操作"><a href="#多层对象的解构操作" class="headerlink" title="多层对象的解构操作"></a>多层对象的解构操作</h5>   <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">//现在我想要单独把subs（嵌套的对象）取出来</span></span><br><span class="line"><span class="keyword">let</span> obj = &#123; <span class="attr">name</span>:<span class="string">&#x27;obj&#x27;</span>,<span class="attr">subs</span>:&#123; <span class="attr">title</span>:<span class="string">&#x27;d&#x27;</span> &#125; &#125;;</span><br><span class="line"><span class="keyword">let</span> &#123; name,<span class="attr">subs</span>:&#123; title &#125; &#125;=obj;</span><br><span class="line"><span class="built_in">console</span>.log(name,title);<span class="comment">//obj d</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <h5 id="对象的解构的默认值实现合并的操作"><a href="#对象的解构的默认值实现合并的操作" class="headerlink" title="对象的解构的默认值实现合并的操作"></a>对象的解构的默认值实现合并的操作</h5><p>   比如说我想实现一个函数，在我没有传递参数的时候，函数运行时使用默认值，传递参数后，覆盖默认值</p>
    <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">   <span class="function"><span class="keyword">function</span> <span class="title">f1</span>(<span class="params">options = &#123;&#125;</span>)</span>&#123;<span class="comment">//注意：此处一定要初始化形参为为空对象否则 f1不传递参数时会报错：TypeError: Cannot read property &#x27;width&#x27; of undefined</span></span><br><span class="line">    <span class="keyword">let</span> &#123; width=<span class="number">100</span>,height=<span class="number">200</span> &#125; = options;</span><br><span class="line">    <span class="built_in">console</span>.log(width,height);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">f1();<span class="comment">//100 200</span></span><br><span class="line">f1(&#123; <span class="attr">width</span>:<span class="number">1</span> &#125;);<span class="comment">//1 200</span></span><br><span class="line">f1(&#123; <span class="attr">width</span>:<span class="number">300</span>,<span class="attr">height</span>:<span class="number">20</span> &#125;);<span class="comment">//300 20</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h5 id="对象属性的增加和删除"><a href="#对象属性的增加和删除" class="headerlink" title="对象属性的增加和删除"></a>对象属性的增加和删除</h5>   <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//增加</span></span><br><span class="line">obj.name = <span class="string">&#x27;xxx&#x27;</span>;</span><br><span class="line">obj[<span class="string">&quot;name&quot;</span>] = <span class="string">&#x27;xx&#x27;</span></span><br><span class="line"><span class="comment">//删除</span></span><br><span class="line"><span class="keyword">delete</span> obj.name</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h5 id="检测属性"><a href="#检测属性" class="headerlink" title="检测属性"></a>检测属性</h5>   <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">obj.hasOwnProperty(<span class="string">&#x27;age&#x27;</span>);<span class="comment">//判断当前对象上（不涉及原型链）有没有属性</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//包含原型链：in 关键词</span></span><br><span class="line"><span class="string">&quot;属性&quot;</span> <span class="keyword">in</span> obj</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h5 id="assign实现合并"><a href="#assign实现合并" class="headerlink" title="assign实现合并"></a>assign实现合并</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a =&#123;<span class="attr">a</span>:<span class="number">1</span>&#125;;</span><br><span class="line"><span class="keyword">let</span> b =&#123;<span class="attr">b</span>:<span class="number">1</span>&#125;;</span><br><span class="line"><span class="keyword">let</span> c =<span class="built_in">Object</span>.assign(a,b);</span><br><span class="line"><span class="comment">//&#123;a: 1, b: 1&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* 那么我也可以构造一个函数实现默认值覆盖 */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">load</span>(<span class="params">params</span>)</span>&#123;</span><br><span class="line"><span class="keyword">let</span> option = &#123;</span><br><span class="line">    size:<span class="number">1000</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">Object</span>.assign(option,params);</span><br><span class="line"><span class="built_in">console</span>.log(option);</span><br><span class="line">&#125;</span><br><span class="line">load(&#123; <span class="attr">size</span>:<span class="number">200</span>,<span class="attr">type</span>:<span class="string">&#x27;jpeg&#x27;</span> &#125;);<span class="comment">//&#123;size: 200, type: &quot;jpeg&quot;&#125;</span></span><br><span class="line">load(&#123;<span class="attr">size</span>:<span class="number">200</span>&#125;);<span class="comment">//&#123;size: 200&#125;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="对象属性的增加和删除"><a href="#对象属性的增加和删除" class="headerlink" title="对象属性的增加和删除"></a>对象属性的增加和删除</h3>   <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//增加</span></span><br><span class="line">obj.name = <span class="string">&#x27;xxx&#x27;</span>;</span><br><span class="line">obj[<span class="string">&quot;name&quot;</span>] = <span class="string">&#x27;xx&#x27;</span></span><br><span class="line"><span class="comment">//删除</span></span><br><span class="line"><span class="keyword">delete</span> obj.name</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="检测属性"><a href="#检测属性" class="headerlink" title="检测属性"></a>检测属性</h3>   <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">obj.hasOwnProperty(<span class="string">&#x27;age&#x27;</span>);<span class="comment">//判断当前对象上（不涉及原型链）有没有属性</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//包含原型链：in 关键词</span></span><br><span class="line"><span class="string">&quot;属性&quot;</span> <span class="keyword">in</span> obj</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="计算属性"><a href="#计算属性" class="headerlink" title="计算属性"></a>计算属性</h3>   <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">let</span> obj = &#123;</span><br><span class="line">      name:<span class="string">&#x27;l&#x27;</span></span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="keyword">let</span> lesson = <span class="string">&#x27;js&#x27;</span>;</span><br><span class="line">  obj[lesson] = <span class="number">99</span>;</span><br><span class="line">  <span class="built_in">console</span>.log(obj);</span><br><span class="line">  <span class="comment">/* </span></span><br><span class="line"><span class="comment">  &#123;</span></span><br><span class="line"><span class="comment">  &quot;name&quot;: &quot;l&quot;,</span></span><br><span class="line"><span class="comment">  &quot;js&quot;: 99</span></span><br><span class="line"><span class="comment">  &#125;</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"> <span class="comment">/* 可以发现当obj[lesson]时，先计算了lesson的值，后将其值的内容放入属性中 */</span></span><br><span class="line"></span><br><span class="line"> <span class="keyword">let</span> l = [</span><br><span class="line">     &#123;</span><br><span class="line">         title:<span class="string">&#x27;css&#x27;</span>,</span><br><span class="line">         grade:<span class="number">90</span></span><br><span class="line">     &#125;,</span><br><span class="line">     &#123;</span><br><span class="line">         title:<span class="string">&#x27;js&#x27;</span>,</span><br><span class="line">         grade:<span class="number">93</span></span><br><span class="line">     &#125;</span><br><span class="line"> ]<span class="comment">//后台经常传入类似的结构，但我想要通过一个属性名获取一个对象，该怎么操作？</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> re=l.reduce(<span class="function">(<span class="params">obj,cur,index</span>)=&gt;</span>&#123;</span><br><span class="line">     obj[<span class="string">`user-<span class="subst">$&#123;cur.title&#125;</span>-<span class="subst">$&#123;index &#125;</span>`</span>] = cur;</span><br><span class="line">     <span class="keyword">return</span> obj;</span><br><span class="line"> &#125;,&#123;&#125;);</span><br><span class="line"> <span class="built_in">console</span>.log(<span class="built_in">JSON</span>.stringify(re,<span class="literal">null</span>,<span class="number">2</span>));</span><br><span class="line"></span><br><span class="line"> <span class="comment">/* </span></span><br><span class="line"><span class="comment"> &#123;</span></span><br><span class="line"><span class="comment">  &quot;user-css-0&quot;: &#123;</span></span><br><span class="line"><span class="comment">      &quot;title&quot;: &quot;css&quot;,</span></span><br><span class="line"><span class="comment">      &quot;grade&quot;: 90</span></span><br><span class="line"><span class="comment">      &#125;,</span></span><br><span class="line"><span class="comment">  &quot;user-js-1&quot;: &#123;</span></span><br><span class="line"><span class="comment">      &quot;title&quot;: &quot;js&quot;,</span></span><br><span class="line"><span class="comment">      &quot;grade&quot;: 93</span></span><br><span class="line"><span class="comment">      &#125;</span></span><br><span class="line"><span class="comment">  &#125;   </span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
 
       
 
@@ -484,6 +487,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Promise</a>
               </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">移动端</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Proxy</a>
+              </li>
             
             <div class="clearfix"></div>
           </ul>
@@ -565,7 +576,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
     
     	<section class="tools-section tools-section-me" q-show="aboutme">
   	  	
-  	  		<div class="aboutme-wrap" id="js-aboutme">很惭愧&lt;br&gt;&lt;br&gt;只做了一点微小的工作&lt;br&gt;谢谢大家</div>
+  	  		<div class="aboutme-wrap" id="js-aboutme">不断学习的鸽子</div>
   	  	
     	</section>
     
