@@ -6,15 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Archives: 2020 | suilfly的博客</title>
+  <title>JS-Promise实现-1 | suilfly的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="suilfly的博客">
-<meta property="og:url" content="http://example.com/archives/2020/index.html">
+  <meta name="description" content="决定从今天开始自己实现一个Promise，希望可以成功吧~ 首先原生Promise在使用的时候需要 1new Promise((resolve,reject)&#x3D;&gt;&amp;#123;&amp;#125;) 要向构造器传递一个函数，而且初始的Promise状态为pending 12345678910111213141516171819class MyPromise&amp;#123;    static PENDIN">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS-Promise实现-1">
+<meta property="og:url" content="http://example.com/2021/03/14/JS-Promise%E5%AE%9E%E7%8E%B0-1/index.html">
 <meta property="og:site_name" content="suilfly的博客">
+<meta property="og:description" content="决定从今天开始自己实现一个Promise，希望可以成功吧~ 首先原生Promise在使用的时候需要 1new Promise((resolve,reject)&#x3D;&gt;&amp;#123;&amp;#125;) 要向构造器传递一个函数，而且初始的Promise状态为pending 12345678910111213141516171819class MyPromise&amp;#123;    static PENDIN">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/img/Promise-实现-1.png">
+<meta property="article:published_time" content="2021-03-14T00:40:47.000Z">
+<meta property="article:modified_time" content="2021-03-14T01:19:46.337Z">
 <meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Promsie实现">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/Promise-实现-1.png">
   
     <link rel="alternative" href="/atom.xml" title="suilfly的博客" type="application/atom+xml">
   
@@ -150,60 +157,184 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-JS-Promise实现-1" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/03/06/%E7%A7%BB%E5%8A%A8%E7%AB%AF-%E6%97%A0%E7%BC%9D%E6%BB%91%E5%B1%8F/" class="archive-article-date">
-  	<time datetime="2020-03-06T06:30:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-06</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/03/06/%E7%A7%BB%E5%8A%A8%E7%AB%AF-%E6%97%A0%E7%BC%9D%E6%BB%91%E5%B1%8F/">移动端-无缝滑屏-1</a>
+    <h1 class="article-title" itemprop="name">
+      JS-Promise实现-1
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2021/03/14/JS-Promise%E5%AE%9E%E7%8E%B0-1/" class="archive-article-date">
+  	<time datetime="2021-03-14T00:40:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-14</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>决定从今天开始自己实现一个Promise，希望可以成功吧~</p>
+<p>首先原生Promise在使用的时候需要</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;&#125;)</span><br></pre></td></tr></table></figure>
+<p>要向构造器传递一个<strong>函数</strong>，而且初始的Promise<strong>状态</strong>为pending</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyPromise</span></span>&#123;</span><br><span class="line">    <span class="keyword">static</span> PENDING = <span class="string">&quot;pending&quot;</span>;<span class="comment">//既然状态每个实例都要使用，就设成静态变量吧</span></span><br><span class="line">    <span class="keyword">static</span> FULFILLED = <span class="string">&quot;fulfilled&quot;</span>;</span><br><span class="line">    <span class="keyword">static</span> REJECT = <span class="string">&quot;reject&quot;</span>;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">executor</span>)</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>.state = MyPromise.PENDING;</span><br><span class="line">        <span class="built_in">this</span>.val = <span class="literal">null</span>;<span class="comment">//原生的Promise中每个状态都对应一个值</span></span><br><span class="line">        executor(<span class="built_in">this</span>.resolve,<span class="built_in">this</span>.reject);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">resolve</span>(<span class="params">value</span>)</span>&#123;</span><br><span class="line">        <span class="comment">/* 执行即修改状态 */</span></span><br><span class="line">        <span class="built_in">this</span>.state = MyPromise.FULFILLED;</span><br><span class="line">        <span class="built_in">this</span>.val = value;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">reject</span>(<span class="params">reason</span>)</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>.state = MyPromise.REJECT;</span><br><span class="line">        <span class="built_in">this</span>.val = reason;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>执行以下看看</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> p = <span class="keyword">new</span> MyPromise(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="built_in">this</span>);<span class="comment">//在这个箭头函数中this指向window</span></span><br><span class="line">    resolve(<span class="string">&quot;成功&quot;</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>结果凉凉：<img src="/img/Promise-实现-1.png"/><br>执行一下p.resolve();输出undefined,this丢失了！,解决this丢失的问题可以使用bind</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyPromise</span></span>&#123;</span><br><span class="line">    <span class="keyword">static</span> PENDING = <span class="string">&quot;pending&quot;</span>;<span class="comment">//既然状态每个实例都要使用，就设成静态变量吧</span></span><br><span class="line">    <span class="keyword">static</span> FULFILLED = <span class="string">&quot;fulfilled&quot;</span>;</span><br><span class="line">    <span class="keyword">static</span> REJECT = <span class="string">&quot;reject&quot;</span>;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">executor</span>)</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>.state = MyPromise.PENDING;</span><br><span class="line">        <span class="built_in">this</span>.val = <span class="literal">null</span>;<span class="comment">//原生的Promise中每个状态都对应一个值</span></span><br><span class="line">        executor(<span class="built_in">this</span>.resolve.bind(<span class="built_in">this</span>),<span class="built_in">this</span>.reject.bind(<span class="built_in">this</span>));<span class="comment">//this.resolve.bind(this)返回一个新的绑定函数：resolve,其中的this指向MyPromise实例</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">resolve</span>(<span class="params">value</span>)</span>&#123;</span><br><span class="line">        <span class="comment">/* 执行即修改状态 */</span></span><br><span class="line">        <span class="built_in">this</span>.state = MyPromise.FULFILLED;</span><br><span class="line">        <span class="built_in">this</span>.val = value;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">reject</span>(<span class="params">reason</span>)</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>.state = MyPromise.REJECT;</span><br><span class="line">        <span class="built_in">this</span>.val = reason;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> p = <span class="keyword">new</span> MyPromise(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</span><br><span class="line">    resolve(<span class="string">&quot;成功&quot;</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(p);<span class="comment">//MyPromise &#123;state: &quot;fulfilled&quot;, val: &quot;成功&quot;&#125;</span></span><br></pre></td></tr></table></figure>
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">移动端</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Promsie实现</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2021/03/14/JS-Promise%E5%AE%9E%E7%8E%B0-1/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2021/03/14/CSS-%E8%A1%8C%E5%86%85%E5%85%83%E7%B4%A0%E6%8E%92%E7%89%88-inline-line-height/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          CSS-行内元素排版-inline&amp;line-height
+        
+      </div>
+    </a>
   
   
-    </div></section>
+    <a href="/2021/03/14/JS-%E5%87%BD%E6%95%B0-1/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">JS-函数-1</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -226,8 +357,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

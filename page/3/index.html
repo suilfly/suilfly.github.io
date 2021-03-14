@@ -6,11 +6,11 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Archives: 2020 | suilfly的博客</title>
+  <title>suilfly的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta property="og:type" content="website">
 <meta property="og:title" content="suilfly的博客">
-<meta property="og:url" content="http://example.com/archives/2020/index.html">
+<meta property="og:url" content="http://example.com/page/3/index.html">
 <meta property="og:site_name" content="suilfly的博客">
 <meta property="og:locale" content="en_US">
 <meta property="article:author" content="John Doe">
@@ -152,34 +152,46 @@
           <div id="js-content" class="content-ll">
             
   
-  
+    <article id="post-移动端-无缝滑屏" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/03/06/%E7%A7%BB%E5%8A%A8%E7%AB%AF-%E6%97%A0%E7%BC%9D%E6%BB%91%E5%B1%8F/" class="archive-article-date">
-  	<time datetime="2020-03-06T06:30:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-06</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/03/06/%E7%A7%BB%E5%8A%A8%E7%AB%AF-%E6%97%A0%E7%BC%9D%E6%BB%91%E5%B1%8F/">移动端-无缝滑屏-1</a>
+      <a class="article-title" href="/2020/03/06/%E7%A7%BB%E5%8A%A8%E7%AB%AF-%E6%97%A0%E7%BC%9D%E6%BB%91%E5%B1%8F/">移动端-无缝滑屏-1</a>
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2020/03/06/%E7%A7%BB%E5%8A%A8%E7%AB%AF-%E6%97%A0%E7%BC%9D%E6%BB%91%E5%B1%8F/" class="archive-article-date">
+  	<time datetime="2020-03-06T06:30:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-06</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在PC端，轮播组件在设计的时候只需要考虑横向上的设计，但是在移动端需要考虑横纵上的设计：比如在 移动端的轮播图上竖向划屏，是应该触发轮播图的事件还是APP页面的上划移动，这种冲突就是抖动。</p>
+<p>所以我这次的目标是实现一个防抖动的无缝滑屏</p>
+<h4 id="初步布局"><a href="#初步布局" class="headerlink" title="初步布局"></a>初步布局</h4><p>HTML：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;X-UA-Compatible&quot;</span> <span class="attr">content</span>=<span class="string">&quot;IE=edge&quot;</span> /&gt;</span></span><br><span class="line">    &lt;meta</span><br><span class="line">      name=&quot;viewport&quot;</span><br><span class="line">      content=&quot;width=device-width, initial-scale=1.0,user-scalable=no&quot;</span><br><span class="line">    /&gt;</span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>无缝滑屏<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line">      * &#123;</span><br><span class="line"><span class="css">        <span class="attribute">margin</span>: <span class="number">0</span>;</span></span><br><span class="line"><span class="css">        <span class="attribute">padding</span>: <span class="number">0</span>;</span></span><br><span class="line">      &#125;</span><br><span class="line"><span class="css">      <span class="selector-tag">html</span>,</span></span><br><span class="line"><span class="css">      <span class="selector-tag">body</span>,</span></span><br><span class="line">      #wrap &#123;</span><br><span class="line"><span class="css">        <span class="attribute">overflow</span>: hidden;</span></span><br><span class="line"><span class="css">        <span class="attribute">height</span>: <span class="number">100%</span>;</span></span><br><span class="line">      &#125;</span><br><span class="line">      .carousel-wrap&gt;.my-list &#123;</span><br><span class="line"><span class="css">        <span class="attribute">width</span>: <span class="number">500%</span>;</span></span><br><span class="line"><span class="css">        <span class="comment">/* ul里的li浮动后，ul高度塌陷，所以要清除浮动 */</span></span></span><br><span class="line"><span class="css">        <span class="attribute">overflow</span>: hidden; <span class="comment">/* 移动端清除浮动的方式 */</span></span></span><br><span class="line">      &#125;</span><br><span class="line"><span class="css">      <span class="selector-class">.my-list</span> &gt; <span class="selector-tag">li</span> &#123;</span></span><br><span class="line"><span class="css">        <span class="attribute">width</span>: <span class="number">20%</span>;</span></span><br><span class="line"><span class="css">        <span class="attribute">list-style</span>: none;</span></span><br><span class="line"><span class="css">        <span class="attribute">float</span>: left; <span class="comment">/* 父级元素ul的宽度不够如此设置依然不能成为一行 */</span></span></span><br><span class="line">      &#125;</span><br><span class="line"><span class="css">      <span class="selector-class">.my-list</span> &gt; <span class="selector-tag">li</span> &gt; <span class="selector-tag">a</span>,</span></span><br><span class="line"><span class="css">      <span class="selector-class">.my-list</span> &gt; <span class="selector-tag">li</span> &gt; <span class="selector-tag">a</span> &gt; <span class="selector-tag">img</span> &#123;</span></span><br><span class="line"><span class="css">        <span class="attribute">display</span>: block; <span class="comment">/* 不写这个有空隙 */</span></span></span><br><span class="line">      &#125;</span><br><span class="line"><span class="css">      <span class="selector-class">.my-list</span> &gt; <span class="selector-tag">li</span> &gt; <span class="selector-tag">a</span> &gt; <span class="selector-tag">img</span> &#123;</span></span><br><span class="line"><span class="css">        <span class="attribute">width</span>: <span class="number">100%</span>; <span class="comment">/* 一层层寻找设置宽度的父级元素，并以此为标准 */</span></span></span><br><span class="line">      &#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;wrap&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;carousel-wrap&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">&quot;my-list&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;javascript:;&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;/img/1.jpg&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;javascript:;&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;/img/2.jpg&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;javascript:;&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;/img/3.jpg&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;javascript:;&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;/img/4.jpg&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;javascript:;&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;/img/5.jpg&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line">  </span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<p>初步的效果，但是问题来了：1.要封装成一个组件，图片的数量和内容都不能是静态写死的 2.要暴露出一个让用户使用无缝滑屏的接口 3.my-list类的宽度不能是静态的</p>
+<img height="300px" src="/img/移动端-1.png"/>
+
+<h5 id="先解决问题3：动态创建节点和动态设置宽度"><a href="#先解决问题3：动态创建节点和动态设置宽度" class="headerlink" title="先解决问题3：动态创建节点和动态设置宽度"></a>先解决问题3：动态创建节点和动态设置宽度</h5><p>首先css要做修改</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* css */</span></span><br><span class="line"> * &#123;</span><br><span class="line">        <span class="attribute">margin</span>: <span class="number">0</span>;</span><br><span class="line">        <span class="attribute">padding</span>: <span class="number">0</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="selector-tag">html</span>,</span><br><span class="line">      <span class="selector-tag">body</span>,</span><br><span class="line">      <span class="selector-id">#wrap</span> &#123;</span><br><span class="line">        <span class="attribute">overflow</span>: hidden;</span><br><span class="line">        <span class="attribute">height</span>: <span class="number">100%</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="selector-class">.carousel-wrap</span>&gt;<span class="selector-class">.my-list</span> &#123;</span><br><span class="line">        <span class="comment">/* display: flex;也可以使用弹性盒+盒子宽度500% */</span></span><br><span class="line">       <span class="comment">/*  width: 500%; */</span></span><br><span class="line">        <span class="comment">/* ul里的li浮动后，ul高度塌陷，所以要清除浮动 */</span></span><br><span class="line">        <span class="attribute">overflow</span>: hidden; <span class="comment">/* 移动端清除浮动的方式 */</span></span><br><span class="line">        <span class="comment">/* 脱离文档流，carousel-wrap高度塌陷 */</span></span><br><span class="line">        <span class="attribute">position</span>: absolute;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="selector-class">.my-list</span> &gt; <span class="selector-tag">li</span> &#123;</span><br><span class="line">        <span class="comment">/* width: 20%; */</span></span><br><span class="line">        <span class="attribute">list-style</span>: none;</span><br><span class="line">        <span class="attribute">float</span>: left; <span class="comment">/* 父级元素ul的宽度不够如此设置依然不能成为一行 */</span></span><br><span class="line">      &#125;</span><br><span class="line">      <span class="selector-class">.my-list</span> &gt; <span class="selector-tag">li</span> &gt; <span class="selector-tag">a</span>,</span><br><span class="line">      <span class="selector-class">.my-list</span> &gt; <span class="selector-tag">li</span> &gt; <span class="selector-tag">a</span> &gt; <span class="selector-tag">img</span> &#123;</span><br><span class="line">        <span class="attribute">display</span>: block; <span class="comment">/* 不写这个有空隙 */</span></span><br><span class="line">      &#125;</span><br><span class="line">      <span class="selector-class">.my-list</span> &gt; <span class="selector-tag">li</span> &gt; <span class="selector-tag">a</span> &gt; <span class="selector-tag">img</span> &#123;</span><br><span class="line">        <span class="attribute">width</span>: <span class="number">100%</span>; <span class="comment">/* 一层层寻找设置宽度的父级元素，并以此为标准 */</span></span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* js */</span></span><br><span class="line"><span class="comment">/* 模拟从后台拿到的数据 */</span></span><br><span class="line"><span class="keyword">let</span> src = [</span><br><span class="line">      <span class="string">&quot;/img/1.jpg&quot;</span>,</span><br><span class="line">      <span class="string">&quot;/img/2.jpg&quot;</span>,</span><br><span class="line">      <span class="string">&quot;/img/3.jpg&quot;</span>,</span><br><span class="line">      <span class="string">&quot;/img/4.jpg&quot;</span>,</span><br><span class="line">      <span class="string">&quot;/img/5.jpg&quot;</span>,</span><br><span class="line">    ];</span><br><span class="line"><span class="keyword">let</span> carouselWrap = <span class="built_in">document</span>.querySelector(<span class="string">&quot;.carousel-wrap&quot;</span>);</span><br><span class="line"><span class="comment">/* 使用插件的用户的存放图片path的数组不一定名：src，所以通过一个函数来规定 */</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">carousel</span>(<span class="params">src=[<span class="string">&quot;/img/1.jpg&quot;</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">      <span class="string">&quot;/img/2.jpg&quot;</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">      <span class="string">&quot;/img/3.jpg&quot;</span>]</span>) </span>&#123;</span><br><span class="line">    <span class="comment">/* 如果页面中有.carousel-wrap */</span></span><br><span class="line">      <span class="keyword">if</span> (carouselWrap) &#123;</span><br><span class="line">        <span class="keyword">let</span> ul = <span class="built_in">document</span>.createElement(<span class="string">&quot;ul&quot;</span>);</span><br><span class="line">        <span class="keyword">let</span> ulWidth = src.length*<span class="number">100</span>;</span><br><span class="line">        <span class="keyword">let</span> liWidth = <span class="number">100</span>/src.length;</span><br><span class="line">        <span class="keyword">let</span> liFromUl = ul.getElementsByTagName(<span class="string">&#x27;li&#x27;</span>);</span><br><span class="line">        ul.classList.add(<span class="string">&#x27;my-list&#x27;</span>);</span><br><span class="line">        <span class="comment">/* 动态创建DOM节点 */</span></span><br><span class="line">        src.forEach(<span class="function">(<span class="params">i</span>) =&gt;</span> &#123;</span><br><span class="line">          ul.innerHTML += <span class="string">`&lt;li&gt;&lt;a href=&quot;javascript:;&quot;&gt;&lt;img src=&quot;<span class="subst">$&#123;i&#125;</span>&quot; alt=&quot;&quot;&gt;&lt;/a&gt;&lt;/li&gt;`</span>;</span><br><span class="line">        &#125;);</span><br><span class="line">        <span class="comment">/* 动态计算滑动容器的宽度 */</span></span><br><span class="line">        ul.style.width = ulWidth+<span class="string">&#x27;%&#x27;</span>;</span><br><span class="line">        [...liFromUl].forEach(<span class="function">(<span class="params">item</span>)=&gt;</span>&#123;</span><br><span class="line">            item.style.width = liWidth+<span class="string">&#x27;%&#x27;</span>;</span><br><span class="line">        &#125;)</span><br><span class="line">        </span><br><span class="line">       <span class="comment">/* 解决carouselWrap高度塌陷问题 */</span></span><br><span class="line">        [...carouselWrap].forEach(<span class="function"><span class="params">item</span>=&gt;</span>&#123;</span><br><span class="line">            item.appendChild(ul);</span><br><span class="line">            <span class="comment">/* let img = document.querySelector(&#x27;.my-list &gt; li &gt; a &gt; img&#x27;);console.dir(img.clientHeight);高度为0的原因：调试可知：在执行到这个语句时DOM节点还未渲染出来，所以没有高度。问题解决：异步编程 */</span></span><br><span class="line">            <span class="keyword">let</span> imgTime = <span class="built_in">setTimeout</span>(<span class="function">()=&gt;</span>&#123;</span><br><span class="line">            <span class="keyword">let</span> img = <span class="built_in">document</span>.querySelector(<span class="string">&#x27;.my-list &gt; li &gt; a &gt; img&#x27;</span>);</span><br><span class="line">            item.style.height = img.clientHeight+<span class="string">&#x27;px&#x27;</span>;</span><br><span class="line">            <span class="built_in">clearInterval</span>(imgTime);</span><br><span class="line">            &#125;,<span class="number">0</span>)</span><br><span class="line">            <span class="comment">/* 获取ul&gt;li中的img的高度赋值给carouselWrap */</span></span><br><span class="line">        &#125;)   </span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -191,19 +203,45 @@
 		</ul>
 	</div>
 
-          
+      
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/03/06/%E7%A7%BB%E5%8A%A8%E7%AB%AF-%E6%97%A0%E7%BC%9D%E6%BB%91%E5%B1%8F/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
-  
-  
-    </div></section>
-  
 
-    
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+  
+    <nav id="page-nav">
+      <a class="extend prev" rel="prev" href="/page/2/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
+    </nav>
+  
 
 
           </div>
@@ -225,9 +263,9 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: false,
+		isHome: true,
 		isPost: false,
-		isArchive: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
