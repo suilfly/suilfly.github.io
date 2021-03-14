@@ -152,6 +152,288 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-JS-数组-函数的使用2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/03/04/JS-%E6%95%B0%E7%BB%84-%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A82/">JS-数组-函数的使用2</a>
+    </h1>
+  
+
+        
+        <a href="/2021/03/04/JS-%E6%95%B0%E7%BB%84-%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A82/" class="archive-article-date">
+  	<time datetime="2021-03-04T05:14:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="合并数组"><a href="#合并数组" class="headerlink" title="合并数组"></a>合并数组</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> ary = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>];</span><br><span class="line">ary.concat(ary); <span class="comment">//[1, 2, 3, 4, 1, 2, 3, 4]</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="数组内部移动复制"><a href="#数组内部移动复制" class="headerlink" title="数组内部移动复制"></a>数组内部移动复制</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> ary = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>];</span><br><span class="line"><span class="comment">/* 第一个参数：想要移动的位置</span></span><br><span class="line"><span class="comment">   第二个参数：决定移动的起始位置（包括）</span></span><br><span class="line"><span class="comment">   第三个参数：决定移动的结束位置（不包括）</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">ary.copyWithin(<span class="number">3</span>, <span class="number">0</span>, <span class="number">2</span>); <span class="comment">//[1, 2, 3, 1, 2]</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="查找元素基本使用"><a href="#查找元素基本使用" class="headerlink" title="查找元素基本使用"></a>查找元素基本使用</h4><ul>
+<li>ary.indexOf 和 ary.lastIndexOf</li>
+</ul>
+<pre><code><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">ary.indexOf(<span class="number">2</span>);<span class="comment">//寻找2的下标值</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//return 1</span></span><br><span class="line">ary.indexOf(<span class="number">88</span>);<span class="comment">//寻找 88 的下标值，找不到返回-1</span></span><br><span class="line"><span class="comment">// -1</span></span><br><span class="line">ary.lastIndexOf(<span class="number">3</span>,-<span class="number">4</span>);<span class="comment">//与 indexOf 正好相反</span></span><br><span class="line"><span class="comment">//-1</span></span><br><span class="line">ary.lastIndexOf(<span class="number">3</span>,<span class="number">0</span>);<span class="comment">//与 indexOf 正好相反</span></span><br><span class="line"><span class="comment">//-1</span></span><br><span class="line">ary.lastIndexOf(<span class="number">3</span>,<span class="number">2</span>);<span class="comment">//与 indexOf 正好相反</span></span><br><span class="line"><span class="comment">//2</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</code></pre>
+<h4 id="数组中是否拥有某元素"><a href="#数组中是否拥有某元素" class="headerlink" title="数组中是否拥有某元素"></a>数组中是否拥有某元素</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">方式一：<span class="keyword">if</span>(ary.indexOf(<span class="number">2</span>)!=-<span class="number">1</span>)<span class="comment">//有</span></span><br><span class="line">方式二：ary.includes(<span class="number">2</span>)<span class="comment">//true</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="更加高效的元素查找"><a href="#更加高效的元素查找" class="headerlink" title="更加高效的元素查找"></a>更加高效的元素查找</h4><p>问题：当我们想要查找数组中是否存在一个引用类型时，用 includes 行吗？：NO</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = [&#123; <span class="attr">name</span>: <span class="string">&quot;w&quot;</span> &#125;, &#123; <span class="attr">name</span>: <span class="string">&quot;s&quot;</span> &#125;];</span><br><span class="line"></span><br><span class="line">a.includes(&#123; <span class="attr">name</span>: <span class="string">&quot;w&quot;</span> &#125;); <span class="comment">//false</span></span><br><span class="line"><span class="comment">//因为include会根据传入的参数去比较是否相同，而引用类型的比较相等的条件是内存地址相等，实参&#123;name:&#x27;w&#x27;&#125;实际上是一个新的地址</span></span><br></pre></td></tr></table></figure>
+
+<p>那么如何检索引用类型？</p>
+<h4 id="检索引用类型：find-function-amp-findIndex"><a href="#检索引用类型：find-function-amp-findIndex" class="headerlink" title="检索引用类型：find(function) &amp; findIndex"></a>检索引用类型：find(function) &amp; findIndex</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = [&#123; <span class="attr">name</span>: <span class="string">&quot;w&quot;</span> &#125;, &#123; <span class="attr">name</span>: <span class="string">&quot;s&quot;</span> &#125;];</span><br><span class="line">a.find(<span class="function"><span class="keyword">function</span> (<span class="params">item</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;); <span class="comment">//当函数中的返回体为真就返回第一个符合函数条件的值（find是禁止贪婪的）</span></span><br><span class="line"></span><br><span class="line">a.find(<span class="function"><span class="keyword">function</span>(<span class="params">item</span>)</span></span><br><span class="line"><span class="function">    </span>&#123; </span><br><span class="line">        <span class="keyword">return</span> item.name==<span class="string">&#x27;w&#x27;</span>;&#125;</span><br><span class="line">    )</span><br><span class="line"><span class="comment">// console:&#123;name: &quot;w&quot;&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//若找不到 返回undefined</span></span><br><span class="line">a.find(<span class="function"><span class="keyword">function</span>(<span class="params">item</span>)</span></span><br><span class="line"><span class="function">    </span>&#123; <span class="keyword">return</span> item.name==<span class="number">2</span>;&#125;</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line"><span class="comment">//如果想要获取到其下标则用findIndex</span></span><br><span class="line">a.findIndex(<span class="function"><span class="keyword">function</span>(<span class="params">item</span>)</span>&#123; <span class="keyword">return</span> item.name==<span class="string">&#x27;w&#x27;</span>;&#125;)</span><br><span class="line"><span class="comment">//0</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li>find 原理<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Myfind</span> (<span class="params">callback</span>)</span>&#123; <span class="keyword">for</span>(<span class="keyword">let</span> i <span class="keyword">of</span> ary)&#123;<span class="keyword">if</span>(callback(i)) <span class="keyword">return</span> i;&#125;<span class="comment">//return undefined;</span></span><br><span class="line">    </span><br><span class="line">    写在原型上：</span><br><span class="line">    <span class="built_in">Array</span>.prototype.MyFind = <span class="function"><span class="keyword">function</span> (<span class="params">callback</span>)</span>&#123; <span class="keyword">for</span>(<span class="keyword">let</span> i <span class="keyword">of</span> <span class="built_in">this</span>)&#123;<span class="keyword">if</span>(callback(i)) <span class="keyword">return</span> i;&#125;<span class="keyword">return</span> <span class="literal">undefined</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="forEach循环数组"><a href="#forEach循环数组" class="headerlink" title="forEach循环数组"></a>forEach循环数组</h4></li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = [&#123;<span class="attr">name</span>:<span class="string">&#x27;aa&#x27;</span>&#125;,&#123;<span class="attr">name</span>:<span class="number">2</span>&#125;]</span><br><span class="line">a.forEach(<span class="function"><span class="keyword">function</span>(<span class="params">item,index,arrys</span>)</span>&#123; <span class="built_in">console</span>.log(item,index,arrys) &#125;)</span><br><span class="line"><span class="comment">// &#123;name: &quot;aa&quot;&#125; 0  [&#123;…&#125;, &#123;…&#125;]</span></span><br><span class="line"> <span class="comment">//&#123;name: 2&#125; 1  [&#123;…&#125;, &#123;…&#125;]</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="every-和-some"><a href="#every-和-some" class="headerlink" title="every 和 some"></a>every 和 some</h4><p>some() 方法测试数组中是不是至少有1个元素通过了被提供的函数测试。它返回的是一个Boolean类型的值</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/* return都是boolean */</span></span><br><span class="line"><span class="keyword">let</span> a = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>];</span><br><span class="line">a.some(<span class="function"><span class="keyword">function</span>(<span class="params">item,index,array</span>)</span>&#123; <span class="keyword">return</span> item == <span class="number">1</span> &#125;);<span class="comment">//true,遇到第一个符合条件的都不再继续向下查找</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = [<span class="number">10</span>,<span class="number">12</span>,<span class="number">11</span>];</span><br><span class="line">a.every(<span class="function"><span class="keyword">function</span>(<span class="params">i,index,array</span>)</span>&#123; <span class="keyword">return</span> i&gt;<span class="number">1</span>; &#125;);<span class="comment">//true,必须每一个都符合才返回true</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="filter"><a href="#filter" class="headerlink" title="filter"></a>filter</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = [<span class="number">10</span>,<span class="number">12</span>,<span class="number">11</span>];</span><br><span class="line">a.filter(<span class="function"><span class="keyword">function</span>(<span class="params">i,index,array</span>)</span>&#123; <span class="keyword">return</span> i&gt;<span class="number">10</span>; &#125;);<span class="comment">//[12, 11],仅过滤符合条件的，返回数组</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="map"><a href="#map" class="headerlink" title="map"></a>map</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* map映射数组：数组中的元素如果是值类型，则不会被影响；若是引用类型则会被影响 */</span></span><br><span class="line">a.map(<span class="function"><span class="keyword">function</span>(<span class="params">value</span>)</span>&#123; value = <span class="number">1</span>; <span class="keyword">return</span> value&#125;)</span><br><span class="line"><span class="comment">// [1, 1, 1, 1]</span></span><br><span class="line"><span class="comment">/* 但 */</span></span><br><span class="line"><span class="built_in">console</span>.log(a);</span><br><span class="line"><span class="comment">//[1, 2, 3, 4]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* 而对于引用类型来说 */</span></span><br><span class="line">b.map(<span class="function"><span class="keyword">function</span>(<span class="params">item</span>)</span>&#123;item.n = <span class="string">&#x27;我已被map映射修改&#x27;</span>;&#125;)；<span class="comment">//在没有返回item的情况下，b内元素的值已经被修改</span></span><br><span class="line"><span class="built_in">console</span>.log(b)；</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 0: &#123;n: &quot;我已被map映射修改&quot;, m: 100&#125;</span></span><br><span class="line"><span class="comment">1: &#123;n: &quot;我已被map映射修改&quot;, m: 100&#125; */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* 所以对于应用类型来说，怎样才能不影响原数组的情况下，获得修改后的副本呢？也就是复制一份数组，再进行修改【有关于浅拷贝和深拷贝】 */</span></span><br><span class="line">b.map(<span class="function"><span class="keyword">function</span>(<span class="params">item</span>)</span>&#123; <span class="keyword">return</span> <span class="built_in">Object</span>.assign(&#123; item ,<span class="attr">add</span>:<span class="string">&#x27;新添加&#x27;</span>&#125;)&#125;)</span><br><span class="line"><span class="comment">/* 0: &#123;item: &#123;…&#125;, add: &quot;新添加&quot;&#125;</span></span><br><span class="line"><span class="comment">1: &#123;item: &#123;…&#125;, add: &quot;新添加&quot;&#125; */</span></span><br><span class="line"><span class="built_in">console</span>.log(b);</span><br><span class="line"><span class="comment">/* 仍是[&#123;n: &quot;我已被map映射修改&quot;, m: 100&#125;</span></span><br><span class="line"><span class="comment"> &#123;n: &quot;我已被map映射修改&quot;, m: 100&#125;] */</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="reduce"><a href="#reduce" class="headerlink" title="reduce"></a>reduce</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>];</span><br><span class="line"><span class="comment">// 第一个参数：回调函数：[参数1-pre：如果没有设置初始值那么第一次的值就是数组的第一个元素，下一次的值是reduce函数上一个返回值        参数2-cur: 当前值]</span></span><br><span class="line"><span class="comment">// 第二个参数：initalPre：pre的初始值</span></span><br><span class="line">a.reduce(<span class="function"><span class="keyword">function</span>(<span class="params">pre,cur,curIndex,arry</span>)</span>&#123; <span class="built_in">console</span>.log(pre,cur,curIndex); &#125;,initalPre);</span><br><span class="line"></span><br><span class="line">a.reduce(<span class="function"><span class="keyword">function</span>(<span class="params">pre,cur,index,arry</span>)</span>&#123; <span class="built_in">console</span>.log(pre,cur,index,arry); <span class="keyword">return</span> <span class="string">&#x27;h&#x27;</span>+cur; &#125;);</span><br><span class="line"><span class="comment">//1 2 1   [1, 2, 3, 4]</span></span><br><span class="line"><span class="comment">//h2 3 2  [1, 2, 3, 4]</span></span><br><span class="line"><span class="comment">//h3 4 3  [1, 2, 3, 4]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* 应用：例如统计元素出现的次数 */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">countNum</span>(<span class="params">arry,value</span>)</span>&#123; <span class="keyword">return</span> arry.reduce(<span class="function"><span class="keyword">function</span>(<span class="params">pre,cur</span>)</span>&#123; <span class="keyword">if</span>(cur === value) <span class="keyword">return</span> ++pre;<span class="keyword">else</span> <span class="keyword">return</span> pre; &#125;,<span class="number">0</span>) &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">JS</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">数组函数的使用</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/03/04/JS-%E6%95%B0%E7%BB%84-%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A82/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-ES6-类的秘密-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/03/01/ES6-%E7%B1%BB%E7%9A%84%E7%A7%98%E5%AF%86-1/">ES6-类的秘密-1</a>
+    </h1>
+  
+
+        
+        <a href="/2021/03/01/ES6-%E7%B1%BB%E7%9A%84%E7%A7%98%E5%AF%86-1/" class="archive-article-date">
+  	<time datetime="2021-03-01T00:31:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-01</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Class的初识-声明一个类"><a href="#Class的初识-声明一个类" class="headerlink" title="Class的初识-声明一个类"></a>Class的初识-声明一个类</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span></span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> user = <span class="keyword">new</span> User();</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>构造函数</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">arg1</span>)</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>.arg1 = arg1;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> user = <span class="keyword">new</span> User(<span class="string">&#x27;哈哈&#x27;</span>);</span><br></pre></td></tr></table></figure>
+<h4 id="见识了javascript中的类，可以发现有了类之后面向对象的编程更加直观明了，那么Class的原理是否也如其他面向对象语言一样呢？"><a href="#见识了javascript中的类，可以发现有了类之后面向对象的编程更加直观明了，那么Class的原理是否也如其他面向对象语言一样呢？" class="headerlink" title="见识了javascript中的类，可以发现有了类之后面向对象的编程更加直观明了，那么Class的原理是否也如其他面向对象语言一样呢？"></a>见识了javascript中的类，可以发现有了类之后面向对象的编程更加直观明了，那么Class的原理是否也如其他面向对象语言一样呢？</h4></li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 类的声明 */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span></span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.dir(User);</span><br></pre></td></tr></table></figure>
+<img src="/img/class.png"/>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 函数的声明 */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Hser</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line"><span class="built_in">console</span>.dir(Hser);</span><br></pre></td></tr></table></figure>
+<img src="/img/function.png"/>
+
+<p>可以发现class和function的原型都是function，也就是说class底层的机制仍然是原型机制，可以说类就是函数。class 只是语法糖为了让类的声明与继承更加简洁清晰。</p>
+<h4 id="对象属性的声明"><a href="#对象属性的声明" class="headerlink" title="对象属性的声明"></a>对象属性的声明</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span></span>&#123;</span><br><span class="line"> outerProperty;<span class="comment">//注意，在此声明时不加let 等关键字</span></span><br><span class="line"> <span class="function"><span class="title">constructor</span>(<span class="params">innerProperty</span>)</span>&#123;</span><br><span class="line">     <span class="built_in">this</span>.innerProperty = innerProperty;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> user = <span class="keyword">new</span> User(<span class="string">&#x27;nihao&#x27;</span>);</span><br><span class="line"><span class="built_in">console</span>.log(user);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.getOwnPropertyNames(user));<span class="comment">//Object.getOwnPropertyNames:获得对象上的属性名（而非原型上的属性），以数组的形式返回</span></span><br><span class="line"><span class="comment">//[&quot;outerProperty&quot;, &quot;innerProperty&quot;]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* 可见构造器函数不是必需的，且show方法会放到User2的原型中 */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User2</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="title">show</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;show&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>user:<img src="/img/对象属性声明.png"/></p>
+<h4 id="严格模式下this的不同"><a href="#严格模式下this的不同" class="headerlink" title="严格模式下this的不同"></a>严格模式下this的不同</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line">    <span class="function"><span class="title">show</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">`show:<span class="subst">$&#123;<span class="built_in">this</span>&#125;</span>`</span>);<span class="comment">//this指向：User</span></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">`test:<span class="subst">$&#123;<span class="built_in">this</span>&#125;</span>`</span>);<span class="comment">//undefined</span></span><br><span class="line">        &#125;</span><br><span class="line">        test();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="class声明的方法不可遍历"><a href="#class声明的方法不可遍历" class="headerlink" title="class声明的方法不可遍历"></a>class声明的方法不可遍历</h4><ul>
+<li>先看一下函数中声明的方法<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">H</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    H.prototype.show = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* 声明H的对象 */</span></span><br><span class="line"><span class="keyword">let</span> h = <span class="keyword">new</span> H();</span><br><span class="line">h.a1 = <span class="string">&#x27;a1&#x27;</span>;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> key <span class="keyword">in</span> h)&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(key);<span class="comment">//循环输出 a1,show</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+但是有时我们遍历对象的属性并不想遍历到它的原型上的属性，该怎么办呢<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="静态访问"><a href="#静态访问" class="headerlink" title="静态访问"></a>静态访问</h4></li>
+</ul>
+<h5 id="静态属性"><a href="#静态属性" class="headerlink" title="静态属性"></a>静态属性</h5><p>静态属性即为类设置属性，而不是为生成的对象设置,在 class 中为属性添加 static 关键字即声明为静态属性</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 可以把为所有对象使用的值定义为静态属性 */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span></span>&#123;</span><br><span class="line">    <span class="keyword">static</span> state = <span class="string">&#x27;ok&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h5 id="静态方法"><a href="#静态方法" class="headerlink" title="静态方法"></a>静态方法</h5>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ES6</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Class</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/03/01/ES6-%E7%B1%BB%E7%9A%84%E7%A7%98%E5%AF%86-1/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-hexo-d部署到git失败的原因" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/02/28/hexo-d%E9%83%A8%E7%BD%B2%E5%88%B0git%E5%A4%B1%E8%B4%A5%E7%9A%84%E5%8E%9F%E5%9B%A0/">hexo d部署到git失败的原因</a>
+    </h1>
+  
+
+        
+        <a href="/2021/02/28/hexo-d%E9%83%A8%E7%BD%B2%E5%88%B0git%E5%A4%B1%E8%B4%A5%E7%9A%84%E5%8E%9F%E5%9B%A0/" class="archive-article-date">
+  	<time datetime="2021-02-28T13:17:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-28</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>我使用的是VPN，所以就有一个代理服务器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global http.proxy 代理地址:端口号</span><br><span class="line">git config --global https.proxy 代理地址:端口号</span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">hexo</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">git</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/02/28/hexo-d%E9%83%A8%E7%BD%B2%E5%88%B0git%E5%A4%B1%E8%B4%A5%E7%9A%84%E5%8E%9F%E5%9B%A0/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-HTML5-draggable属性" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -466,7 +748,7 @@
 <img src="/img/多行交叉轴-1.png"/>
 
 
-<h4 id="flex-item的属性"><a href="#flex-item的属性" class="headerlink" title="flex item的属性"></a>flex item的属性</h4><h5 id="align-self-定义了单个弹性项目在交叉轴上应当如何对齐，这个定义会覆盖由-align-items-所确立的默认值。"><a href="#align-self-定义了单个弹性项目在交叉轴上应当如何对齐，这个定义会覆盖由-align-items-所确立的默认值。" class="headerlink" title="align-self 定义了单个弹性项目在交叉轴上应当如何对齐，这个定义会覆盖由 align-items 所确立的默认值。"></a>align-self 定义了<strong>单个弹性项目</strong>在交叉轴上应当如何对齐，这个定义会覆盖由 align-items 所确立的默认值。</h5><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#c</span>&#123;</span><br><span class="line">           <span class="attribute">width</span>: <span class="number">350px</span>;</span><br><span class="line">           <span class="attribute">height</span>: <span class="number">350px</span>;</span><br><span class="line">           <span class="attribute">border</span>: <span class="number">1px</span> solid black;</span><br><span class="line">           <span class="attribute">display</span>: flex;</span><br><span class="line">           <span class="attribute">justify-content</span>: center;</span><br><span class="line">           <span class="attribute">flex-wrap</span>: wrap;</span><br><span class="line"></span><br><span class="line">       &#125;</span><br><span class="line">       <span class="selector-id">#c</span>&gt;<span class="selector-tag">div</span>&#123;</span><br><span class="line">           <span class="attribute">width</span>: <span class="number">100px</span>;</span><br><span class="line">           <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line">           <span class="attribute">background-color</span>: bisque;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="selector-id">#c</span>&gt;<span class="selector-tag">div</span><span class="selector-pseudo">:first</span>-child&#123;</span><br><span class="line">           <span class="attribute">align-self</span>: center;</span><br><span class="line">       &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="flex-item的属性"><a href="#flex-item的属性" class="headerlink" title="flex item的属性"></a>flex item的属性</h3><h5 id="align-self-定义了单个弹性项目在交叉轴上应当如何对齐，这个定义会覆盖由-align-items-所确立的默认值。"><a href="#align-self-定义了单个弹性项目在交叉轴上应当如何对齐，这个定义会覆盖由-align-items-所确立的默认值。" class="headerlink" title="align-self 定义了单个弹性项目在交叉轴上应当如何对齐，这个定义会覆盖由 align-items 所确立的默认值。"></a>align-self 定义了<strong>单个弹性项目</strong>在交叉轴上应当如何对齐，这个定义会覆盖由 align-items 所确立的默认值。</h5><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#c</span>&#123;</span><br><span class="line">           <span class="attribute">width</span>: <span class="number">350px</span>;</span><br><span class="line">           <span class="attribute">height</span>: <span class="number">350px</span>;</span><br><span class="line">           <span class="attribute">border</span>: <span class="number">1px</span> solid black;</span><br><span class="line">           <span class="attribute">display</span>: flex;</span><br><span class="line">           <span class="attribute">justify-content</span>: center;</span><br><span class="line">           <span class="attribute">flex-wrap</span>: wrap;</span><br><span class="line"></span><br><span class="line">       &#125;</span><br><span class="line">       <span class="selector-id">#c</span>&gt;<span class="selector-tag">div</span>&#123;</span><br><span class="line">           <span class="attribute">width</span>: <span class="number">100px</span>;</span><br><span class="line">           <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line">           <span class="attribute">background-color</span>: bisque;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="selector-id">#c</span>&gt;<span class="selector-tag">div</span><span class="selector-pseudo">:first</span>-child&#123;</span><br><span class="line">           <span class="attribute">align-self</span>: center;</span><br><span class="line">       &#125;</span><br></pre></td></tr></table></figure>
 <p>效果显示：<img src="/img/多行交叉轴-2.png"/></p>
 <ul>
 <li><p>normal<br>这个关键字的效果取决于我们处在什么布局模式中：</p>
@@ -487,7 +769,17 @@
 <ul>
 <li>center</li>
 </ul>
-<h5 id="设置弹性元素在主轴上，对剩余空间的分配"><a href="#设置弹性元素在主轴上，对剩余空间的分配" class="headerlink" title="设置弹性元素在主轴上，对剩余空间的分配"></a>设置弹性元素在主轴上，对剩余空间的分配</h5>
+<h5 id="flex-grow-设置弹性元素在主轴上，对剩余空间的分配"><a href="#flex-grow-设置弹性元素在主轴上，对剩余空间的分配" class="headerlink" title="flex-grow 设置弹性元素在主轴上，对剩余空间的分配"></a>flex-grow 设置弹性元素在主轴上，对剩余空间的分配</h5><p>flex-grow:n; 把剩余空间平均分配成n等份</p>
+<ul>
+<li>平均分配剩余空间</li>
+</ul>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 给弹性盒中的每一个弹性元素设置 */</span></span><br><span class="line"><span class="attribute">flex-grow</span>:<span class="number">1</span>;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li>不分配剩余空间（是多大就多大）</li>
+</ul>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">flex-grow</span>:<span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+
+
       
 
       
@@ -871,6 +1163,22 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Proxy</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">JS事件</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">JS数据结构</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">二叉树</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">继承</a>
               </li>
             
             <div class="clearfix"></div>
