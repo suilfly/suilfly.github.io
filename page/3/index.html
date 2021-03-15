@@ -152,6 +152,90 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-css3媒体查询" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/02/27/css3%E5%AA%92%E4%BD%93%E6%9F%A5%E8%AF%A2/">CSS媒体查询</a>
+    </h1>
+  
+
+        
+        <a href="/2021/02/27/css3%E5%AA%92%E4%BD%93%E6%9F%A5%E8%AF%A2/" class="archive-article-date">
+  	<time datetime="2021-02-27T06:38:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-27</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="出现的意义"><a href="#出现的意义" class="headerlink" title="出现的意义"></a>出现的意义</h2><blockquote>
+<p>为了应对不同尺寸的屏幕显示的样式，通常把媒体设备分类两大类：screen 和 print</p>
+</blockquote>
+<h4 id="style中使用不同的媒体设备样式"><a href="#style中使用不同的媒体设备样式" class="headerlink" title="style中使用不同的媒体设备样式"></a>style中使用不同的媒体设备样式</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;style media&#x3D;&quot;screen&quot;&gt;</span><br><span class="line">...其中的样式将会引用到屏幕设备中</span><br><span class="line">&lt;&#x2F;style&gt;</span><br><span class="line">&lt;style media&#x3D;&quot;print&quot;&gt;</span><br><span class="line">...其中的样式将会引用到打印机设备中</span><br><span class="line">&lt;&#x2F;style&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="LINK引入css样式表"><a href="#LINK引入css样式表" class="headerlink" title="LINK引入css样式表"></a>LINK引入css样式表</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;  link media&#x3D;&quot;screen&quot; href&#x3D;&quot;...&quot;&#x2F;&gt;</span><br><span class="line">&lt;  link media&#x3D;&quot;print&quot; href&#x3D;&quot;...&quot;&#x2F;&gt;</span><br></pre></td></tr></table></figure>
+<p>** 但是这样引入会显得页面杂乱，于是出现了@import来简化页面多文件引入 **</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">    @import url(common.css);</span><br><span class="line">    @import url(screen.css) screen;</span><br><span class="line">    @import url(print.css) print;</span><br><span class="line">&#x2F;*  url()会根据当前test.css的位置，来搜索css文件</span><br><span class="line">*&#x2F;</span><br></pre></td></tr></table></figure>
+<h2 id="media设置某部分的样式随媒体的属性变化–局部定义响应查询"><a href="#media设置某部分的样式随媒体的属性变化–局部定义响应查询" class="headerlink" title="@media设置某部分的样式随媒体的属性变化–局部定义响应查询"></a>@media设置某部分的样式随媒体的属性变化–局部定义响应查询</h2><h3 id="media-AND条件判断响应式使用"><a href="#media-AND条件判断响应式使用" class="headerlink" title="@media AND条件判断响应式使用"></a>@media AND条件判断响应式使用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;style media&#x3D;&quot;screen and (min-width:768px)&quot;&gt;</span><br><span class="line">&#x2F;* 条件语句用()包裹，min-width:768px &lt;&#x3D;&gt; 屏幕的最小宽度为768px,即屏幕宽度&gt;&#x3D;768px *&#x2F;</span><br><span class="line">&lt;style media&#x3D;&quot;screen and (max-width:768px)&quot;&gt;</span><br><span class="line">&#x2F;* max-width:768px &lt;&#x3D;&gt; 屏幕宽度&lt;&#x3D;768px*&#x2F;</span><br></pre></td></tr></table></figure>
+<p>** 那么当两个条件都写时，当屏幕为768px时，样式由谁决定？：优先级按照顺序排序越往后写优先级越高，所以按照max-width:768px</p>
+<h3 id="media-逻辑或的使用"><a href="#media-逻辑或的使用" class="headerlink" title="@media 逻辑或的使用"></a>@media 逻辑或的使用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">css中的逻辑或用 , 表示</span><br><span class="line">    &lt;style media&#x3D;&quot;screen and (orientation: landscape)</span><br><span class="line">    ,screen and(min-width:768px)&quot;&gt;</span><br><span class="line">    &#x2F;* 意思是当屏幕为横屏或者屏幕的宽度&gt;&#x3D;768px时，使用以上样式*&#x2F;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="media-非的使用"><a href="#media-非的使用" class="headerlink" title="@media 非的使用"></a>@media 非的使用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;style&gt;</span><br><span class="line">    @media screen and (min-width:768px) and (max-width:1000px)&#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">    当屏幕宽度在[768px,1000px]时使用上面的样式，那么区间之外的想要再设置一个不同的样式该怎样写呢？如下</span><br><span class="line">    @media not screen and (min-width:768px) and (max-width:1000px)</span><br><span class="line">&lt;&#x2F;style&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="使用-only排除低端浏览器"><a href="#使用-only排除低端浏览器" class="headerlink" title="使用 only排除低端浏览器"></a>使用 only排除低端浏览器</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@media only ....</span><br><span class="line">&#x2F;* 意思是仅当浏览器支持媒体查询时使用 *&#x2F;</span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">CSS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/02/27/css3%E5%AA%92%E4%BD%93%E6%9F%A5%E8%AF%A2/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-移动端-无缝滑屏" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -419,6 +503,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Promsie实现</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">跨域</a>
               </li>
             
             <div class="clearfix"></div>

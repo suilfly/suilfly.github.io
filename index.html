@@ -152,6 +152,85 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-关于跨域的那些事-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/03/15/%E5%85%B3%E4%BA%8E%E8%B7%A8%E5%9F%9F%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B-1/">关于跨域的那些事-1</a>
+    </h1>
+  
+
+        
+        <a href="/2021/03/15/%E5%85%B3%E4%BA%8E%E8%B7%A8%E5%9F%9F%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B-1/" class="archive-article-date">
+  	<time datetime="2021-03-15T01:22:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-15</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>其实这个跨域是狭义上的跨域，由于浏览器的同源策略限制而产生的</p>
+<h3 id="同源策略？"><a href="#同源策略？" class="headerlink" title="同源策略？"></a>同源策略？</h3><p>同源：协议+域名+端口三者相同（严格意义上的）。<br>同源策略/SOP（<strong>Same origin policy</strong>）是一种约定，由Netscape公司1995年引入浏览器，它是浏览器最核心也最基本的安全功能，如果缺少了同源策略，浏览器很容易受到<a>XSS</a>、<a>CSFR</a>等攻击。</p>
+<h2 id="跨域解决方案"><a href="#跨域解决方案" class="headerlink" title="跨域解决方案"></a>跨域解决方案</h2><ul>
+<li>通过jsonp跨域</li>
+</ul>
+<p>我发现在HTML页面中引入一个外部网址的js文件是被浏览器所允许的。经过考证，原来：通常为了<strong>减轻web服务器的负载</strong>，把<strong>js、css，img</strong>等静态资源分离到另一台<strong>独立域名</strong>的服务器上，在html页面中再通过相应的标签从不同域名下加载静态资源，而被浏览器允许，基于此原理，我们可以通过动态创建script，再请求一个带参网址实现跨域通信</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">跨域</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/03/15/%E5%85%B3%E4%BA%8E%E8%B7%A8%E5%9F%9F%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B-1/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-CSS-行内元素排版-inline-line-height" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -899,73 +978,6 @@
 
 
   
-    <article id="post-移动端-无缝滑屏-2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/03/07/%E7%A7%BB%E5%8A%A8%E7%AB%AF-%E6%97%A0%E7%BC%9D%E6%BB%91%E5%B1%8F-2/">移动端-无缝滑屏-2</a>
-    </h1>
-  
-
-        
-        <a href="/2021/03/07/%E7%A7%BB%E5%8A%A8%E7%AB%AF-%E6%97%A0%E7%BC%9D%E6%BB%91%E5%B1%8F-2/" class="archive-article-date">
-  	<time datetime="2021-03-07T07:28:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-07</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="设置滑屏事件"><a href="#设置滑屏事件" class="headerlink" title="设置滑屏事件"></a>设置滑屏事件</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 滑屏相关 */</span></span><br><span class="line"><span class="keyword">let</span> touchStartX = <span class="number">0</span>,</span><br><span class="line">  touchdis = <span class="number">0</span>;</span><br><span class="line"><span class="comment">/* 滑动的元素的起始位置 */</span></span><br><span class="line"><span class="keyword">let</span> ulX = <span class="number">0</span>;</span><br><span class="line"><span class="comment">/* 图片的下标 */</span></span><br><span class="line"><span class="keyword">let</span> imgIndex = <span class="number">0</span>;</span><br><span class="line"><span class="comment">/* 添加移动端事件 */</span></span><br><span class="line">[...carouselWrap].forEach(<span class="function">(<span class="params">item</span>) =&gt;</span> &#123;</span><br><span class="line">  item.addEventListener(<span class="string">&quot;touchstart&quot;</span>, <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> touch = e.changedTouches[<span class="number">0</span>]; <span class="comment">/* TouchList 接口代表一个触摸平面上所有触点的列表。例如，如果一个用户用三根手指接触屏幕（或者触控板），与之对应的 TouchList 会包含每根手指的 Touch 对象，总共三个 */</span></span><br><span class="line">    touchStartX = touch.clientX;</span><br><span class="line">    ulX = ul.offsetLeft;</span><br><span class="line">  &#125;);</span><br><span class="line">  item.addEventListener(<span class="string">&quot;touchmove&quot;</span>, <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> touch = e.changedTouches[<span class="number">0</span>];</span><br><span class="line">    touchdis = touch.clientX - touchStartX;</span><br><span class="line">    ul.style.left = ulX + touchdis + <span class="string">&quot;px&quot;</span>;</span><br><span class="line">  &#125;);</span><br><span class="line">  item.addEventListener(<span class="string">&quot;touchend&quot;</span>, <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (touchdis &gt; <span class="number">0</span>) &#123;</span><br><span class="line">      <span class="comment">/* 向右划 */</span></span><br><span class="line">      imgIndex--;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">/* 向左划 */</span></span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (<span class="built_in">Math</span>.abs(touchdis) &gt;= <span class="built_in">document</span>.documentElement.clientWidth / <span class="number">2</span>) &#123;</span><br><span class="line">        <span class="comment">/* 移动距离大于视口的一半 */</span></span><br><span class="line">        imgIndex++;</span><br><span class="line">        ul.style.left =</span><br><span class="line">          -imgIndex * <span class="built_in">document</span>.documentElement.clientWidth +</span><br><span class="line">          <span class="string">&quot;px&quot;</span>; <span class="comment">/* 每次移动一个视口的宽度 */</span></span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        ul.style.left = ulX + <span class="string">&quot;px&quot;</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>将imgIndex抽象成图片的索引，发现判断左滑右划不方便，决定升级index，抽象成ul的实时位置</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 滑屏相关 */</span></span><br><span class="line">   <span class="keyword">let</span> touchStartX = <span class="number">0</span>,touchdis = <span class="number">0</span>;</span><br><span class="line">   <span class="comment">/* 滑动的元素的起始位置 */</span></span><br><span class="line">   <span class="keyword">let</span> ulX = <span class="number">0</span>;</span><br><span class="line">   <span class="comment">/* 图片的下标 */</span></span><br><span class="line">   <span class="comment">/* let imgIndex = 0; */</span></span><br><span class="line">   <span class="comment">/* 添加移动端事件 */</span></span><br><span class="line">   [...carouselWrap].forEach(<span class="function"><span class="params">item</span>=&gt;</span>&#123;</span><br><span class="line">     item.addEventListener(<span class="string">&#x27;touchstart&#x27;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123; </span><br><span class="line">       <span class="keyword">let</span> touch = e.changedTouches[<span class="number">0</span>];<span class="comment">/* TouchList 接口代表一个触摸平面上所有触点的列表。例如，如果一个用户用三根手指接触屏幕（或者触控板），与之对应的 TouchList 会包含每根手指的 Touch 对象，总共三个 */</span></span><br><span class="line">       touchStartX = touch.clientX;</span><br><span class="line">       ulX = ul.offsetLeft;</span><br><span class="line">     &#125;);</span><br><span class="line">     item.addEventListener(<span class="string">&#x27;touchmove&#x27;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123; </span><br><span class="line">       <span class="keyword">let</span> touch = e.changedTouches[<span class="number">0</span>];</span><br><span class="line">       touchdis = touch.clientX - touchStartX;</span><br><span class="line">       ul.style.left =ulX+touchdis+<span class="string">&#x27;px&#x27;</span>;</span><br><span class="line">      &#125;);</span><br><span class="line">     item.addEventListener(<span class="string">&#x27;touchend&#x27;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;</span><br><span class="line">     <span class="comment">/* 修改位置 */</span></span><br><span class="line">       <span class="keyword">let</span> index = ul.offsetLeft/<span class="built_in">document</span>.documentElement.clientWidth;<span class="comment">/* 用ul的实时位置抽象成下标，若index的下标为负：向左滑，为正：向右滑 */</span></span><br><span class="line">       index=<span class="built_in">Math</span>.round(index)</span><br><span class="line">       <span class="keyword">if</span>(index&gt;<span class="number">0</span>)&#123;</span><br><span class="line">         <span class="comment">/* 往右划 */</span></span><br><span class="line">         ul.style.left = index*(<span class="built_in">document</span>.documentElement.clientWidth)+<span class="string">&#x27;px&#x27;</span>;<span class="built_in">console</span>.log(index);</span><br><span class="line"></span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">else</span>&#123;</span><br><span class="line">         <span class="comment">/* 向左划 */</span></span><br><span class="line">         <span class="keyword">if</span>(<span class="built_in">Math</span>.abs(touchdis)&gt;=<span class="built_in">document</span>.documentElement.clientWidth/<span class="number">2</span>)&#123; <span class="comment">/* 移动距离大于视口的一半 */</span></span><br><span class="line">            ul.style.left = index*(<span class="built_in">document</span>.documentElement.clientWidth)+<span class="string">&#x27;px&#x27;</span>;<span class="built_in">console</span>.log(index);<span class="comment">/* 每次移动一个视口的宽度  Math.round(index):四舍五入返回整数*/</span></span><br><span class="line">         &#125;</span><br><span class="line">         <span class="keyword">else</span>&#123;</span><br><span class="line">           ul.style.left =ulX+<span class="string">&#x27;px&#x27;</span>;</span><br><span class="line">         &#125;</span><br><span class="line">            </span><br><span class="line">       &#125;</span><br><span class="line">     &#125;);</span><br><span class="line">   &#125;)   </span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h4 id="设置无限轮播的效果（思想）"><a href="#设置无限轮播的效果（思想）" class="headerlink" title="设置无限轮播的效果（思想）"></a>设置无限轮播的效果（思想）</h4><img src="/img/wuxian.png"/>
-
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/03/07/%E7%A7%BB%E5%8A%A8%E7%AB%AF-%E6%97%A0%E7%BC%9D%E6%BB%91%E5%B1%8F-2/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
@@ -1148,6 +1160,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Promsie实现</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">跨域</a>
               </li>
             
             <div class="clearfix"></div>
