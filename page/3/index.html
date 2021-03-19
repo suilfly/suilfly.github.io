@@ -152,6 +152,84 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-JS-数组-函数的使用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/02/28/JS-%E6%95%B0%E7%BB%84-%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8/">JS-数组-函数的使用</a>
+    </h1>
+  
+
+        
+        <a href="/2021/02/28/JS-%E6%95%B0%E7%BB%84-%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8/" class="archive-article-date">
+  	<time datetime="2021-02-28T01:59:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-28</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="slice"><a href="#slice" class="headerlink" title="slice"></a>slice</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 简单的使用slice截取数组 */</span></span><br><span class="line">    <span class="keyword">let</span> ary = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>];</span><br><span class="line">    <span class="comment">/* 两个参数的含义：起始下标：1（包含1），结束下标：2（不包含下标2） */</span></span><br><span class="line">    <span class="keyword">let</span> newAry = ary.slice(<span class="number">1</span>,<span class="number">2</span>);</span><br><span class="line">    <span class="built_in">console</span>.log(newAry);<span class="comment">//[2]</span></span><br><span class="line">    <span class="built_in">console</span>.log(ary);<span class="comment">//[1,2,3,4,5],说明slice函数并不修改原数组，只是复制了结果</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 无参数：含义截取整个数组 */</span></span><br><span class="line">    ary.slice();<span class="comment">//[1,2,3,4,5]</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 只有一个参数:表示从下标2开始截取（包含下标2）到结束 */</span></span><br><span class="line">    ary.slice(<span class="number">2</span>);<span class="comment">//[3, 4, 5]</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="splice-实现数组的增删改"><a href="#splice-实现数组的增删改" class="headerlink" title="splice-实现数组的增删改"></a>splice-实现数组的增删改</h3><h5 id="splice-实现数组的删除"><a href="#splice-实现数组的删除" class="headerlink" title="splice-实现数组的删除"></a>splice-实现数组的删除</h5><pre><code>    <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">let</span> ary = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>];</span><br><span class="line"><span class="comment">/* 两个参数的含义：从哪个下标开始截取；截取几个元素 */</span></span><br><span class="line"><span class="keyword">let</span> newA = ary.splice(<span class="number">0</span>,<span class="number">2</span>);</span><br><span class="line"><span class="built_in">console</span>.log(ary);<span class="comment">//[3,4,5]，发现原数组被改变，删除了[1,2]</span></span><br><span class="line"><span class="built_in">console</span>.log(newA);<span class="comment">//[1,2]</span></span><br></pre></td></tr></table></figure>
+</code></pre>
+<h6 id="应用：删除结点元素"><a href="#应用：删除结点元素" class="headerlink" title="应用：删除结点元素"></a>应用：删除结点元素</h6><h5 id="splice-实现数组的增加（替换操作）"><a href="#splice-实现数组的增加（替换操作）" class="headerlink" title="splice-实现数组的增加（替换操作）"></a>splice-实现数组的增加（替换操作）</h5><pre><code>    <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">let</span> ary = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>];</span><br><span class="line"><span class="keyword">let</span> ary2 = [<span class="string">&#x27;a&#x27;</span>,<span class="string">&#x27;b&#x27;</span>,<span class="string">&#x27;c&#x27;</span>,<span class="string">&#x27;d&#x27;</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 在头部追加：前两个参数的含义不变，之后的参数为新增的元素内容，从原数组的头部插入（因为第一个参数为0） */</span></span><br><span class="line"><span class="keyword">let</span> newA = ary.splice(<span class="number">0</span>,<span class="number">2</span>,<span class="string">&#x27;x1&#x27;</span>,<span class="string">&#x27;x2&#x27;</span>,<span class="string">&#x27;x3&#x27;</span>);</span><br><span class="line"><span class="comment">/* 在插入的同时进行了删除 */</span></span><br><span class="line"><span class="built_in">console</span>.log(ary);<span class="comment">//[&quot;x1&quot;, &quot;x2&quot;, &quot;x3&quot;, 3, 4, 5]</span></span><br><span class="line"><span class="built_in">console</span>.log(newA);<span class="comment">//[1, 2]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* 在特定位置追加:在2-3数字之间的位置追加 */</span></span><br><span class="line"><span class="keyword">let</span> ary3 = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>];</span><br><span class="line">ary3.splice(<span class="number">2</span>,<span class="number">0</span>,<span class="string">&#x27;a&#x27;</span>,<span class="string">&#x27;b&#x27;</span>);</span><br><span class="line"><span class="built_in">console</span>.log(ary3);<span class="comment">//[1, 2, &quot;a&quot;, &quot;b&quot;, 3, 4, 5]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* 在末尾增加 */</span></span><br><span class="line">ary3.splice(ary3.length,<span class="number">0</span>,<span class="string">&#x27;cc&#x27;</span>);</span><br><span class="line"><span class="built_in">console</span>.log(ary3);<span class="comment">// [1, 2, &quot;a&quot;, &quot;b&quot;, 3, 4, 5, &quot;cc&quot;]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* 替换操作 ：把ary2中的b替换为2*/</span></span><br><span class="line"><span class="keyword">let</span> newA2 = ary2.splice(<span class="number">1</span>,<span class="number">1</span>,<span class="number">2</span>);</span><br><span class="line"><span class="built_in">console</span>.log(newA2);<span class="comment">//输出被删除的元素[&quot;b&quot;]</span></span><br><span class="line"><span class="built_in">console</span>.log(ary2);<span class="comment">//[&quot;a&quot;, 2, &quot;c&quot;, &quot;d&quot;]</span></span><br></pre></td></tr></table></figure>
+</code></pre>
+<h5 id="splice-实现数组的清空"><a href="#splice-实现数组的清空" class="headerlink" title="splice-实现数组的清空"></a>splice-实现数组的清空</h5> <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">/* 清空数组的几种方式 */</span></span><br><span class="line">hd = [],<span class="comment">//不会影响其他</span></span><br><span class="line">hd.length = <span class="number">0</span>;<span class="comment">//若是复制的会影响原数值</span></span><br><span class="line">hd.splice(<span class="number">0</span>); || hd.splice(<span class="number">0</span>,hd.length);</span><br><span class="line"><span class="keyword">while</span>(hd.pop())&#123;&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">JS 数组</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/02/28/JS-%E6%95%B0%E7%BB%84-%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-css3-弹性盒布局" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -689,6 +767,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">防抖</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">节流</a>
               </li>
             
             <div class="clearfix"></div>
