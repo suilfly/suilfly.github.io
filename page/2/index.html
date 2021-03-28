@@ -152,6 +152,200 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-JS-面向对象-继承" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/03/12/JS-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1-%E7%BB%A7%E6%89%BF/">JS-面向对象-继承</a>
+    </h1>
+  
+
+        
+        <a href="/2021/03/12/JS-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1-%E7%BB%A7%E6%89%BF/" class="archive-article-date">
+  	<time datetime="2021-03-12T00:35:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="实现继承是-ECMAScript-唯一支持的继承方式，而这主要是通过原型链实现的"><a href="#实现继承是-ECMAScript-唯一支持的继承方式，而这主要是通过原型链实现的" class="headerlink" title="实现继承是 ECMAScript 唯一支持的继承方式，而这主要是通过原型链实现的"></a>实现继承是 ECMAScript 唯一支持的继承方式，而这主要是通过原型链实现的</h4><h2 id="原型链继承"><a href="#原型链继承" class="headerlink" title="原型链继承"></a>原型链继承</h2><p>构造函数、原型和实例的关系：每个<em>构造函数</em>都有一个原型对象，原型有一个属性(constructor)指回构造函数，而实例有一个内部指针([[ prototype ]])指向原型。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">/* 构造函数 */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Father</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">this</span>.fatherName=<span class="string">&quot;f1&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.dir(Father);<span class="comment">/*构造函数内有prototype: &#123;constructor: ƒ Father()&#125; constructor指向father */</span></span><br><span class="line"><span class="keyword">let</span> fatherInstance = <span class="keyword">new</span> Father();</span><br><span class="line"><span class="built_in">console</span>.log(fatherInstance.__proto__);<span class="comment">/* fatherInstance为Father的实例：实例中有一个指针指向Father原型，输出&#123;constructor: ƒ Father()&#125; */</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>插入图片讲解</p>
+<p>实现继承</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Father</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">this</span>.fatherName=<span class="string">&quot;f1&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line">Father.prototype.f = <span class="string">&quot;pf&quot;</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Son</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">this</span>.sonName=<span class="string">&quot;s1&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* 现在想要Son继承Father，已知Son的构造函数的prototype:&#123;constructor f Son()&#125; ,那么只要改变Son的构造函数的原型即可*/</span></span><br><span class="line"><span class="comment">/* Son.prototype = Father.prototype; 不能使用此方法改变Son的原型，因为如此改变后，Son的实例只能使用自己的属性和Father原型上的属性，并没有继承Father实例中的属性，而且以后想要修改Son的原型必定会破坏Father的原型*/</span></span><br><span class="line">Son.prototype = <span class="keyword">new</span> Father();</span><br><span class="line"><span class="built_in">console</span>.log(s <span class="keyword">instanceof</span> Father);<span class="comment">//true</span></span><br><span class="line"><span class="built_in">console</span>.log(s <span class="keyword">instanceof</span> Son);<span class="comment">//true</span></span><br></pre></td></tr></table></figure>
+<p>插入图片</p>
+<h3 id="原型与实例的关系"><a href="#原型与实例的关系" class="headerlink" title="原型与实例的关系"></a>原型与实例的关系</h3><ul>
+<li>方式一</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 上面用到了instanceof来检测原型与实例的关系 */</span></span><br><span class="line"><span class="built_in">console</span>.log(s <span class="keyword">instanceof</span> <span class="built_in">Object</span>);<span class="comment">//true，找到s原型链上有和Object一样的构造函数</span></span><br><span class="line"><span class="built_in">console</span>.log(s <span class="keyword">instanceof</span> Father);<span class="comment">//true</span></span><br><span class="line"><span class="built_in">console</span>.log(s <span class="keyword">instanceof</span> Son);<span class="comment">//true</span></span><br><span class="line"><span class="comment">/* instanceof的原理：查找s的原型链，看看是否有和Object|Father|Son原型链上一样的构造函数 */</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>方式二</li>
+</ul>
+<p>确定这种关系的第二种方式是使用 isPrototypeOf()方法。原型链中的每个原型都可以调用这个方法，只要原型链中包含这个原型，这个方法就返回 true：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Father.prototype.isPrototypeOf(s);<span class="comment">//true ，s的原型链中包含Father原型</span></span><br><span class="line">Son.prototype.isPrototypeOf(s);<span class="comment">//true ，s的原型链中包含Father原型</span></span><br><span class="line"><span class="built_in">Object</span>.prototype.isPrototypeOf(s);<span class="comment">//true ，s的原型链中包含Father原型</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="原型链的问题"><a href="#原型链的问题" class="headerlink" title="原型链的问题"></a>原型链的问题</h3><ul>
+<li>某一实例成为构造函数原型后，共享内存的问题</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Father</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">this</span>.fatherFood=[<span class="string">&#x27;面条&#x27;</span>,<span class="string">&#x27;鸡蛋&#x27;</span>];</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Son</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">this</span>.sonFoos = [<span class="string">&#x27;肯德基&#x27;</span>]</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* 继承 */</span></span><br><span class="line">Son.prototype = <span class="keyword">new</span> Father();</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> s = <span class="keyword">new</span> Son();</span><br><span class="line">s.fatherFood.push(<span class="string">&#x27;鸡腿&#x27;</span>);</span><br><span class="line"><span class="keyword">let</span> s2 = <span class="keyword">new</span> Son();</span><br><span class="line">s2.fatherFood;<span class="comment">//[&quot;面条&quot;, &quot;鸡蛋&quot;, &quot;鸡腿&quot;],但是s2的fatherFood也改变</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li>原型链的第二个问题是，子类型在实例化时不能给父类型的构造函数传参。就导致原型链基本不会被单独使用，用来修改继承关系。</li>
+</ul>
+<h2 id="盗用构造函数继承"><a href="#盗用构造函数继承" class="headerlink" title="盗用构造函数继承"></a>盗用构造函数继承</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Father</span>(<span class="params">name</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">this</span>.fatherFood=[<span class="string">&#x27;面条&#x27;</span>,<span class="string">&#x27;鸡蛋&#x27;</span>];</span><br><span class="line">    <span class="built_in">this</span>.name = <span class="string">&quot;ff&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Son</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">this</span>.sonFoos = [<span class="string">&#x27;肯德基&#x27;</span>];</span><br><span class="line">    Father.call(<span class="built_in">this</span>,<span class="string">&quot;ss&quot;</span>);<span class="comment">/* 执行Father，并修改this指向Son的实例,可以在子类构造函数中向父类构造函数传参 */</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> s = <span class="keyword">new</span> Son();</span><br><span class="line">s.fatherFood.push(<span class="string">&#x27;鸡腿&#x27;</span>);</span><br><span class="line"><span class="keyword">let</span> s2 = <span class="keyword">new</span> Son();</span><br><span class="line">s2.fatherFood;<span class="comment">//[&quot;面条&quot;, &quot;鸡蛋&quot;]，解决了共享内存问题</span></span><br><span class="line"></span><br><span class="line">s <span class="keyword">instanceof</span> Father;<span class="comment">//false</span></span><br><span class="line">s <span class="keyword">instanceof</span> Son;<span class="comment">//true</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>盗用构造函数的问题：子类也不能访问父类原型上定义的方法，所以基本也不用此方法来修改继承关系</p>
+<h2 id="组合继承"><a href="#组合继承" class="headerlink" title="组合继承"></a>组合继承</h2><p>组合继承（有时候也叫伪经典继承）综合了原型链和盗用构造函数，将两者的优点集中了起来。基本的思路是<strong>使用原型链继承原型上的属性和方法，而通过盗用构造函数继承实例属性</strong>。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Father</span>(<span class="params">name</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">this</span>.fatherFood=[<span class="string">&#x27;面条&#x27;</span>,<span class="string">&#x27;鸡蛋&#x27;</span>];</span><br><span class="line">    <span class="built_in">this</span>.name = <span class="string">&quot;ff&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Son</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">this</span>.sonFoos = [<span class="string">&#x27;肯德基&#x27;</span>];</span><br><span class="line">    <span class="comment">/* 继承属性 */</span></span><br><span class="line">    Father.call(<span class="built_in">this</span>,<span class="string">&quot;ss&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line">Son.prototype = <span class="keyword">new</span> Father();<span class="comment">/* 继承父方法 */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> s = <span class="keyword">new</span> Son();</span><br><span class="line">s.fatherFood.push(<span class="string">&#x27;鸡腿&#x27;</span>);</span><br><span class="line"><span class="keyword">let</span> s2 = <span class="keyword">new</span> Son();</span><br><span class="line">s2.fatherFood;<span class="comment">//[&quot;面条&quot;, &quot;鸡蛋&quot;]，解决了共享内存问题</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>组合继承弥补了原型链和盗用构造函数的不足，是 JavaScript 中使用<strong>最多</strong>的继承模式。而且组合继承也保留了 instanceof 操作符和 isPrototypeOf()方法识别合成对象的能力。</p>
+<h2 id="寄生式组合继承"><a href="#寄生式组合继承" class="headerlink" title="寄生式组合继承"></a>寄生式组合继承</h2><p>其实组合继承也有一个问题：效率不是很高，因为它要执行两次父级构造函数，第一次在子级构造函数内，第二次在修改子级原型时</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 寄生式顾名思义，在一个函数内部做了某些操作 */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">inheritPrototype</span>(<span class="params">Father,Son</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> prototype = <span class="built_in">Object</span>.create(Father.prototype);<span class="comment">/* Object.create(proto，[propertiesObject]);proto 新创建对象的原型对象 */</span></span><br><span class="line">    prototype.constructor = Son;<span class="comment">//修改constructor，因为之后要把这个prototype作为Son的原型，那么Son原型中的constructor一定要指向Son啦</span></span><br><span class="line">    Son.prototype = prototype;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Father</span>(<span class="params">name</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">this</span>.fatherFood=[<span class="string">&#x27;面条&#x27;</span>,<span class="string">&#x27;鸡蛋&#x27;</span>];</span><br><span class="line">    <span class="built_in">this</span>.name = <span class="string">&quot;ff&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line">Father.prototype.ff = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; <span class="built_in">console</span>.log(<span class="string">&quot;function of father&quot;</span>) &#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Son</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">this</span>.sonFoos = [<span class="string">&#x27;肯德基&#x27;</span>];</span><br><span class="line">    <span class="comment">/* 继承属性 */</span></span><br><span class="line">    Father.call(<span class="built_in">this</span>,<span class="string">&quot;ss&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line">inheritPrototype(Father,Son);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>这里只调用了一次 Father 构造函数，避免了 Son.prototype 上不必要也用不到的属性，<br>因此可以说这个例子的效率更高。而且，原型链仍然保持不变，因此 instanceof 操作符和<br>isPrototypeOf()方法正常有效。<strong>寄生式组合继承可以算是引用类型继承的最佳模式</strong>。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">继承</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/03/12/JS-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1-%E7%BB%A7%E6%89%BF/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-异步编程与Promise-3" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/03/11/%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B%E4%B8%8EPromise-3/">异步编程与Promise-3</a>
+    </h1>
+  
+
+        
+        <a href="/2021/03/11/%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B%E4%B8%8EPromise-3/" class="archive-article-date">
+  	<time datetime="2021-03-11T01:04:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Promise的语法糖：async与await"><a href="#Promise的语法糖：async与await" class="headerlink" title="Promise的语法糖：async与await"></a>Promise的语法糖：async与await</h3><p>以前写Promise时需要这种结构</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</span><br><span class="line">    resolve();</span><br><span class="line">&#125;)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>而async就是Promise的语法糖写法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">promise</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* 被async修饰的函数，执行结果返回一个Promise对象 */</span></span><br><span class="line"><span class="built_in">console</span>.log(promise());<span class="comment">//Promise &#123;&lt;fulfilled&gt;: undefined&#125;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>以前写Promise.then</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</span><br><span class="line">    resolve(<span class="string">&quot;success&quot;</span>);</span><br><span class="line">&#125;)</span><br><span class="line"> .then(<span class="function"><span class="params">msg</span>=&gt;</span>&#123;</span><br><span class="line">     <span class="keyword">return</span> <span class="string">&quot;传递给下一个then的参数&quot;</span>;</span><br><span class="line"> &#125;)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>而await就是then的语法糖写法</p>
+<p>await 右侧的表达式一般为 promise 对象, 但也可以是其它的值:</p>
+<ul>
+<li><p>如果表达式是 promise 对象, await 返回的是 promise 成功的值</p>
+</li>
+<li><p>如果表达式是其它值, 直接将此值作为 await 的返回值</p>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">myPromise</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="comment">/* await相当于函数myPromise返回的Promise对象调用then */</span></span><br><span class="line">    <span class="keyword">let</span> param = <span class="keyword">await</span> <span class="string">&quot;参数1&quot;</span>;<span class="comment">/* param接受了“参数1”，而“参数1”相当于 .then(msg=&gt;&#123; return &quot;参数1&quot;;&#125;)中Return的内容*/</span></span><br><span class="line">    <span class="built_in">console</span>.log(param);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(myPromise());<span class="comment">//参数1</span></span><br><span class="line"><span class="comment">/* ----------------------------------------------------------------------------------------------------------- */</span></span><br><span class="line"><span class="comment">/* 同样也可以返回Promise对象 */</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">promise</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> p2 = <span class="keyword">await</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</span><br><span class="line">        resolve(<span class="string">&quot;p2-fullfiled&quot;</span>);</span><br><span class="line">    &#125;);<span class="comment">/* p2状态为fullfiled */</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">console</span>.log(p2);<span class="comment">//p2-fullfiled</span></span><br><span class="line">    <span class="keyword">let</span> p3 = <span class="keyword">await</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="params">resolve</span>=&gt;</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(p2+<span class="string">&quot;-收到&quot;</span>);<span class="comment">//p2-fullfiled-收到</span></span><br><span class="line">    &#125;);<span class="comment">/* p3没有执行回调函数且无异常，状态为pending */</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> p4 = <span class="keyword">await</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="params">resolve</span>=&gt;</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(p3);<span class="comment">//Promise &#123;&lt;pending&gt;&#125;</span></span><br><span class="line">    &#125;);<span class="comment">/* p4 等待p3状态改变后执行 */</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* ----------------------------------------------------------------------------------------------------------- */</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">promise</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> p2 = <span class="keyword">await</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</span><br><span class="line">        reject(<span class="string">&quot;p2-rejected&quot;</span>);<span class="comment">/* 此处rejected ，之后的代码不执行直接进入catch*/</span></span><br><span class="line">    &#125;);  </span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;p2 &quot;</span>+p2);</span><br><span class="line">    <span class="keyword">let</span> p3 = <span class="keyword">await</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="params">resolve</span>=&gt;</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(p2+<span class="string">&quot;-收到&quot;</span>);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> p4 = <span class="keyword">await</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="params">resolve</span>=&gt;</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(p3);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;<span class="keyword">catch</span>(e)&#123; <span class="built_in">console</span>.log(<span class="string">&quot;error:&quot;</span>+e) &#125;  </span><br><span class="line">&#125;</span><br><span class="line">promise();<span class="comment">//error:p2-rejected</span></span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">异步编程</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Promise</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/03/11/%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B%E4%B8%8EPromise-3/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-异步编程与Promise-2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -968,226 +1162,6 @@
 
 
   
-    <article id="post-hexo-d部署到git失败的原因" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/02/28/hexo-d%E9%83%A8%E7%BD%B2%E5%88%B0git%E5%A4%B1%E8%B4%A5%E7%9A%84%E5%8E%9F%E5%9B%A0/">hexo d部署到git失败的原因</a>
-    </h1>
-  
-
-        
-        <a href="/2021/02/28/hexo-d%E9%83%A8%E7%BD%B2%E5%88%B0git%E5%A4%B1%E8%B4%A5%E7%9A%84%E5%8E%9F%E5%9B%A0/" class="archive-article-date">
-  	<time datetime="2021-02-28T13:17:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-28</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>我使用的是VPN，所以就有一个代理服务器</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global http.proxy 代理地址:端口号</span><br><span class="line">git config --global https.proxy 代理地址:端口号</span><br></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">hexo</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">git</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/02/28/hexo-d%E9%83%A8%E7%BD%B2%E5%88%B0git%E5%A4%B1%E8%B4%A5%E7%9A%84%E5%8E%9F%E5%9B%A0/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-HTML5-draggable属性" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/02/28/HTML5-draggable%E5%B1%9E%E6%80%A7/">HTML5&amp;JS-draggable属性&amp;dragEvent</a>
-    </h1>
-  
-
-        
-        <a href="/2021/02/28/HTML5-draggable%E5%B1%9E%E6%80%A7/" class="archive-article-date">
-  	<time datetime="2021-02-28T05:51:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-28</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="drag事件"><a href="#drag事件" class="headerlink" title="drag事件"></a>drag事件</h4><p>   当<strong>元素</strong>或者<strong>选择的文本</strong>被拖动时触发 drag 事件,并且在拖拽未结束之前每隔几百毫秒触发一次drag事件</p>
-<h4 id="dragstart事件"><a href="#dragstart事件" class="headerlink" title="dragstart事件"></a>dragstart事件</h4><p>   dragstart：用户开始拖拉时，在被拖拉的节点上触发，该事件的target属性是被拖拉的节点。通常应该在这个事件的监听函数中，指定拖拉的数据。</p>
-<h4 id="dragend事件"><a href="#dragend事件" class="headerlink" title="dragend事件"></a>dragend事件</h4><p>   dragend：拖拉结束时（释放鼠标键或按下 ESC 键）在被拖拉的节点上触发，该事件的target属性是被拖拉的节点。它与dragstart事件，在同一个节点上触发。<strong>不管拖拉是否跨窗口，或者中途被取消，dragend事件总是会触发的</strong>。</p>
-<h4 id="dragenter事件"><a href="#dragenter事件" class="headerlink" title="dragenter事件"></a>dragenter事件</h4><p>   dragenter：拖拉进入当前节点时，在当前节点上触发一次，该事件的<strong>target属性是当前节点</strong>。通常应该在这个事件的监听函数中，指定是否允许在当前节点放下（drop）拖拉的数据。如果当前节点没有该事件的监听函数，或者监听函数不执行任何操作，就意味着不允许在当前节点放下数据。在视觉上显示拖拉进入当前节点，也是在这个事件的监听函数中设置。</p>
-<h4 id="dragover事件"><a href="#dragover事件" class="headerlink" title="dragover事件"></a>dragover事件</h4><p>   dragover：拖拉到当前节点上方时，在当前节点上持续触发（相隔几百毫秒），该事件的<strong>target属性是当前节点</strong>。该事件与dragenter事件的区别是，dragenter事件在进入该节点时触发，然后只要没有离开这个节点，dragover事件会持续触发。</p>
-<h4 id="dragleave事件"><a href="#dragleave事件" class="headerlink" title="dragleave事件"></a>dragleave事件</h4><p>   dragleave：拖拉操作离开当前节点范围时，在当前节点上触发，<strong>该事件的target属性是当前节点</strong>。如果要在视觉上显示拖拉离开操作当前节点，就在这个事件的监听函数中设置。</p>
-<h4 id="dragEvent"><a href="#dragEvent" class="headerlink" title="dragEvent"></a>dragEvent</h4><p>   用于表示拖、放交互的DOM event接口</p>
-<h5 id="属性-amp-方法"><a href="#属性-amp-方法" class="headerlink" title="属性&amp;方法"></a>属性&amp;方法</h5><ul>
-<li><p>dataTransfer(只读) ：保存着拖拽操作中的数据，dataTransfer的对象（其中保存着数据）</p>
-<ul>
-<li><p>dataTransfer中包含的属性</p>
-<ul>
-<li><p>dropEffect：表示拖放过程中给用户的反馈，会影响拖拽过程中鼠标光标的手势，似如hover的鼠标手势变化</p>
-<ul>
-<li><p>值:</p>
-<ul>
-<li><p>none(默认):可能禁止拖拽（说可能是因为，还与effectAllow又关）</p>
-</li>
-<li><p>move:将元素移动到新位置</p>
-</li>
-<li><p>copy:新位置产生原元素的副本</p>
-</li>
-<li><p>link:新位置产生原项目的链接</p>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>effectAllow：允许dropEffect的行为发生</p>
-<ul>
-<li><p>值</p>
-<ul>
-<li><p>uninitialized(效果没有设置时的默认值&lt;=&gt;all)</p>
-</li>
-<li><p>none 此项表示不允许放下</p>
-</li>
-<li><p>copy源项目的复制项可能会出现在新位置。</p>
-</li>
-<li><p>copyLink允许 copy 或者 link 操作。</p>
-</li>
-<li><p>copyMove允许 copy 或者 move 操作。</p>
-</li>
-<li><p>link可以在新地方建立与源的链接。</p>
-</li>
-<li><p>linkMove允许 link 或者 move 操作。</p>
-</li>
-<li><p>move一个项目可能被移动到新位置</p>
-</li>
-<li><p>all允许所有的操作。</p>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>setData:[ function ]用于存储拖拽时想要存储的数据</p>
- <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* @params:</span></span><br><span class="line"><span class="comment">          arg1[String]:要存储的数据的数据类型：如果数据类型不存在,将数据存储到列表的最后一项，使得 types 列表中的最后一个项目将是新类型。</span></span><br><span class="line"><span class="comment">          arg2[String]:要存储的数据</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">dataTransfer.setData(arg1,arg2);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>getData:[function]用于获取存储的数据</p>
-  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dataTransfer.getData(<span class="string">&#x27;dataName&#x27;</span>);</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">HTML5新特性</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">dragEvent</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/02/28/HTML5-draggable%E5%B1%9E%E6%80%A7/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">Next &amp;raquo;</a>
@@ -1382,6 +1356,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">节流</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Node.js</a>
               </li>
             
             <div class="clearfix"></div>

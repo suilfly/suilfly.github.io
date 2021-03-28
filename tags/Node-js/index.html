@@ -6,19 +6,14 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>JS-面向对象-继承 | suilfly的博客</title>
+  <title>Tag: Node.js | suilfly的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="实现继承是 ECMAScript 唯一支持的继承方式，而这主要是通过原型链实现的原型链继承构造函数、原型和实例的关系：每个构造函数都有一个原型对象，原型有一个属性(constructor)指回构造函数，而实例有一个内部指针([[ prototype ]])指向原型。 12345678 &#x2F;* 构造函数 *&#x2F;function Father()&amp;#123;    this.fatherName&#x3D;&amp;quo">
-<meta property="og:type" content="article">
-<meta property="og:title" content="JS-面向对象-继承">
-<meta property="og:url" content="http://example.com/2021/03/12/JS-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1-%E7%BB%A7%E6%89%BF/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="suilfly的博客">
+<meta property="og:url" content="http://example.com/tags/Node-js/index.html">
 <meta property="og:site_name" content="suilfly的博客">
-<meta property="og:description" content="实现继承是 ECMAScript 唯一支持的继承方式，而这主要是通过原型链实现的原型链继承构造函数、原型和实例的关系：每个构造函数都有一个原型对象，原型有一个属性(constructor)指回构造函数，而实例有一个内部指针([[ prototype ]])指向原型。 12345678 &#x2F;* 构造函数 *&#x2F;function Father()&amp;#123;    this.fatherName&#x3D;&amp;quo">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2021-03-12T00:35:39.000Z">
-<meta property="article:modified_time" content="2021-03-12T02:46:31.678Z">
 <meta property="article:author" content="John Doe">
-<meta property="article:tag" content="继承">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="suilfly的博客" type="application/atom+xml">
@@ -155,205 +150,60 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-JS-面向对象-继承" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+            
   
-    <h1 class="article-title" itemprop="name">
-      JS-面向对象-继承
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2021" class="archive-year">2021</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2021/03/28/Node-js-module/" class="archive-article-date">
+  	<time datetime="2021-03-28T09:19:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-28</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2021/03/28/Node-js-module/">Node.js-module</a>
     </h1>
   
 
-        
-        <a href="/2021/03/12/JS-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1-%E7%BB%A7%E6%89%BF/" class="archive-article-date">
-  	<time datetime="2021-03-12T00:35:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-12</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="实现继承是-ECMAScript-唯一支持的继承方式，而这主要是通过原型链实现的"><a href="#实现继承是-ECMAScript-唯一支持的继承方式，而这主要是通过原型链实现的" class="headerlink" title="实现继承是 ECMAScript 唯一支持的继承方式，而这主要是通过原型链实现的"></a>实现继承是 ECMAScript 唯一支持的继承方式，而这主要是通过原型链实现的</h4><h2 id="原型链继承"><a href="#原型链继承" class="headerlink" title="原型链继承"></a>原型链继承</h2><p>构造函数、原型和实例的关系：每个<em>构造函数</em>都有一个原型对象，原型有一个属性(constructor)指回构造函数，而实例有一个内部指针([[ prototype ]])指向原型。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">/* 构造函数 */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Father</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">this</span>.fatherName=<span class="string">&quot;f1&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.dir(Father);<span class="comment">/*构造函数内有prototype: &#123;constructor: ƒ Father()&#125; constructor指向father */</span></span><br><span class="line"><span class="keyword">let</span> fatherInstance = <span class="keyword">new</span> Father();</span><br><span class="line"><span class="built_in">console</span>.log(fatherInstance.__proto__);<span class="comment">/* fatherInstance为Father的实例：实例中有一个指针指向Father原型，输出&#123;constructor: ƒ Father()&#125; */</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>插入图片讲解</p>
-<p>实现继承</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Father</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">this</span>.fatherName=<span class="string">&quot;f1&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line">Father.prototype.f = <span class="string">&quot;pf&quot;</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Son</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">this</span>.sonName=<span class="string">&quot;s1&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* 现在想要Son继承Father，已知Son的构造函数的prototype:&#123;constructor f Son()&#125; ,那么只要改变Son的构造函数的原型即可*/</span></span><br><span class="line"><span class="comment">/* Son.prototype = Father.prototype; 不能使用此方法改变Son的原型，因为如此改变后，Son的实例只能使用自己的属性和Father原型上的属性，并没有继承Father实例中的属性，而且以后想要修改Son的原型必定会破坏Father的原型*/</span></span><br><span class="line">Son.prototype = <span class="keyword">new</span> Father();</span><br><span class="line"><span class="built_in">console</span>.log(s <span class="keyword">instanceof</span> Father);<span class="comment">//true</span></span><br><span class="line"><span class="built_in">console</span>.log(s <span class="keyword">instanceof</span> Son);<span class="comment">//true</span></span><br></pre></td></tr></table></figure>
-<p>插入图片</p>
-<h3 id="原型与实例的关系"><a href="#原型与实例的关系" class="headerlink" title="原型与实例的关系"></a>原型与实例的关系</h3><ul>
-<li>方式一</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 上面用到了instanceof来检测原型与实例的关系 */</span></span><br><span class="line"><span class="built_in">console</span>.log(s <span class="keyword">instanceof</span> <span class="built_in">Object</span>);<span class="comment">//true，找到s原型链上有和Object一样的构造函数</span></span><br><span class="line"><span class="built_in">console</span>.log(s <span class="keyword">instanceof</span> Father);<span class="comment">//true</span></span><br><span class="line"><span class="built_in">console</span>.log(s <span class="keyword">instanceof</span> Son);<span class="comment">//true</span></span><br><span class="line"><span class="comment">/* instanceof的原理：查找s的原型链，看看是否有和Object|Father|Son原型链上一样的构造函数 */</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>方式二</li>
-</ul>
-<p>确定这种关系的第二种方式是使用 isPrototypeOf()方法。原型链中的每个原型都可以调用这个方法，只要原型链中包含这个原型，这个方法就返回 true：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Father.prototype.isPrototypeOf(s);<span class="comment">//true ，s的原型链中包含Father原型</span></span><br><span class="line">Son.prototype.isPrototypeOf(s);<span class="comment">//true ，s的原型链中包含Father原型</span></span><br><span class="line"><span class="built_in">Object</span>.prototype.isPrototypeOf(s);<span class="comment">//true ，s的原型链中包含Father原型</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h3 id="原型链的问题"><a href="#原型链的问题" class="headerlink" title="原型链的问题"></a>原型链的问题</h3><ul>
-<li>某一实例成为构造函数原型后，共享内存的问题</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Father</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">this</span>.fatherFood=[<span class="string">&#x27;面条&#x27;</span>,<span class="string">&#x27;鸡蛋&#x27;</span>];</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Son</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">this</span>.sonFoos = [<span class="string">&#x27;肯德基&#x27;</span>]</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* 继承 */</span></span><br><span class="line">Son.prototype = <span class="keyword">new</span> Father();</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> s = <span class="keyword">new</span> Son();</span><br><span class="line">s.fatherFood.push(<span class="string">&#x27;鸡腿&#x27;</span>);</span><br><span class="line"><span class="keyword">let</span> s2 = <span class="keyword">new</span> Son();</span><br><span class="line">s2.fatherFood;<span class="comment">//[&quot;面条&quot;, &quot;鸡蛋&quot;, &quot;鸡腿&quot;],但是s2的fatherFood也改变</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<ul>
-<li>原型链的第二个问题是，子类型在实例化时不能给父类型的构造函数传参。就导致原型链基本不会被单独使用，用来修改继承关系。</li>
-</ul>
-<h2 id="盗用构造函数继承"><a href="#盗用构造函数继承" class="headerlink" title="盗用构造函数继承"></a>盗用构造函数继承</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Father</span>(<span class="params">name</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">this</span>.fatherFood=[<span class="string">&#x27;面条&#x27;</span>,<span class="string">&#x27;鸡蛋&#x27;</span>];</span><br><span class="line">    <span class="built_in">this</span>.name = <span class="string">&quot;ff&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Son</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">this</span>.sonFoos = [<span class="string">&#x27;肯德基&#x27;</span>];</span><br><span class="line">    Father.call(<span class="built_in">this</span>,<span class="string">&quot;ss&quot;</span>);<span class="comment">/* 执行Father，并修改this指向Son的实例,可以在子类构造函数中向父类构造函数传参 */</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> s = <span class="keyword">new</span> Son();</span><br><span class="line">s.fatherFood.push(<span class="string">&#x27;鸡腿&#x27;</span>);</span><br><span class="line"><span class="keyword">let</span> s2 = <span class="keyword">new</span> Son();</span><br><span class="line">s2.fatherFood;<span class="comment">//[&quot;面条&quot;, &quot;鸡蛋&quot;]，解决了共享内存问题</span></span><br><span class="line"></span><br><span class="line">s <span class="keyword">instanceof</span> Father;<span class="comment">//false</span></span><br><span class="line">s <span class="keyword">instanceof</span> Son;<span class="comment">//true</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>盗用构造函数的问题：子类也不能访问父类原型上定义的方法，所以基本也不用此方法来修改继承关系</p>
-<h2 id="组合继承"><a href="#组合继承" class="headerlink" title="组合继承"></a>组合继承</h2><p>组合继承（有时候也叫伪经典继承）综合了原型链和盗用构造函数，将两者的优点集中了起来。基本的思路是<strong>使用原型链继承原型上的属性和方法，而通过盗用构造函数继承实例属性</strong>。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Father</span>(<span class="params">name</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">this</span>.fatherFood=[<span class="string">&#x27;面条&#x27;</span>,<span class="string">&#x27;鸡蛋&#x27;</span>];</span><br><span class="line">    <span class="built_in">this</span>.name = <span class="string">&quot;ff&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Son</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">this</span>.sonFoos = [<span class="string">&#x27;肯德基&#x27;</span>];</span><br><span class="line">    <span class="comment">/* 继承属性 */</span></span><br><span class="line">    Father.call(<span class="built_in">this</span>,<span class="string">&quot;ss&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line">Son.prototype = <span class="keyword">new</span> Father();<span class="comment">/* 继承父方法 */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> s = <span class="keyword">new</span> Son();</span><br><span class="line">s.fatherFood.push(<span class="string">&#x27;鸡腿&#x27;</span>);</span><br><span class="line"><span class="keyword">let</span> s2 = <span class="keyword">new</span> Son();</span><br><span class="line">s2.fatherFood;<span class="comment">//[&quot;面条&quot;, &quot;鸡蛋&quot;]，解决了共享内存问题</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>组合继承弥补了原型链和盗用构造函数的不足，是 JavaScript 中使用<strong>最多</strong>的继承模式。而且组合继承也保留了 instanceof 操作符和 isPrototypeOf()方法识别合成对象的能力。</p>
-<h2 id="寄生式组合继承"><a href="#寄生式组合继承" class="headerlink" title="寄生式组合继承"></a>寄生式组合继承</h2><p>其实组合继承也有一个问题：效率不是很高，因为它要执行两次父级构造函数，第一次在子级构造函数内，第二次在修改子级原型时</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 寄生式顾名思义，在一个函数内部做了某些操作 */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">inheritPrototype</span>(<span class="params">Father,Son</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> prototype = <span class="built_in">Object</span>.create(Father.prototype);<span class="comment">/* Object.create(proto，[propertiesObject]);proto 新创建对象的原型对象 */</span></span><br><span class="line">    prototype.constructor = Son;<span class="comment">//修改constructor，因为之后要把这个prototype作为Son的原型，那么Son原型中的constructor一定要指向Son啦</span></span><br><span class="line">    Son.prototype = prototype;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Father</span>(<span class="params">name</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">this</span>.fatherFood=[<span class="string">&#x27;面条&#x27;</span>,<span class="string">&#x27;鸡蛋&#x27;</span>];</span><br><span class="line">    <span class="built_in">this</span>.name = <span class="string">&quot;ff&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line">Father.prototype.ff = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; <span class="built_in">console</span>.log(<span class="string">&quot;function of father&quot;</span>) &#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Son</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">this</span>.sonFoos = [<span class="string">&#x27;肯德基&#x27;</span>];</span><br><span class="line">    <span class="comment">/* 继承属性 */</span></span><br><span class="line">    Father.call(<span class="built_in">this</span>,<span class="string">&quot;ss&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line">inheritPrototype(Father,Son);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>这里只调用了一次 Father 构造函数，避免了 Son.prototype 上不必要也用不到的属性，<br>因此可以说这个例子的效率更高。而且，原型链仍然保持不变，因此 instanceof 操作符和<br>isPrototypeOf()方法正常有效。<strong>寄生式组合继承可以算是引用类型继承的最佳模式</strong>。</p>
-
-      
-
-      
-        <div class="page-reward">
-          <a href="javascript:;" class="page-reward-btn tooltip-top">
-            <div class="tooltip tooltip-east">
-            <span class="tooltip-item">
-              赏
-            </span>
-            <span class="tooltip-content">
-              <span class="tooltip-text">
-                <span class="tooltip-inner">
-                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
-                  <div class="reward-box">
-                    
-                    
-                  </div>
-                </span>
-              </span>
-            </span>
-          </div>
-          </a>
-        </div>
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">继承</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Node.js</a>
         		</li>
       		
 		</ul>
 	</div>
 
-      
+          
 
-      
-
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2021/03/12/JS-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1-%E7%BB%A7%E6%89%BF/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-  
-<nav id="article-nav">
-  
-    <a href="/2021/03/12/JS-%E4%BA%8B%E4%BB%B6-1/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          JS-事件-1
-        
-      </div>
-    </a>
   
   
-    <a href="/2021/03/11/%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B%E4%B8%8EPromise-3/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">异步编程与Promise-3</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-  
-  
+    </div></section>
   
 
-  
-
-  
-
-  
+    
 
 
           </div>
@@ -376,9 +226,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
+		isPost: false,
 		isArchive: false,
-		isTag: false,
+		isTag: true,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
