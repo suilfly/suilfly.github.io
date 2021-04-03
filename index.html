@@ -152,6 +152,96 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Nodejs-NPM" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/04/02/Nodejs-NPM/">Nodejs-NPM</a>
+    </h1>
+  
+
+        
+        <a href="/2021/04/02/Nodejs-NPM/" class="archive-article-date">
+  	<time datetime="2021-04-02T00:55:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-04-02</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="笔记：使用npm-第三方库"><a href="#笔记：使用npm-第三方库" class="headerlink" title="笔记：使用npm 第三方库"></a>笔记：使用npm 第三方库</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> v = <span class="built_in">require</span>(<span class="string">&#x27;packageName&#x27;</span>);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>会先查找是否是core module</li>
+<li>是否是 File / folder(没用./等路径代替就不是)</li>
+<li>是否是node_module</li>
+</ul>
+<p>Semantic Versioning：2.3.4<br>major version. minor version.patch version<br>^2.3.4 &lt;=&gt;2.x<br>~2.3.4 &lt;=&gt;2.3.x<br>2.3.4 &lt;=&gt;2.3.4</p>
+<ul>
+<li>列出所有已下载的包及其版本：npm list</li>
+</ul>
+<p>npm list –depth=0//仅显示你下载的包，不显示依赖包<br>npm view 包名<br>npm view 包名 versions/dependency<br>npm i 包名@版本号</p>
+<ul>
+<li>找出outdated包<br>npm outdated<br>npm update //update minor&amp;patch version</li>
+</ul>
+<p>npm i -g npm-check-updates//更新到最新版本<br>ncu -u //to upgeade package.json<br>npm i //下载更新的包</p>
+<p>DevDependency：<br>有的时候我们在开发时需要使用一些依赖：测试包，打包工具等，这些依赖关系是开发依赖，他们不应在在生产环境中使用，所以我们就把这些依赖单独的放入Devdependency中</p>
+<p>npm i jshint –save-dev<br>都下载到node_module文件夹中</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Nodejs</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/04/02/Nodejs-NPM/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Node-js-module" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -887,85 +977,6 @@
 
 
   
-    <article id="post-JS-事件-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/03/12/JS-%E4%BA%8B%E4%BB%B6-1/">JS-事件-1</a>
-    </h1>
-  
-
-        
-        <a href="/2021/03/12/JS-%E4%BA%8B%E4%BB%B6-1/" class="archive-article-date">
-  	<time datetime="2021-03-12T10:55:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-12</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="事件流"><a href="#事件流" class="headerlink" title="事件流"></a>事件流</h2><p>事件流描述了页面<strong>接收事件</strong>的顺序</p>
-<h4 id="事件冒泡"><a href="#事件冒泡" class="headerlink" title="事件冒泡"></a>事件冒泡</h4><p>IE 事件流被称为事件冒泡，这是因为事件被定义为从最具体的元素（文档树中最深的节点）开始触<br>发，然后向上传播至没有那么具体的元素（文档）。比如有如下 HTML 页面：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">title</span>&gt;</span>Event Bubbling Example<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;myDiv&quot;</span>&gt;</span>Click Me<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 在点击页面中的&lt;div&gt;元素后，click 事件会以如下顺序发生：</span></span><br><span class="line"><span class="comment">(1) &lt;div&gt;</span></span><br><span class="line"><span class="comment">(2) &lt;body&gt;</span></span><br><span class="line"><span class="comment">(3) &lt;html&gt;</span></span><br><span class="line"><span class="comment">(4) document --&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<img src="/img/事件冒泡.png"/>
-
-<h4 id="事件捕获"><a href="#事件捕获" class="headerlink" title="事件捕获"></a>事件捕获</h4><p>Netscape Communicator 团队提出了另一种名为事件捕获的事件流。事件捕获的意思是最不具体的节<br>点应该最先收到事件，而最具体的节点应该最后收到事件。事件捕获实际上是为了在事件到达最终目标<br>前拦截事件</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JS事件</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/03/12/JS-%E4%BA%8B%E4%BB%B6-1/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
@@ -1164,6 +1175,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Node.js</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Nodejs</a>
               </li>
             
             <div class="clearfix"></div>
