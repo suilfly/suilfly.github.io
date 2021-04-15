@@ -152,6 +152,194 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-JS-对象的解构与属性增删改查" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/03/06/JS-%E5%AF%B9%E8%B1%A1%E7%9A%84%E8%A7%A3%E6%9E%84%E4%B8%8E%E5%B1%9E%E6%80%A7%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5/">JS-对象-1</a>
+    </h1>
+  
+
+        
+        <a href="/2021/03/06/JS-%E5%AF%B9%E8%B1%A1%E7%9A%84%E8%A7%A3%E6%9E%84%E4%B8%8E%E5%B1%9E%E6%80%A7%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5/" class="archive-article-date">
+  	<time datetime="2021-03-06T00:05:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-06</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="对象使用解构"><a href="#对象使用解构" class="headerlink" title="对象使用解构"></a>对象使用解构</h3><h5 id="多层对象的解构操作"><a href="#多层对象的解构操作" class="headerlink" title="多层对象的解构操作"></a>多层对象的解构操作</h5>   <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">//现在我想要单独把subs（嵌套的对象）取出来</span></span><br><span class="line"><span class="keyword">let</span> obj = &#123; <span class="attr">name</span>:<span class="string">&#x27;obj&#x27;</span>,<span class="attr">subs</span>:&#123; <span class="attr">title</span>:<span class="string">&#x27;d&#x27;</span> &#125; &#125;;</span><br><span class="line"><span class="keyword">let</span> &#123; name,<span class="attr">subs</span>:&#123; title &#125; &#125;=obj;</span><br><span class="line"><span class="built_in">console</span>.log(name,title);<span class="comment">//obj d</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h5 id="对象的解构的默认值实现合并的操作"><a href="#对象的解构的默认值实现合并的操作" class="headerlink" title="对象的解构的默认值实现合并的操作"></a>对象的解构的默认值实现合并的操作</h5><p>   比如说我想实现一个函数，在我没有传递参数的时候，函数运行时使用默认值，传递参数后，覆盖默认值</p>
+   <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">   <span class="function"><span class="keyword">function</span> <span class="title">f1</span>(<span class="params">options = &#123;&#125;</span>)</span>&#123;<span class="comment">//注意：此处一定要初始化形参为为空对象否则 f1不传递参数时会报错：TypeError: Cannot read property &#x27;width&#x27; of undefined</span></span><br><span class="line">    <span class="keyword">let</span> &#123; width=<span class="number">100</span>,height=<span class="number">200</span> &#125; = options;</span><br><span class="line">    <span class="built_in">console</span>.log(width,height);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">f1();<span class="comment">//100 200</span></span><br><span class="line">f1(&#123; <span class="attr">width</span>:<span class="number">1</span> &#125;);<span class="comment">//1 200</span></span><br><span class="line">f1(&#123; <span class="attr">width</span>:<span class="number">300</span>,<span class="attr">height</span>:<span class="number">20</span> &#125;);<span class="comment">//300 20</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h5 id="assign实现合并"><a href="#assign实现合并" class="headerlink" title="assign实现合并"></a>assign实现合并</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a =&#123;<span class="attr">a</span>:<span class="number">1</span>&#125;;</span><br><span class="line"><span class="keyword">let</span> b =&#123;<span class="attr">b</span>:<span class="number">1</span>&#125;;</span><br><span class="line"><span class="keyword">let</span> c =<span class="built_in">Object</span>.assign(a,b);</span><br><span class="line"><span class="comment">//&#123;a: 1, b: 1&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* 那么我也可以构造一个函数实现默认值覆盖 */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">load</span>(<span class="params">params</span>)</span>&#123;</span><br><span class="line"><span class="keyword">let</span> option = &#123;</span><br><span class="line">    size:<span class="number">1000</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">Object</span>.assign(option,params);</span><br><span class="line"><span class="built_in">console</span>.log(option);</span><br><span class="line">&#125;</span><br><span class="line">load(&#123; <span class="attr">size</span>:<span class="number">200</span>,<span class="attr">type</span>:<span class="string">&#x27;jpeg&#x27;</span> &#125;);<span class="comment">//&#123;size: 200, type: &quot;jpeg&quot;&#125;</span></span><br><span class="line">load(&#123;<span class="attr">size</span>:<span class="number">200</span>&#125;);<span class="comment">//&#123;size: 200&#125;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="对象属性的增加和删除"><a href="#对象属性的增加和删除" class="headerlink" title="对象属性的增加和删除"></a>对象属性的增加和删除</h3>   <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//增加</span></span><br><span class="line">obj.name = <span class="string">&#x27;xxx&#x27;</span>;</span><br><span class="line">obj[<span class="string">&quot;name&quot;</span>] = <span class="string">&#x27;xx&#x27;</span></span><br><span class="line"><span class="comment">//删除</span></span><br><span class="line"><span class="keyword">delete</span> obj.name</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="检测属性"><a href="#检测属性" class="headerlink" title="检测属性"></a>检测属性</h3>   <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">obj.hasOwnProperty(<span class="string">&#x27;age&#x27;</span>);<span class="comment">//判断当前对象上（不涉及原型链）有没有属性</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//包含原型链：in 关键词</span></span><br><span class="line"><span class="string">&quot;属性&quot;</span> <span class="keyword">in</span> obj</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="计算属性"><a href="#计算属性" class="headerlink" title="计算属性"></a>计算属性</h3>   <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">let</span> obj = &#123;</span><br><span class="line">      name:<span class="string">&#x27;l&#x27;</span></span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="keyword">let</span> lesson = <span class="string">&#x27;js&#x27;</span>;</span><br><span class="line">  obj[lesson] = <span class="number">99</span>;</span><br><span class="line">  <span class="built_in">console</span>.log(obj);</span><br><span class="line">  <span class="comment">/* </span></span><br><span class="line"><span class="comment">  &#123;</span></span><br><span class="line"><span class="comment">  &quot;name&quot;: &quot;l&quot;,</span></span><br><span class="line"><span class="comment">  &quot;js&quot;: 99</span></span><br><span class="line"><span class="comment">  &#125;</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"> <span class="comment">/* 可以发现当obj[lesson]时，先计算了lesson的值，后将其值的内容放入属性中 */</span></span><br><span class="line"></span><br><span class="line"> <span class="keyword">let</span> l = [</span><br><span class="line">     &#123;</span><br><span class="line">         title:<span class="string">&#x27;css&#x27;</span>,</span><br><span class="line">         grade:<span class="number">90</span></span><br><span class="line">     &#125;,</span><br><span class="line">     &#123;</span><br><span class="line">         title:<span class="string">&#x27;js&#x27;</span>,</span><br><span class="line">         grade:<span class="number">93</span></span><br><span class="line">     &#125;</span><br><span class="line"> ]<span class="comment">//后台经常传入类似的结构，但我想要通过一个属性名获取一个对象，该怎么操作？</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> re=l.reduce(<span class="function">(<span class="params">obj,cur,index</span>)=&gt;</span>&#123;</span><br><span class="line">     obj[<span class="string">`user-<span class="subst">$&#123;cur.title&#125;</span>-<span class="subst">$&#123;index &#125;</span>`</span>] = cur;</span><br><span class="line">     <span class="keyword">return</span> obj;</span><br><span class="line"> &#125;,&#123;&#125;);</span><br><span class="line"> <span class="built_in">console</span>.log(<span class="built_in">JSON</span>.stringify(re,<span class="literal">null</span>,<span class="number">2</span>));</span><br><span class="line"></span><br><span class="line"> <span class="comment">/* </span></span><br><span class="line"><span class="comment"> &#123;</span></span><br><span class="line"><span class="comment">  &quot;user-css-0&quot;: &#123;</span></span><br><span class="line"><span class="comment">      &quot;title&quot;: &quot;css&quot;,</span></span><br><span class="line"><span class="comment">      &quot;grade&quot;: 90</span></span><br><span class="line"><span class="comment">      &#125;,</span></span><br><span class="line"><span class="comment">  &quot;user-js-1&quot;: &#123;</span></span><br><span class="line"><span class="comment">      &quot;title&quot;: &quot;js&quot;,</span></span><br><span class="line"><span class="comment">      &quot;grade&quot;: 93</span></span><br><span class="line"><span class="comment">      &#125;</span></span><br><span class="line"><span class="comment">  &#125;   </span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JS对象</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">解构</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/03/06/JS-%E5%AF%B9%E8%B1%A1%E7%9A%84%E8%A7%A3%E6%9E%84%E4%B8%8E%E5%B1%9E%E6%80%A7%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-JS-数组-函数的使用2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/03/04/JS-%E6%95%B0%E7%BB%84-%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A82/">JS-数组-函数的使用2</a>
+    </h1>
+  
+
+        
+        <a href="/2021/03/04/JS-%E6%95%B0%E7%BB%84-%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A82/" class="archive-article-date">
+  	<time datetime="2021-03-04T05:14:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="合并数组"><a href="#合并数组" class="headerlink" title="合并数组"></a>合并数组</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> ary = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>];</span><br><span class="line">ary.concat(ary); <span class="comment">//[1, 2, 3, 4, 1, 2, 3, 4]</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="数组内部移动复制"><a href="#数组内部移动复制" class="headerlink" title="数组内部移动复制"></a>数组内部移动复制</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> ary = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>];</span><br><span class="line"><span class="comment">/* 第一个参数：想要移动的位置</span></span><br><span class="line"><span class="comment">   第二个参数：决定移动的起始位置（包括）</span></span><br><span class="line"><span class="comment">   第三个参数：决定移动的结束位置（不包括）</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">ary.copyWithin(<span class="number">3</span>, <span class="number">0</span>, <span class="number">2</span>); <span class="comment">//[1, 2, 3, 1, 2]</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="查找元素基本使用"><a href="#查找元素基本使用" class="headerlink" title="查找元素基本使用"></a>查找元素基本使用</h4><ul>
+<li>ary.indexOf 和 ary.lastIndexOf</li>
+</ul>
+<pre><code><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">ary.indexOf(<span class="number">2</span>);<span class="comment">//寻找2的下标值</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//return 1</span></span><br><span class="line">ary.indexOf(<span class="number">88</span>);<span class="comment">//寻找 88 的下标值，找不到返回-1</span></span><br><span class="line"><span class="comment">// -1</span></span><br><span class="line"><span class="keyword">let</span> a=[<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">2</span>];</span><br><span class="line">a.lastIndexOf(<span class="number">1</span>);<span class="comment">//返回下标值2，也就是说查找值为一的最后出现的下标</span></span><br><span class="line">ary.lastIndexOf(<span class="number">3</span>,-<span class="number">4</span>);<span class="comment">//与 indexOf 正好相反</span></span><br><span class="line"><span class="comment">//-1</span></span><br><span class="line">ary.lastIndexOf(<span class="number">3</span>,<span class="number">0</span>);<span class="comment">//与 indexOf 正好相反</span></span><br><span class="line"><span class="comment">//-1</span></span><br><span class="line">ary.lastIndexOf(<span class="number">3</span>,<span class="number">2</span>);<span class="comment">//与 indexOf 正好相反</span></span><br><span class="line"><span class="comment">//2</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</code></pre>
+<h4 id="数组中是否拥有某元素"><a href="#数组中是否拥有某元素" class="headerlink" title="数组中是否拥有某元素"></a>数组中是否拥有某元素</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">方式一：<span class="keyword">if</span>(ary.indexOf(<span class="number">2</span>)!=-<span class="number">1</span>)<span class="comment">//有</span></span><br><span class="line">方式二：ary.includes(<span class="number">2</span>)<span class="comment">//true</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="更加高效的元素查找"><a href="#更加高效的元素查找" class="headerlink" title="更加高效的元素查找"></a>更加高效的元素查找</h4><p>问题：当我们想要查找数组中是否存在一个引用类型时，用 includes 行吗？：NO</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = [&#123; <span class="attr">name</span>: <span class="string">&quot;w&quot;</span> &#125;, &#123; <span class="attr">name</span>: <span class="string">&quot;s&quot;</span> &#125;];</span><br><span class="line"></span><br><span class="line">a.includes(&#123; <span class="attr">name</span>: <span class="string">&quot;w&quot;</span> &#125;); <span class="comment">//false</span></span><br><span class="line"><span class="comment">//因为include会根据传入的参数去比较是否相同，而引用类型的比较相等的条件是内存地址相等，实参&#123;name:&#x27;w&#x27;&#125;实际上是一个新的地址</span></span><br></pre></td></tr></table></figure>
+
+<p>那么如何检索引用类型？</p>
+<h4 id="检索引用类型：find-function-amp-findIndex"><a href="#检索引用类型：find-function-amp-findIndex" class="headerlink" title="检索引用类型：find(function) &amp; findIndex"></a>检索引用类型：find(function) &amp; findIndex</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = [&#123; <span class="attr">name</span>: <span class="string">&quot;w&quot;</span> &#125;, &#123; <span class="attr">name</span>: <span class="string">&quot;s&quot;</span> &#125;];</span><br><span class="line">a.find(<span class="function"><span class="keyword">function</span> (<span class="params">item</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;); <span class="comment">//当函数中的返回体为真就返回第一个符合函数条件的值（find是禁止贪婪的）</span></span><br><span class="line"></span><br><span class="line">a.find(<span class="function"><span class="keyword">function</span>(<span class="params">item</span>)</span></span><br><span class="line"><span class="function">    </span>&#123; </span><br><span class="line">        <span class="keyword">return</span> item.name==<span class="string">&#x27;w&#x27;</span>;&#125;</span><br><span class="line">    )</span><br><span class="line"><span class="comment">// console:&#123;name: &quot;w&quot;&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//若找不到 返回undefined</span></span><br><span class="line">a.find(<span class="function"><span class="keyword">function</span>(<span class="params">item</span>)</span></span><br><span class="line"><span class="function">    </span>&#123; <span class="keyword">return</span> item.name==<span class="number">2</span>;&#125;</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line"><span class="comment">//如果想要获取到其下标则用findIndex</span></span><br><span class="line">a.findIndex(<span class="function"><span class="keyword">function</span>(<span class="params">item</span>)</span>&#123; <span class="keyword">return</span> item.name==<span class="string">&#x27;w&#x27;</span>;&#125;)</span><br><span class="line"><span class="comment">//0</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li>find 原理<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Myfind</span> (<span class="params">callback</span>)</span>&#123; <span class="keyword">for</span>(<span class="keyword">let</span> i <span class="keyword">of</span> ary)&#123;<span class="keyword">if</span>(callback(i)) <span class="keyword">return</span> i;&#125;<span class="comment">//return undefined;</span></span><br><span class="line">    </span><br><span class="line">    写在原型上：</span><br><span class="line">    <span class="built_in">Array</span>.prototype.MyFind = <span class="function"><span class="keyword">function</span> (<span class="params">callback</span>)</span>&#123; <span class="keyword">for</span>(<span class="keyword">let</span> i <span class="keyword">of</span> <span class="built_in">this</span>)&#123;<span class="keyword">if</span>(callback(i)) <span class="keyword">return</span> i;&#125;<span class="keyword">return</span> <span class="literal">undefined</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="forEach循环数组"><a href="#forEach循环数组" class="headerlink" title="forEach循环数组"></a>forEach循环数组</h4></li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = [&#123;<span class="attr">name</span>:<span class="string">&#x27;aa&#x27;</span>&#125;,&#123;<span class="attr">name</span>:<span class="number">2</span>&#125;]</span><br><span class="line">a.forEach(<span class="function"><span class="keyword">function</span>(<span class="params">item,index,arrys</span>)</span>&#123; <span class="built_in">console</span>.log(item,index,arrys) &#125;)</span><br><span class="line"><span class="comment">// &#123;name: &quot;aa&quot;&#125; 0  [&#123;…&#125;, &#123;…&#125;]</span></span><br><span class="line"> <span class="comment">//&#123;name: 2&#125; 1  [&#123;…&#125;, &#123;…&#125;]</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="every-和-some"><a href="#every-和-some" class="headerlink" title="every 和 some"></a>every 和 some</h4><p>some() 方法测试数组中是不是至少有1个元素通过了被提供的函数测试。它返回的是一个Boolean类型的值</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/* return都是boolean */</span></span><br><span class="line"><span class="keyword">let</span> a = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>];</span><br><span class="line">a.some(<span class="function"><span class="keyword">function</span>(<span class="params">item,index,array</span>)</span>&#123; <span class="keyword">return</span> item == <span class="number">1</span> &#125;);<span class="comment">//true,遇到第一个符合条件的都不再继续向下查找</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = [<span class="number">10</span>,<span class="number">12</span>,<span class="number">11</span>];</span><br><span class="line">a.every(<span class="function"><span class="keyword">function</span>(<span class="params">i,index,array</span>)</span>&#123; <span class="keyword">return</span> i&gt;<span class="number">1</span>; &#125;);<span class="comment">//true,必须每一个都符合才返回true</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="filter"><a href="#filter" class="headerlink" title="filter"></a>filter</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = [<span class="number">10</span>,<span class="number">12</span>,<span class="number">11</span>];</span><br><span class="line">a.filter(<span class="function"><span class="keyword">function</span>(<span class="params">i,index,array</span>)</span>&#123; <span class="keyword">return</span> i&gt;<span class="number">10</span>; &#125;);<span class="comment">//[12, 11],仅过滤符合条件的，返回数组</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="map"><a href="#map" class="headerlink" title="map"></a>map</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* map映射数组：数组中的元素如果是值类型，则不会被影响；若是引用类型则会被影响 */</span></span><br><span class="line">a.map(<span class="function"><span class="keyword">function</span>(<span class="params">value</span>)</span>&#123; value = <span class="number">1</span>; <span class="keyword">return</span> value&#125;)</span><br><span class="line"><span class="comment">// [1, 1, 1, 1]</span></span><br><span class="line"><span class="comment">/* 但 */</span></span><br><span class="line"><span class="built_in">console</span>.log(a);</span><br><span class="line"><span class="comment">//[1, 2, 3, 4]，数组a未被改变</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* 而对于引用类型来说 */</span></span><br><span class="line">b.map(<span class="function"><span class="keyword">function</span>(<span class="params">item</span>)</span>&#123;item.n = <span class="string">&#x27;我已被map映射修改&#x27;</span>;&#125;)；<span class="comment">//在没有返回item的情况下，b内元素的值已经被修改</span></span><br><span class="line"><span class="built_in">console</span>.log(b)；</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 0: &#123;n: &quot;我已被map映射修改&quot;, m: 100&#125;</span></span><br><span class="line"><span class="comment">1: &#123;n: &quot;我已被map映射修改&quot;, m: 100&#125; */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* 所以对于应用类型来说，怎样才能不影响原数组的情况下，获得修改后的副本呢？也就是复制一份数组，再进行修改【有关于浅拷贝和深拷贝】 */</span></span><br><span class="line">b.map(<span class="function"><span class="keyword">function</span>(<span class="params">item</span>)</span>&#123; <span class="keyword">return</span> <span class="built_in">Object</span>.assign(&#123; item ,<span class="attr">add</span>:<span class="string">&#x27;新添加&#x27;</span>&#125;)&#125;)</span><br><span class="line"><span class="comment">/* 0: &#123;item: &#123;…&#125;, add: &quot;新添加&quot;&#125;</span></span><br><span class="line"><span class="comment">1: &#123;item: &#123;…&#125;, add: &quot;新添加&quot;&#125; */</span></span><br><span class="line"><span class="built_in">console</span>.log(b);</span><br><span class="line"><span class="comment">/* 仍是[&#123;n: &quot;我已被map映射修改&quot;, m: 100&#125;</span></span><br><span class="line"><span class="comment"> &#123;n: &quot;我已被map映射修改&quot;, m: 100&#125;] */</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="reduce"><a href="#reduce" class="headerlink" title="reduce"></a>reduce</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>];</span><br><span class="line"><span class="comment">// 第一个参数：回调函数：[参数1-pre：如果没有设置初始值那么第一次的值就是数组的第一个元素，下一次的值是reduce函数上一个返回值        参数2-cur: 当前值]</span></span><br><span class="line"><span class="comment">// 第二个参数：initalPre：pre的初始值</span></span><br><span class="line">a.reduce(<span class="function"><span class="keyword">function</span>(<span class="params">pre,cur,curIndex,arry</span>)</span>&#123; <span class="built_in">console</span>.log(pre,cur,curIndex); &#125;,initalPre);</span><br><span class="line"></span><br><span class="line">a.reduce(<span class="function"><span class="keyword">function</span>(<span class="params">pre,cur,index,arry</span>)</span>&#123; <span class="built_in">console</span>.log(pre,cur,index,arry); <span class="keyword">return</span> <span class="string">&#x27;h&#x27;</span>+cur; &#125;);</span><br><span class="line"><span class="comment">//1 2 1   [1, 2, 3, 4]</span></span><br><span class="line"><span class="comment">//h2 3 2  [1, 2, 3, 4]</span></span><br><span class="line"><span class="comment">//h3 4 3  [1, 2, 3, 4]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* 应用：例如统计元素出现的次数 */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">countNum</span>(<span class="params">arry,value</span>)</span>&#123; <span class="keyword">return</span> arry.reduce(<span class="function"><span class="keyword">function</span>(<span class="params">pre,cur</span>)</span>&#123; <span class="keyword">if</span>(cur === value) <span class="keyword">return</span> ++pre;<span class="keyword">else</span> <span class="keyword">return</span> pre; &#125;,<span class="number">0</span>) &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">JS</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">数组函数的使用</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/03/04/JS-%E6%95%B0%E7%BB%84-%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A82/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-ES6-类的秘密-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1100,6 +1288,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Nodejs</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Web协议详解与实包</a>
               </li>
             
             <div class="clearfix"></div>

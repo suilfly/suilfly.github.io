@@ -6,20 +6,16 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>异步编程与Promise-3 | suilfly的博客</title>
+  <title>前端-JS实操题目-1 | suilfly的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Promise的语法糖：async与await以前写Promise时需要这种结构 1234new Promise((resolve,reject)&#x3D;&gt;&amp;#123;    resolve();&amp;#125;) 而async就是Promise的语法糖写法 123456async function promise()&amp;#123;&amp;#125;&#x2F;* 被async修饰的函数，执行结果返回一个Promise">
-<meta property="og:type" content="article">
-<meta property="og:title" content="异步编程与Promise-3">
-<meta property="og:url" content="http://example.com/2021/03/11/%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B%E4%B8%8EPromise-3/index.html">
+  <meta property="og:type" content="article">
+<meta property="og:title" content="前端-JS实操题目-1">
+<meta property="og:url" content="http://example.com/2021/04/07/%E5%89%8D%E7%AB%AF-JS%E5%AE%9E%E6%93%8D%E9%A2%98%E7%9B%AE-1/index.html">
 <meta property="og:site_name" content="suilfly的博客">
-<meta property="og:description" content="Promise的语法糖：async与await以前写Promise时需要这种结构 1234new Promise((resolve,reject)&#x3D;&gt;&amp;#123;    resolve();&amp;#125;) 而async就是Promise的语法糖写法 123456async function promise()&amp;#123;&amp;#125;&#x2F;* 被async修饰的函数，执行结果返回一个Promise">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2021-03-11T01:04:43.000Z">
-<meta property="article:modified_time" content="2021-03-11T02:16:49.154Z">
+<meta property="article:published_time" content="2021-04-07T02:38:06.000Z">
+<meta property="article:modified_time" content="2021-04-07T02:38:06.562Z">
 <meta property="article:author" content="John Doe">
-<meta property="article:tag" content="异步编程">
-<meta property="article:tag" content="Promise">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="suilfly的博客" type="application/atom+xml">
@@ -156,41 +152,27 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-异步编程与Promise-3" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-前端-JS实操题目-1" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      异步编程与Promise-3
+      前端-JS实操题目-1
     </h1>
   
 
         
-        <a href="/2021/03/11/%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B%E4%B8%8EPromise-3/" class="archive-article-date">
-  	<time datetime="2021-03-11T01:04:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-11</time>
+        <a href="/2021/04/07/%E5%89%8D%E7%AB%AF-JS%E5%AE%9E%E6%93%8D%E9%A2%98%E7%9B%AE-1/" class="archive-article-date">
+  	<time datetime="2021-04-07T02:38:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-04-07</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="Promise的语法糖：async与await"><a href="#Promise的语法糖：async与await" class="headerlink" title="Promise的语法糖：async与await"></a>Promise的语法糖：async与await</h3><p>以前写Promise时需要这种结构</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</span><br><span class="line">    resolve();</span><br><span class="line">&#125;)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>而async就是Promise的语法糖写法</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">promise</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* 被async修饰的函数，执行结果返回一个Promise对象 */</span></span><br><span class="line"><span class="built_in">console</span>.log(promise());<span class="comment">//Promise &#123;&lt;fulfilled&gt;: undefined&#125;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>以前写Promise.then</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</span><br><span class="line">    resolve(<span class="string">&quot;success&quot;</span>);</span><br><span class="line">&#125;)</span><br><span class="line"> .then(<span class="function"><span class="params">msg</span>=&gt;</span>&#123;</span><br><span class="line">     <span class="keyword">return</span> <span class="string">&quot;传递给下一个then的参数&quot;</span>;</span><br><span class="line"> &#125;)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>而await就是then的语法糖写法</p>
-<p>await 右侧的表达式一般为 promise 对象, 但也可以是其它的值:</p>
-<ul>
-<li><p>如果表达式是 promise 对象, await 返回的是 promise 成功的值</p>
-</li>
-<li><p>如果表达式是其它值, 直接将此值作为 await 的返回值</p>
-</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">myPromise</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="comment">/* await相当于函数myPromise返回的Promise对象调用then */</span></span><br><span class="line">    <span class="keyword">let</span> param = <span class="keyword">await</span> <span class="string">&quot;参数1&quot;</span>;<span class="comment">/* param接受了“参数1”，而“参数1”相当于 .then(msg=&gt;&#123; return &quot;参数1&quot;;&#125;)中Return的内容*/</span></span><br><span class="line">    <span class="built_in">console</span>.log(param);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(myPromise());<span class="comment">//参数1</span></span><br><span class="line"><span class="comment">/* ----------------------------------------------------------------------------------------------------------- */</span></span><br><span class="line"><span class="comment">/* 同样也可以返回Promise对象 */</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">promise</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> p2 = <span class="keyword">await</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</span><br><span class="line">        resolve(<span class="string">&quot;p2-fullfiled&quot;</span>);</span><br><span class="line">    &#125;);<span class="comment">/* p2状态为fullfiled */</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">console</span>.log(p2);<span class="comment">//p2-fullfiled</span></span><br><span class="line">    <span class="keyword">let</span> p3 = <span class="keyword">await</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="params">resolve</span>=&gt;</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(p2+<span class="string">&quot;-收到&quot;</span>);<span class="comment">//p2-fullfiled-收到</span></span><br><span class="line">    &#125;);<span class="comment">/* p3没有执行回调函数且无异常，状态为pending */</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> p4 = <span class="keyword">await</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="params">resolve</span>=&gt;</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(p3);<span class="comment">//Promise &#123;&lt;pending&gt;&#125;</span></span><br><span class="line">    &#125;);<span class="comment">/* p4 等待p3状态改变后执行 */</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* ----------------------------------------------------------------------------------------------------------- */</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">promise</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> p2 = <span class="keyword">await</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</span><br><span class="line">        reject(<span class="string">&quot;p2-rejected&quot;</span>);<span class="comment">/* 此处rejected ，之后的代码不执行直接进入catch*/</span></span><br><span class="line">    &#125;);  </span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;p2 &quot;</span>+p2);</span><br><span class="line">    <span class="keyword">let</span> p3 = <span class="keyword">await</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="params">resolve</span>=&gt;</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(p2+<span class="string">&quot;-收到&quot;</span>);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> p4 = <span class="keyword">await</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="params">resolve</span>=&gt;</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(p3);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;<span class="keyword">catch</span>(e)&#123; <span class="built_in">console</span>.log(<span class="string">&quot;error:&quot;</span>+e) &#125;  </span><br><span class="line">&#125;</span><br><span class="line">promise();<span class="comment">//error:p2-rejected</span></span><br></pre></td></tr></table></figure>
+        
       
 
       
@@ -219,21 +201,6 @@
     <div class="article-info article-info-index">
       
       
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">异步编程</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Promise</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
       
 
       
@@ -284,7 +251,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2021/03/11/%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B%E4%B8%8EPromise-3/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2021/04/07/%E5%89%8D%E7%AB%AF-JS%E5%AE%9E%E6%93%8D%E9%A2%98%E7%9B%AE-1/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -298,18 +265,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2021/03/12/JS-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1-%E7%BB%A7%E6%89%BF/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2021/04/15/HTTP-1/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          JS-面向对象-继承
+          HTTP/1
         
       </div>
     </a>
   
   
-    <a href="/2021/03/09/%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B%E4%B8%8EPromise-2/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">异步编程与Promise-2</div>
+    <a href="/2021/04/02/Nodejs-NPM/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Nodejs-NPM</div>
       <i class="icon-circle-right"></i>
     </a>
   
