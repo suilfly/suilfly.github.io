@@ -152,6 +152,89 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Node-js-JSONP" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/04/17/Node-js-JSONP/">Node.js-JSONP</a>
+    </h1>
+  
+
+        
+        <a href="/2021/04/17/Node-js-JSONP/" class="archive-article-date">
+  	<time datetime="2021-04-17T13:03:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-04-17</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="跨域-JSONP"><a href="#跨域-JSONP" class="headerlink" title="跨域-JSONP"></a>跨域-JSONP</h3><blockquote>
+<p>在HTML中请求一个script脚本并不会触发同源策略，可以进行跨域请求：JSONP=&gt;json pending。</p>
+</blockquote>
+<ul>
+<li><p>前端</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"> <span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">      <span class="function"><span class="keyword">function</span> <span class="title">getData</span>(<span class="params">data</span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">&#x27;getData:&#x27;</span>+data);</span></span><br><span class="line">      &#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 请求后端接口 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;http://localhost:3000/d?pend=getData&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建一个server</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Node.js */</span></span><br><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">&#x27;http&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> url = <span class="built_in">require</span>(<span class="string">&#x27;url&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> PORT = process.env.PORT || <span class="number">3000</span>;</span><br><span class="line"><span class="keyword">const</span> server = http.createServer(<span class="function">(<span class="params">req,res</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> urlStr = req.url.split(<span class="string">&#x27;?&#x27;</span>)[<span class="number">1</span>];<span class="comment">//请求的路径是如：/api?a=..那么就把a=...取到</span></span><br><span class="line">    <span class="comment">//url.URLSearchParams 是一个类，用来解析参数</span></span><br><span class="line">    <span class="keyword">let</span> urlSearchParam = <span class="keyword">new</span> url.URLSearchParams(urlStr);</span><br><span class="line">    <span class="keyword">let</span> data = <span class="string">&#x27;data&#x27;</span>;</span><br><span class="line">    res.write(<span class="string">`<span class="subst">$&#123;urlSearchParam.get(<span class="string">&#x27;pend&#x27;</span>)&#125;</span>(&#x27;<span class="subst">$&#123;data&#125;</span>&#x27;)`</span>)</span><br><span class="line"></span><br><span class="line">    res.end();<span class="comment">//通知客户端响应数据发送完毕</span></span><br><span class="line">&#125;);</span><br><span class="line">server.listen(PORT,<span class="string">&#x27;localhost&#x27;</span>,<span class="function">()=&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">`listening port <span class="subst">$&#123;PORT&#125;</span>`</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Node.js</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/04/17/Node-js-JSONP/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-HTTP-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -867,88 +950,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2021/03/14/CSS-%E8%A1%8C%E5%86%85%E5%85%83%E7%B4%A0%E6%8E%92%E7%89%88-inline-line-height/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-JS-Promise实现-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/03/14/JS-Promise%E5%AE%9E%E7%8E%B0-1/">JS-Promise实现-1</a>
-    </h1>
-  
-
-        
-        <a href="/2021/03/14/JS-Promise%E5%AE%9E%E7%8E%B0-1/" class="archive-article-date">
-  	<time datetime="2021-03-14T00:40:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-14</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>决定从今天开始自己实现一个Promise，希望可以成功吧~</p>
-<p>首先原生Promise在使用的时候需要</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;&#125;)</span><br></pre></td></tr></table></figure>
-<p>要向构造器传递一个<strong>函数</strong>，而且初始的Promise<strong>状态</strong>为pending</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyPromise</span></span>&#123;</span><br><span class="line">    <span class="keyword">static</span> PENDING = <span class="string">&quot;pending&quot;</span>;<span class="comment">//既然状态每个实例都要使用，就设成静态变量吧</span></span><br><span class="line">    <span class="keyword">static</span> FULFILLED = <span class="string">&quot;fulfilled&quot;</span>;</span><br><span class="line">    <span class="keyword">static</span> REJECT = <span class="string">&quot;reject&quot;</span>;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">executor</span>)</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>.state = MyPromise.PENDING;</span><br><span class="line">        <span class="built_in">this</span>.val = <span class="literal">null</span>;<span class="comment">//原生的Promise中每个状态都对应一个值</span></span><br><span class="line">        executor(<span class="built_in">this</span>.resolve,<span class="built_in">this</span>.reject);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">resolve</span>(<span class="params">value</span>)</span>&#123;</span><br><span class="line">        <span class="comment">/* 执行即修改状态 */</span></span><br><span class="line">        <span class="built_in">this</span>.state = MyPromise.FULFILLED;</span><br><span class="line">        <span class="built_in">this</span>.val = value;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">reject</span>(<span class="params">reason</span>)</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>.state = MyPromise.REJECT;</span><br><span class="line">        <span class="built_in">this</span>.val = reason;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>执行以下看看</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> p = <span class="keyword">new</span> MyPromise(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="built_in">this</span>);<span class="comment">//在这个箭头函数中this指向window</span></span><br><span class="line">    resolve(<span class="string">&quot;成功&quot;</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>结果凉凉：<img src="/img/Promise-实现-1.png"/><br>执行一下p.resolve();输出undefined,this丢失了！,解决this丢失的问题可以使用bind</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyPromise</span></span>&#123;</span><br><span class="line">    <span class="keyword">static</span> PENDING = <span class="string">&quot;pending&quot;</span>;<span class="comment">//既然状态每个实例都要使用，就设成静态变量吧</span></span><br><span class="line">    <span class="keyword">static</span> FULFILLED = <span class="string">&quot;fulfilled&quot;</span>;</span><br><span class="line">    <span class="keyword">static</span> REJECT = <span class="string">&quot;reject&quot;</span>;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">executor</span>)</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>.state = MyPromise.PENDING;</span><br><span class="line">        <span class="built_in">this</span>.val = <span class="literal">null</span>;<span class="comment">//原生的Promise中每个状态都对应一个值</span></span><br><span class="line">        executor(<span class="built_in">this</span>.resolve.bind(<span class="built_in">this</span>),<span class="built_in">this</span>.reject.bind(<span class="built_in">this</span>));<span class="comment">//this.resolve.bind(this)返回一个新的绑定函数：resolve,其中的this指向MyPromise实例</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">resolve</span>(<span class="params">value</span>)</span>&#123;</span><br><span class="line">        <span class="comment">/* 执行即修改状态 */</span></span><br><span class="line">        <span class="built_in">this</span>.state = MyPromise.FULFILLED;</span><br><span class="line">        <span class="built_in">this</span>.val = value;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">reject</span>(<span class="params">reason</span>)</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>.state = MyPromise.REJECT;</span><br><span class="line">        <span class="built_in">this</span>.val = reason;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> p = <span class="keyword">new</span> MyPromise(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</span><br><span class="line">    resolve(<span class="string">&quot;成功&quot;</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(p);<span class="comment">//MyPromise &#123;state: &quot;fulfilled&quot;, val: &quot;成功&quot;&#125;</span></span><br></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Promsie实现</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/03/14/JS-Promise%E5%AE%9E%E7%8E%B0-1/">展开全文 >></a>
         </p>
       
 

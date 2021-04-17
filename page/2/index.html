@@ -152,6 +152,88 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-JS-Promise实现-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/03/14/JS-Promise%E5%AE%9E%E7%8E%B0-1/">JS-Promise实现-1</a>
+    </h1>
+  
+
+        
+        <a href="/2021/03/14/JS-Promise%E5%AE%9E%E7%8E%B0-1/" class="archive-article-date">
+  	<time datetime="2021-03-14T00:40:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-14</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>决定从今天开始自己实现一个Promise，希望可以成功吧~</p>
+<p>首先原生Promise在使用的时候需要</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;&#125;)</span><br></pre></td></tr></table></figure>
+<p>要向构造器传递一个<strong>函数</strong>，而且初始的Promise<strong>状态</strong>为pending</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyPromise</span></span>&#123;</span><br><span class="line">    <span class="keyword">static</span> PENDING = <span class="string">&quot;pending&quot;</span>;<span class="comment">//既然状态每个实例都要使用，就设成静态变量吧</span></span><br><span class="line">    <span class="keyword">static</span> FULFILLED = <span class="string">&quot;fulfilled&quot;</span>;</span><br><span class="line">    <span class="keyword">static</span> REJECT = <span class="string">&quot;reject&quot;</span>;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">executor</span>)</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>.state = MyPromise.PENDING;</span><br><span class="line">        <span class="built_in">this</span>.val = <span class="literal">null</span>;<span class="comment">//原生的Promise中每个状态都对应一个值</span></span><br><span class="line">        executor(<span class="built_in">this</span>.resolve,<span class="built_in">this</span>.reject);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">resolve</span>(<span class="params">value</span>)</span>&#123;</span><br><span class="line">        <span class="comment">/* 执行即修改状态 */</span></span><br><span class="line">        <span class="built_in">this</span>.state = MyPromise.FULFILLED;</span><br><span class="line">        <span class="built_in">this</span>.val = value;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">reject</span>(<span class="params">reason</span>)</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>.state = MyPromise.REJECT;</span><br><span class="line">        <span class="built_in">this</span>.val = reason;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>执行以下看看</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> p = <span class="keyword">new</span> MyPromise(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="built_in">this</span>);<span class="comment">//在这个箭头函数中this指向window</span></span><br><span class="line">    resolve(<span class="string">&quot;成功&quot;</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>结果凉凉：<img src="/img/Promise-实现-1.png"/><br>执行一下p.resolve();输出undefined,this丢失了！,解决this丢失的问题可以使用bind</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyPromise</span></span>&#123;</span><br><span class="line">    <span class="keyword">static</span> PENDING = <span class="string">&quot;pending&quot;</span>;<span class="comment">//既然状态每个实例都要使用，就设成静态变量吧</span></span><br><span class="line">    <span class="keyword">static</span> FULFILLED = <span class="string">&quot;fulfilled&quot;</span>;</span><br><span class="line">    <span class="keyword">static</span> REJECT = <span class="string">&quot;reject&quot;</span>;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">executor</span>)</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>.state = MyPromise.PENDING;</span><br><span class="line">        <span class="built_in">this</span>.val = <span class="literal">null</span>;<span class="comment">//原生的Promise中每个状态都对应一个值</span></span><br><span class="line">        executor(<span class="built_in">this</span>.resolve.bind(<span class="built_in">this</span>),<span class="built_in">this</span>.reject.bind(<span class="built_in">this</span>));<span class="comment">//this.resolve.bind(this)返回一个新的绑定函数：resolve,其中的this指向MyPromise实例</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">resolve</span>(<span class="params">value</span>)</span>&#123;</span><br><span class="line">        <span class="comment">/* 执行即修改状态 */</span></span><br><span class="line">        <span class="built_in">this</span>.state = MyPromise.FULFILLED;</span><br><span class="line">        <span class="built_in">this</span>.val = value;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">reject</span>(<span class="params">reason</span>)</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>.state = MyPromise.REJECT;</span><br><span class="line">        <span class="built_in">this</span>.val = reason;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> p = <span class="keyword">new</span> MyPromise(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</span><br><span class="line">    resolve(<span class="string">&quot;成功&quot;</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(p);<span class="comment">//MyPromise &#123;state: &quot;fulfilled&quot;, val: &quot;成功&quot;&#125;</span></span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Promsie实现</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/03/14/JS-Promise%E5%AE%9E%E7%8E%B0-1/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-JS-函数-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -946,135 +1028,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2021/03/07/JS-%E5%AF%B9%E8%B1%A1-2/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-异步编程与Promise-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/03/06/%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B%E4%B8%8EPromise-1/">异步编程与Promise</a>
-    </h1>
-  
-
-        
-        <a href="/2021/03/06/%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B%E4%B8%8EPromise-1/" class="archive-article-date">
-  	<time datetime="2021-03-06T00:25:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-06</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="异步编程"><a href="#异步编程" class="headerlink" title="异步编程"></a>异步编程</h3><p>由于JS是单线程的，如果线程运行的时候发生阻塞，对用户来说是不好的体验，为了解决这个问题，就出现了异步编程：当发现一个需要较长时间执行的任务，就把这个任务交给一个模块去管理，完成后放入到任务队列中。当主线程执行完了自己的同步代码（依次按序执行的），就会不断的询问任务队列中是否有完成的任务</p>
-<ul>
-<li>通过异步加载图片来体验任务操作<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">let</span> img = <span class="keyword">new</span> Image();<span class="comment">//imgDOM</span></span><br><span class="line">    <span class="keyword">let</span> img = <span class="keyword">new</span> Image();<span class="comment">//imgDOM</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">loadImg</span>(<span class="params">src,resolve,reject</span>)</span>&#123;</span><br><span class="line">        img.src = src;</span><br><span class="line">        img.onload = resolve;</span><br><span class="line">        img.onerror = reject;</span><br><span class="line">    &#125;</span><br><span class="line">    loadImg(<span class="string">&quot;1.jpg&quot;</span>,<span class="function">()=&gt;</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;图片加载完成&#x27;</span>);</span><br><span class="line">    &#125;,<span class="function">()=&gt;</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;图片加载失败&#x27;</span>);</span><br><span class="line">    &#125;);<span class="comment">//由于需要通过路径来加载一个图片，需要一定时间来完成，所以异步</span></span><br><span class="line">    <span class="built_in">console</span>.dir(img);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-最后的结果</li>
-</ul>
-<img src="/img/异步-1.png"/>
-
-<ul>
-<li>通过定时器来体验异步任务操作</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//封装一个定时器</span></span><br><span class="line"> <span class="function"><span class="keyword">function</span> <span class="title">interval</span>(<span class="params">callback,delay</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> id = <span class="built_in">setInterval</span>(<span class="function">()=&gt;</span>callback(id),delay)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"> interval(<span class="function">(<span class="params">id</span>)=&gt;</span>&#123;</span><br><span class="line">        <span class="comment">/* 实现div右移 */</span></span><br><span class="line">        <span class="keyword">let</span> div = <span class="built_in">document</span>.querySelector(<span class="string">&#x27;div&#x27;</span>);</span><br><span class="line">        <span class="comment">//Window.getComputedStyle()方法返回的style是一个实时的 CSSStyleDeclaration 对象，当元素的样式更改时，它会自动更新本身。</span></span><br><span class="line">        <span class="keyword">let</span> left = <span class="built_in">Number</span>.parseInt(getComputedStyle(div).left);</span><br><span class="line">        div.style.left = left+<span class="number">100</span>+<span class="string">&#x27;px&#x27;</span>;</span><br><span class="line">        <span class="keyword">if</span>(left &gt; <span class="number">300</span>)&#123;</span><br><span class="line">            <span class="built_in">clearInterval</span>(id);<span class="comment">//停止移动</span></span><br><span class="line">            interval(<span class="function">(<span class="params">id</span>)=&gt;</span>&#123;<span class="comment">//让div 逐渐消失</span></span><br><span class="line">                <span class="keyword">let</span> width = <span class="built_in">Number</span>.parseInt(getComputedStyle(div).width);</span><br><span class="line">                div.style.width = width-<span class="number">10</span>+<span class="string">&#x27;px&#x27;</span>;</span><br><span class="line">                <span class="keyword">if</span>(width == <span class="number">0</span>)</span><br><span class="line">                    <span class="built_in">clearInterval</span>(id)</span><br><span class="line">            &#125;,<span class="number">100</span>)</span><br><span class="line">        &#125;</span><br><span class="line">            </span><br><span class="line">    &#125;,<span class="number">600</span>)</span><br></pre></td></tr></table></figure>
-<p>最后的结果</p>
-<img src="/img/定时器-1.gif" width="80%"/>
-
-<p>但是这样写后会发现，嵌套的定时器显得代码混乱，所以后来的Promise会使代码更加整洁，但是内部的原理不变</p>
-<h4 id="任务排列"><a href="#任务排列" class="headerlink" title="任务排列"></a>任务排列</h4><p>顾名思义：任务队列，队列是一个先进先出的数据结构，所以任务调出的顺序取决于任务调入的顺序</p>
-<ul>
-<li>通过文件加载来体验任务顺序</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 1.js */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">first</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;first&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* 2.js */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">second</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    first();</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;second&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//现在我要加载两个文件（加载文件需要异步操作），但是2.js依赖于1.js</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">fileLoad</span>(<span class="params">src,resolve = <span class="literal">null</span></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">let</span> script = <span class="built_in">document</span>.createElement(<span class="string">&#x27;script&#x27;</span>);</span><br><span class="line">        script.src = src;</span><br><span class="line">        <span class="built_in">document</span>.body.appendChild(script);</span><br><span class="line">        script.onload = resolve;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/* 希望1.js先加载完进入任务队列 */</span></span><br><span class="line">    fileLoad(<span class="string">&quot;1.js&quot;</span>);</span><br><span class="line">    fileLoad(<span class="string">&quot;2.js&quot;</span>,<span class="function">()=&gt;</span>&#123;</span><br><span class="line">        second();</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>但是有时候也会出现2.js先加载的情况，导致</p>
-<img src="/img/文件异步-1.png"/>
-
-<p>为了解决这个问题，我可以</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fileLoad</span>(<span class="params">src,resolve = <span class="literal">null</span></span>)</span>&#123;</span><br><span class="line">      <span class="keyword">let</span> script = <span class="built_in">document</span>.createElement(<span class="string">&#x27;script&#x27;</span>);</span><br><span class="line">      script.src = src;</span><br><span class="line">      <span class="built_in">document</span>.body.appendChild(script);</span><br><span class="line">      script.onload = resolve;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">/* 先加载1.js 加载完成后执行onload事件 */</span></span><br><span class="line">  fileLoad(<span class="string">&quot;1.js&quot;</span>,<span class="function">()=&gt;</span>&#123;</span><br><span class="line">      <span class="comment">/* 1.js onload事件：加载2.js */</span></span><br><span class="line">      fileLoad(<span class="string">&quot;2.js&quot;</span>,<span class="function">()=&gt;</span>&#123;</span><br><span class="line">      second();</span><br><span class="line">  &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>结果</p>
-<img src="/img/文件异步-2.png"/>
-
-<p>但是我们会看到，问题虽然解决了，但是出现了大量的嵌套，代码混乱，产生回调地狱，所以后来的Promise会使代码更加整洁</p>
-<h4 id="Promise-微任务"><a href="#Promise-微任务" class="headerlink" title="Promise 微任务"></a>Promise 微任务</h4><p>使用Promise执行的任务被放入微任务队列，setTimeout,setInterval的执行的任务放入的队列被称为宏任务队列，就优先级来说，微任务的优先级高于宏任务优先级</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Promise的三种状态：待定（pending）: 初始状态，既没有操作成功，也没有被拒绝。</span></span><br><span class="line"><span class="comment">已成功（fulfilled）: 意味着操作成功完成。</span></span><br><span class="line"><span class="comment">已拒绝（rejected）: 意味着操作失败。 */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> promise = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(promise);<span class="comment">//pending:准备状态，因为Promise构造函数中没有执行resolve或reject方法，所以是pending</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">let</span> promise = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123; resolve(); &#125;);</span><br><span class="line"><span class="built_in">console</span>.log(promise);<span class="comment">//fulfilled，因为Promise构造函数中执行resolve方法</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">let</span> promise = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123; reject(); &#125;);</span><br><span class="line"><span class="built_in">console</span>.log(promise);<span class="comment">//rejected，因为Promise构造函数中执行reject方法</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h5 id="Promise-链式调用"><a href="#Promise-链式调用" class="headerlink" title="Promise -链式调用"></a>Promise -链式调用</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 执行顺序：Promise构造器内的代码是同步执行的，所以先执行 console.log(&#x27;构造器内部&#x27;);</span></span><br><span class="line"><span class="comment">再执行： console.log(&quot;console&quot;);</span></span><br><span class="line"><span class="comment">最后主线程的同步代码都执行完后，轮询微任务队列中的任务，执行then*/</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> promise = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123; </span><br><span class="line">       reject(<span class="string">&#x27;error&#x27;</span>);<span class="comment">//当调用这个方法后，会把紧挨着的then的任务加入到任务队列中</span></span><br><span class="line">       <span class="built_in">console</span>.log(<span class="string">&#x27;构造器内部&#x27;</span>);</span><br><span class="line">    &#125;).then(<span class="function">(<span class="params">resolve</span>)=&gt;</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;现在执行成功后的业务操作&#x27;</span>+resolve);</span><br><span class="line">    &#125;,<span class="function">(<span class="params">reject</span>)=&gt;</span>&#123; <span class="built_in">console</span>.log(<span class="string">&#x27;现在执行失败后的业务操作：&#x27;</span>+reject) &#125;);</span><br><span class="line">   </span><br><span class="line">   <span class="built_in">console</span>.log(<span class="string">&quot;console&quot;</span>);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>链式调用</p>
-<ul>
-<li>Promise.then()返回的还是一个promise对象</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> p1 = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</span><br><span class="line">    resolve();</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">let</span> p2 = p1.then(<span class="function"><span class="params">a</span>=&gt;</span>&#123; <span class="built_in">console</span>.log(<span class="string">&#x27;成功&#x27;</span>) &#125;,<span class="function"><span class="params">b</span>=&gt;</span>&#123; <span class="built_in">console</span>.log(b) &#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 根据代码执行顺序的分析：p1 status为成功，微任务+1</span></span><br><span class="line"><span class="comment">   p1: Promise &#123;&lt;fulfilled&gt;: undefined&#125;</span></span><br><span class="line"><span class="comment">   p2: Promise &#123;&lt;pending&gt;&#125;*/</span></span><br><span class="line"><span class="built_in">console</span>.log(p1,p2);</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 考虑下面 这种情况 */</span></span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function">()=&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(p1,p2);</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment">代码执行顺序：</span></span><br><span class="line"><span class="comment">    1.p1的resolve，微任务+1（所以p1.then等待执行）</span></span><br><span class="line"><span class="comment">    2.主线程中的同步代码：console.log(p1,p2);</span></span><br><span class="line"><span class="comment">    3.定时器，宏任务+1</span></span><br><span class="line"><span class="comment">    4.微任务队列和宏任务队列都有任务的情况下（且两者的任务没有依赖关系）轮询微任务队列：执行p1.then=&gt;输出：成功，微任务-1</span></span><br><span class="line"><span class="comment">    5.执行宏任务：setTimeout中：console.log(p1,p2);此时的p1,p2的状态都发生更改：都为=&gt;Promise &#123;&lt;fulfilled&gt;: undefined&#125;</span></span><br><span class="line"><span class="comment">设置定时器后最终的输出：成功</span></span><br><span class="line"><span class="comment">                      28538(定时器编号)</span></span><br><span class="line"><span class="comment">                      Promise &#123;&lt;fulfilled&gt;: undefined&#125; Promise &#123;&lt;fulfilled&gt;: undefined&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>当p1的状态为rejected时</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> p1 = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</span><br><span class="line">    reject(<span class="string">&#x27;失败&#x27;</span>);</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">let</span> p2 = p1.then(<span class="function"><span class="params">a</span>=&gt;</span>&#123; <span class="built_in">console</span>.log(<span class="string">&#x27;成功&#x27;</span>) &#125;,<span class="function"><span class="params">b</span>=&gt;</span>&#123; <span class="built_in">console</span>.log(b) &#125;)</span><br><span class="line"><span class="comment">/* p1:rejected p2:fulfilled */</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<ul>
-<li>链式调用总结:后一个then 就是对前一个Promise的处理</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> p1 = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</span><br><span class="line">    resolve(<span class="string">&#x27;成功&#x27;</span>);</span><br><span class="line">&#125;).then(<span class="function"><span class="params">a</span>=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;成功-任务-1&#x27;</span>;<span class="comment">//返回值字符串的作用：给下一个微任务传参</span></span><br><span class="line">&#125;).then(<span class="function"><span class="params">a</span>=&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(a);</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">/* 输出：成功-任务-1 */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> p1 = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</span><br><span class="line">    resolve(<span class="string">&#x27;成功&#x27;</span>);</span><br><span class="line">&#125;).then(<span class="function"><span class="params">a</span>=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;&#125;);<span class="comment">/* 返回一个新的promise，状态pending,所以第二个then等待这个promise状态的改变时才执行 */</span></span><br><span class="line">&#125;).then(<span class="function"><span class="params">a</span>=&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(a);</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">/* 无输出 */</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>最后的输出顺序是：<img src="/img/Promise-1.png"/></p>
-<h5 id="微任务与宏任务"><a href="#微任务与宏任务" class="headerlink" title="微任务与宏任务"></a>微任务与宏任务</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment">执行顺序：1.宏任务队列中放入setTimeout </span></span><br><span class="line"><span class="comment">         2.console.log(&#x27;构造器内部&#x27;);</span></span><br><span class="line"><span class="comment">         3.console.log(&quot;console&quot;);</span></span><br><span class="line"><span class="comment">         4.主线程执行完，因为只有宏任务中有任务：4.1 往微任务中加入一个任务  4.2 console.log(&#x27;setTimeout&#x27;); 4.3 then中的resolve</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">let</span> promise = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</span><br><span class="line">       <span class="built_in">setTimeout</span>(<span class="function">()=&gt;</span>&#123;</span><br><span class="line">         resolve(<span class="string">&#x27;sucess&#x27;</span>);<span class="comment">//微任务队列加入一个任务</span></span><br><span class="line">         <span class="built_in">console</span>.log(<span class="string">&#x27;setTimeout&#x27;</span>);</span><br><span class="line">       &#125;,<span class="number">0</span>)</span><br><span class="line">       <span class="built_in">console</span>.log(<span class="string">&#x27;构造器内部&#x27;</span>);</span><br><span class="line">    &#125;).then(<span class="function">(<span class="params">resolveMsg</span>)=&gt;</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;现在执行成功后的业务操作&#x27;</span>+resolveMsg);</span><br><span class="line">    &#125;,<span class="function">(<span class="params">rejectMsg</span>)=&gt;</span>&#123; <span class="built_in">console</span>.log(<span class="string">&#x27;现在执行失败后的业务操作：&#x27;</span>+rejectMsg) &#125;);</span><br><span class="line">   </span><br><span class="line">   <span class="built_in">console</span>.log(<span class="string">&quot;console&quot;</span>);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h5 id="Promise-状态中转"><a href="#Promise-状态中转" class="headerlink" title="Promise 状态中转"></a>Promise 状态中转</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> p1 = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</span><br><span class="line">    resolve(<span class="string">&#x27;p1 成功&#x27;</span>);</span><br><span class="line">&#125;).then();</span><br><span class="line"><span class="keyword">let</span> p2 = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</span><br><span class="line">    resolve(p1);<span class="comment">//注意这里传入的是一个Promise对象，那么这意味着什么呢？</span></span><br><span class="line">&#125;).then();</span><br><span class="line"><span class="built_in">console</span>.log(p1,p2);</span><br><span class="line"><span class="comment">/* 输出结果：Promise &#123;&lt;fulfilled&gt;: &quot;p1 成功&quot;&#125;</span></span><br><span class="line"><span class="comment">            Promise &#123;&lt;fulfilled&gt;: &quot;p1 成功&quot;&#125; </span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">let</span> p1 = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</span><br><span class="line">    reject(<span class="string">&#x27;p1 失败&#x27;</span>);</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">let</span> p2 = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</span><br><span class="line">    resolve(p1);<span class="comment">//由于p1的状态是rejected，所以执行then 的第二个回调函数</span></span><br><span class="line">&#125;).then(<span class="function"><span class="params">msg</span>=&gt;</span>&#123; <span class="built_in">console</span>.log(msg); &#125;,<span class="function"><span class="params">rejectmsg</span>=&gt;</span>&#123; <span class="built_in">console</span>.log(rejectmsg+<span class="string">&#x27;error&#x27;</span>); &#125;);</span><br><span class="line"><span class="built_in">console</span>.log(p1);</span><br><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment">p1:Promise &#123;&lt;rejected&gt;: &quot;p1 失败&quot;&#125; 由于p2执行了resolve所以最终p2的状态为fulfilled，</span></span><br><span class="line"><span class="comment">然后执行rejectmsg=&gt;&#123; console.log(rejectmsg+&#x27;error&#x27;);输出：p1 失败error</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="comment">/*这也就意味着，当p2中的resolve传入的值是Promise对象的时候，就相当于传入了p1的状态,p2再根据p1的状态执行对应的回调函数*/</span></span><br></pre></td></tr></table></figure>
-
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">异步编程</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Promise</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/03/06/%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B%E4%B8%8EPromise-1/">展开全文 >></a>
         </p>
       
 
