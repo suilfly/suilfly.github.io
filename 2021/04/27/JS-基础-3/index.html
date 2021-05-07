@@ -6,14 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Tag: Promsie实现 | suilfly的博客</title>
+  <title>JS-基础-3-数据类型转换 | suilfly的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="suilfly的博客">
-<meta property="og:url" content="http://example.com/tags/Promsie%E5%AE%9E%E7%8E%B0/index.html">
+  <meta name="description" content="数据类型转换 显式数据类型转换其他数据类型转数字 其他数据类型转数字 ：使用Number()  字符串转数字1234Number(&amp;#x27;123&amp;#x27;); &#x2F;&#x2F; 123Number(&amp;#x27;aaa&amp;#x27;); &#x2F;&#x2F; NaNNumber(&amp;#x27;1a&amp;#x27;); &#x2F;&#x2F; NaNNumber(&amp;#x27;3.14&amp;#x27;); &#x2F;&#x2F; 3.14 布尔值转字符串12Number(">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS-基础-3-数据类型转换">
+<meta property="og:url" content="http://example.com/2021/04/27/JS-%E5%9F%BA%E7%A1%80-3/index.html">
 <meta property="og:site_name" content="suilfly的博客">
+<meta property="og:description" content="数据类型转换 显式数据类型转换其他数据类型转数字 其他数据类型转数字 ：使用Number()  字符串转数字1234Number(&amp;#x27;123&amp;#x27;); &#x2F;&#x2F; 123Number(&amp;#x27;aaa&amp;#x27;); &#x2F;&#x2F; NaNNumber(&amp;#x27;1a&amp;#x27;); &#x2F;&#x2F; NaNNumber(&amp;#x27;3.14&amp;#x27;); &#x2F;&#x2F; 3.14 布尔值转字符串12Number(">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-04-27T05:56:27.000Z">
+<meta property="article:modified_time" content="2021-04-30T23:22:55.392Z">
 <meta property="article:author" content="John Doe">
+<meta property="article:tag" content="JS基础">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="suilfly的博客" type="application/atom+xml">
@@ -150,60 +155,244 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-JS-基础-3" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2021" class="archive-year">2021</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/03/14/JS-Promise%E5%AE%9E%E7%8E%B0-1/" class="archive-article-date">
-  	<time datetime="2021-03-14T00:40:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-14</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/03/14/JS-Promise%E5%AE%9E%E7%8E%B0-1/">JS-Promise实现-1</a>
+    <h1 class="article-title" itemprop="name">
+      JS-基础-3-数据类型转换
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2021/04/27/JS-%E5%9F%BA%E7%A1%80-3/" class="archive-article-date">
+  	<time datetime="2021-04-27T05:56:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-04-27</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="数据类型转换"><a href="#数据类型转换" class="headerlink" title="数据类型转换"></a>数据类型转换</h4><ul>
+<li><h5 id="显式数据类型转换"><a href="#显式数据类型转换" class="headerlink" title="显式数据类型转换"></a>显式数据类型转换</h5><h5 id="其他数据类型转数字"><a href="#其他数据类型转数字" class="headerlink" title="其他数据类型转数字"></a>其他数据类型转数字</h5><ul>
+<li><p>其他数据类型转数字 ：使用Number()</p>
+<ol>
+<li>字符串转数字<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Number</span>(<span class="string">&#x27;123&#x27;</span>); <span class="comment">// 123</span></span><br><span class="line"><span class="built_in">Number</span>(<span class="string">&#x27;aaa&#x27;</span>); <span class="comment">// NaN</span></span><br><span class="line"><span class="built_in">Number</span>(<span class="string">&#x27;1a&#x27;</span>); <span class="comment">// NaN</span></span><br><span class="line"><span class="built_in">Number</span>(<span class="string">&#x27;3.14&#x27;</span>); <span class="comment">// 3.14</span></span><br></pre></td></tr></table></figure></li>
+<li>布尔值转字符串<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Number</span>(<span class="literal">true</span>); <span class="comment">// 1</span></span><br><span class="line"><span class="built_in">Number</span>(<span class="literal">false</span>); <span class="comment">// 0</span></span><br></pre></td></tr></table></figure></li>
+<li>undefined转字符串<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Number</span>(<span class="literal">undefined</span>); <span class="comment">// NaN</span></span><br></pre></td></tr></table></figure></li>
+<li>null转字符串<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Number</span>(<span class="literal">null</span>); <span class="comment">// 0</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+<li><p>其他类型转数字：使用parseInt()</p>
+<ol>
+<li>字符串转数字<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">parseInt</span>(<span class="string">&#x27;231&#x27;</span>); <span class="comment">// 231</span></span><br><span class="line"><span class="built_in">parseInt</span>(<span class="string">&#x27;3.14&#x27;</span>); <span class="comment">// 3</span></span><br><span class="line"><span class="built_in">parseInt</span>(<span class="string">&#x27;3.9&#x27;</span>); <span class="comment">// 3</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 可以看出parseInt方法只是简单的截取整数部分。并不进行四舍五入的运算</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="comment">/*-----------------------*/</span></span><br><span class="line"><span class="built_in">parseInt</span>(<span class="string">&#x27;21aa&#x27;</span>); <span class="comment">// 21</span></span><br><span class="line"><span class="built_in">parseInt</span>(<span class="string">&#x27;2a1&#x27;</span>); <span class="comment">// 2</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意：parseInt():<br>第一个参数若是字符串，它就会对接受的字符串参数进行解析:例如</p>
+<ul>
+<li>‘21aa’,parseInt解析到可转化为数字的字符串’21’再往后解析发现遇到了不可转化为数字的’a’，那么它就会返回数字：21。<strong>也不管之后的字符串中是否有能转化为数字的子串</strong></li>
+</ul>
+</blockquote>
+</li>
+<li>布尔转数字<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">parseInt</span>(<span class="literal">true</span>); <span class="comment">//NaN</span></span><br><span class="line"><span class="built_in">parseInt</span>(<span class="literal">false</span>); <span class="comment">// NaN</span></span><br></pre></td></tr></table></figure></li>
+<li>undefined转数字<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">parseInt</span>(<span class="literal">undefined</span>); <span class="comment">//NaN</span></span><br></pre></td></tr></table></figure></li>
+<li>null转数字<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">parseInt</span>(<span class="literal">null</span>); <span class="comment">//NaN</span></span><br></pre></td></tr></table></figure></li>
+<li>NaN<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">parseInt</span>(<span class="literal">NaN</span>); <span class="comment">// NaN</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li><p>其他类型转数字：使用parseFloat()</p>
+<ol>
+<li>字符串转数字<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">parseFloat</span>(<span class="string">&#x27;231&#x27;</span>); <span class="comment">// 231</span></span><br><span class="line"><span class="built_in">parseFloat</span>(<span class="string">&#x27;2.3&#x27;</span>); <span class="comment">// 2.3</span></span><br><span class="line"><span class="built_in">parseFloat</span>(<span class="string">&#x27;a&#x27;</span>); <span class="comment">// NaN</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * parseFloat()并不能保留想要的小数位</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> num = <span class="number">3.128323</span>;</span><br><span class="line">num.toFixed(<span class="number">2</span>); <span class="comment">// &#x27;3.13&#x27; !注意这里的结果是字符串类型的</span></span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<li>布尔转数字<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">parseFloat</span>(<span class="literal">true</span>); <span class="comment">//NaN</span></span><br><span class="line"><span class="built_in">parseFloat</span>(<span class="literal">false</span>);<span class="comment">// NaN</span></span><br></pre></td></tr></table></figure></li>
+<li>undefined转数字<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">parseFloat</span>(<span class="literal">undefined</span>); <span class="comment">// NaN</span></span><br></pre></td></tr></table></figure></li>
+<li>null转数字<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">parseFloat</span>(<span class="literal">null</span>); <span class="comment">//NaN</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>parseInt(string,radix)<br>其实有两个参数</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">parseInt</span>(<span class="string">&#x27;10&#x27;</span>,<span class="number">16</span>); <span class="comment">// 16</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 添加了第二个参数后含义为：</span></span><br><span class="line"><span class="comment"> * 十六进制中的10 转化为十进制的结果为16</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
+<h5 id="其他数据类型转字符串"><a href="#其他数据类型转字符串" class="headerlink" title="其他数据类型转字符串"></a>其他数据类型转字符串</h5></li>
+</ol>
+</li>
+<li><p>其他数据类型转字符串：String()</p>
+<ol>
+<li>数字转字符串<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">String</span>(<span class="number">123</span>); <span class="comment">// &quot;123&quot;</span></span><br><span class="line"><span class="built_in">String</span>(<span class="number">123.111</span>); <span class="comment">// &quot;123.111&quot;</span></span><br></pre></td></tr></table></figure></li>
+<li>布尔转字符串<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">String</span>(<span class="literal">true</span>); <span class="comment">//&quot;true&quot;</span></span><br><span class="line"><span class="built_in">String</span>(<span class="literal">false</span>); <span class="comment">// &quot;false&quot;</span></span><br></pre></td></tr></table></figure></li>
+<li>undefined 或 null 转字符串<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">     <span class="built_in">String</span>(<span class="literal">null</span>); <span class="comment">// &#x27;null&#x27;</span></span><br><span class="line">     <span class="built_in">String</span>(<span class="literal">undefined</span>); <span class="comment">// &#x27;undefined&#x27;</span></span><br><span class="line">     <span class="string">``</span><span class="string">`     </span></span><br><span class="line"><span class="string">- ##### 隐式数据类型转换</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">  - ######  运算中的隐式转换</span></span><br><span class="line"><span class="string">    `</span><span class="string">``</span>javascript</span><br><span class="line">    <span class="keyword">var</span> a = <span class="string">&#x27;a&#x27;</span> + <span class="number">1</span>; <span class="comment">// a = &#x27;a1&#x27;</span></span><br><span class="line">    <span class="keyword">var</span> b = <span class="string">&#x27;2&#x27;</span> * <span class="number">3</span>; <span class="comment">// b = 6</span></span><br><span class="line">    <span class="keyword">var</span> c = <span class="string">&#x27;123&#x27;</span>;</span><br><span class="line">    <span class="keyword">var</span> d = c++; <span class="comment">// d = 124</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<ul>
+<li>正负运算:在值的前面加上+或-，会进行隐式数据类型转换<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">  +<span class="literal">true</span>; <span class="comment">// 1</span></span><br><span class="line">  -<span class="literal">true</span></span><br><span class="line"></span><br><span class="line">  +<span class="string">&#x27;123&#x27;</span>; <span class="comment">// 123</span></span><br><span class="line">  -<span class="string">&#x27;123&#x27;</span>; <span class="comment">// -123</span></span><br><span class="line">  +<span class="string">&#x27;12a&#x27;</span>; <span class="comment">// NaN</span></span><br><span class="line"></span><br><span class="line">  +<span class="literal">null</span>; <span class="comment">// 0</span></span><br><span class="line">  -<span class="literal">null</span>; <span class="comment">// -0</span></span><br><span class="line"></span><br><span class="line">  +<span class="literal">undefined</span>; <span class="comment">// NaN</span></span><br><span class="line">  -<span class="literal">undefined</span>; <span class="comment">// NaN</span></span><br><span class="line">  <span class="string">``</span><span class="string">`  </span></span><br><span class="line"><span class="string">- ###### 比较中的隐式转换</span></span><br><span class="line"><span class="string"> &gt;如果比较运算符的两边数据类型不相等。比较的时候都将运算符两边的数据类型转化为数字类型。**但是null类型和undefined类型既不&gt;0，也不&lt;0** </span></span><br><span class="line"><span class="string"> `</span><span class="string">``</span>javascript</span><br><span class="line"> <span class="keyword">var</span> a = <span class="string">&#x27;1&#x27;</span> &gt; <span class="number">2</span>; <span class="comment">// false 字符串1先转换为数字1，之后1与2比较</span></span><br><span class="line"> a = <span class="string">&#x27;1&#x27;</span> == <span class="literal">true</span>; <span class="comment">// a = true</span></span><br><span class="line"> a = <span class="string">&#x27;0&#x27;</span> == <span class="literal">null</span>; <span class="comment">// false</span></span><br><span class="line"> a = <span class="string">&#x27;0&#x27;</span> == <span class="literal">undefined</span>; <span class="comment">// false</span></span><br><span class="line"> a = <span class="number">0</span> == <span class="literal">null</span>; <span class="comment">// false !注意 </span></span><br><span class="line"> a = <span class="number">0</span> &gt;= <span class="literal">null</span>; <span class="comment">// true !  注意</span></span><br><span class="line"> a = <span class="number">0</span> &lt; <span class="literal">null</span>; <span class="comment">// false</span></span><br><span class="line"> a = <span class="number">0</span> &gt;= <span class="literal">undefined</span>; <span class="comment">// false</span></span><br><span class="line"> a = <span class="number">0</span> &lt;= <span class="literal">undefined</span>; <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>=== 全等运算<strong>不进行数据类型转换</strong></p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="判断NaN：isNaN-方法"><a href="#判断NaN：isNaN-方法" class="headerlink" title="判断NaN：isNaN()方法"></a>判断NaN：isNaN()方法</h5><ul>
+<li>把参数先转换为Number类型，再把结果与NaN进行比较</li>
+</ul>
+<pre><code class="javascript">isNaN(&#39;123&#39;); // false
+isNaN(&#39;1qq2&#39;); // true
+
+isNaN(true); // false
+isNaN(false); // false
+
+isNaN(null); //false
+isNaN(undefined); //true
+</code></pre>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Promsie实现</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JS基础</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2021/04/27/JS-%E5%9F%BA%E7%A1%80-3/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2021/05/01/JS-%E5%9F%BA%E7%A1%80-4-%E5%87%BD%E6%95%B0/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          JS-基础-4-函数
+        
+      </div>
+    </a>
   
   
-    </div></section>
+    <a href="/2021/04/26/JS-%E5%9F%BA%E7%A1%80-2/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">JS-基础-2-运算</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -226,9 +415,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
@@ -348,14 +537,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">异步编程</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Promise</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">移动端</a>
               </li>
              
@@ -380,14 +561,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Promsie实现</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">跨域</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">防抖</a>
               </li>
              
@@ -405,6 +578,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Web协议详解与实包</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">JS基础</a>
               </li>
             
             <div class="clearfix"></div>

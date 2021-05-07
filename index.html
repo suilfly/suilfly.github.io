@@ -152,6 +152,698 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-JS基础-原型" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/05/06/JS%E5%9F%BA%E7%A1%80-%E5%8E%9F%E5%9E%8B/">JS基础-原型</a>
+    </h1>
+  
+
+        
+        <a href="/2021/05/06/JS%E5%9F%BA%E7%A1%80-%E5%8E%9F%E5%9E%8B/" class="archive-article-date">
+  	<time datetime="2021-05-06T09:54:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-06</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="原型"><a href="#原型" class="headerlink" title="原型"></a>原型</h3><ul>
+<li><p>什么是原型？</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Handphone</span>(<span class="params">color, brand</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">this</span>.color = color;</span><br><span class="line">    <span class="built_in">this</span>.brand = brand;</span><br><span class="line">    <span class="built_in">this</span>.screen = <span class="string">&quot;18:9&quot;</span> ;</span><br><span class="line">    <span class="built_in">this</span>.system = <span class="string">&quot; Android&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line">Handphone.prototype.rom= <span class="string">&#x27;64G&#x27;</span>;</span><br><span class="line">Handphone .prototype.ram = <span class="string">&#x27;6G&quot; ;</span></span><br><span class="line"><span class="string">Handphone.prototype.screen = &quot;16:9&#x27;</span>; </span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> hp1 = <span class="keyword">new</span> Handphone( <span class="string">&#x27;red&#x27;</span> ,<span class="string">&#x27;小米&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> hp2 = <span class="keyword">new</span> Handphone( <span class="string">&#x27;black&#x27;</span> ,<span class="string">&#x27;华为&#x27;</span>);</span><br><span class="line"><span class="built_in">console</span>.log(hp1.rom); <span class="comment">// 输出64G</span></span><br><span class="line"><span class="built_in">console</span>.log(hp2.ram); <span class="comment">// 6G</span></span><br><span class="line">consoLe.log(hp1.screen); <span class="comment">// 18:9</span></span><br><span class="line">consoLe.log(hp2.screen); <span class="comment">// 18:9</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>看了上面的代码，可能对prototype有了初步的认识。</p>
+<ol>
+<li>可以说prototype是构造函数构造出的每一个对象的<strong>公共祖先</strong></li>
+<li>所有被该构造函数构造出的对象都继承prototype上的属性和方法</li>
+<li>实例中已有的属性若与其prototype重名，则<strong>使用实例自己的属性</strong></li>
+</ol>
+</blockquote>
+</li>
+<li><p>原型可以用来干什么？</p>
+<blockquote>
+<p>在上述的代码中构造函数中，有的属性是写死的值，像这样的参数就可以写到prototype中。而需要配置的参数放入this中 </p>
+</blockquote>
+</li>
+<li><p>能在实例上对prototype实现增删改查吗？</p>
+</li>
+</ul>
+<ol>
+<li>查</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Car</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">&#125;</span><br><span class="line">Car.prototype.name = <span class="string">&#x27;BenBen&#x27;</span>;</span><br><span class="line"><span class="keyword">var</span> car = <span class="keyword">new</span> Car();</span><br><span class="line">car.name; <span class="comment">// BenBen</span></span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>增 ✖ 不能实现<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Car</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">&#125;</span><br><span class="line">Car.prototype.name = <span class="string">&#x27;BenBen&#x27;</span>;</span><br><span class="line"><span class="keyword">var</span> car = <span class="keyword">new</span> Car();</span><br><span class="line">car.size = <span class="number">1222</span>;</span><br><span class="line">Car.prototype.size; <span class="comment">// undefined</span></span><br></pre></td></tr></table></figure></li>
+<li>删 ✖ 不能实现<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Car</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">&#125;</span><br><span class="line">Car.prototype.name = <span class="string">&#x27;BenBen&#x27;</span>;</span><br><span class="line"><span class="keyword">var</span> car = <span class="keyword">new</span> Car();</span><br><span class="line"><span class="keyword">delete</span> car.name;</span><br><span class="line">Car.prototype.name; <span class="comment">//BenBen</span></span><br></pre></td></tr></table></figure></li>
+<li>改 ✖ 不能实现<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Car</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">&#125;</span><br><span class="line">Car.prototype.name = <span class="string">&#x27;BenBen&#x27;</span>;</span><br><span class="line"><span class="keyword">var</span> car = <span class="keyword">new</span> Car();</span><br><span class="line">car.name = <span class="string">&#x27;sasa&#x27;</span></span><br><span class="line"><span class="string">``</span><span class="string">`  </span></span><br><span class="line"><span class="string">#### prototype中的constructor属性</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&lt;img src=&quot;/img/constructor.png&quot;/&gt;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">* prototype.constructor仍然指向构造函数本身</span></span><br><span class="line"><span class="string">* 而构造函数中又有prototype属性，这样就形成了一个链。</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">##### constructor可以被修改吗？</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">`</span><span class="string">``</span>javascript</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Car</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Car2</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line">Car.prototype = &#123;</span><br><span class="line">    <span class="title">constructor</span>:<span class="title">Car2</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<img src="/img/constructor-2.png"/>
+</li>
+</ol>
+<ul>
+<li>由此可以看出constructor是可以被修改的</li>
+</ul>
+<h4 id="实例中的-proto-是什么？"><a href="#实例中的-proto-是什么？" class="headerlink" title="实例中的__proto__是什么？"></a>实例中的__proto__是什么？</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Car</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> car = <span class="keyword">new</span> Car();</span><br><span class="line">car;</span><br></pre></td></tr></table></figure>
+<img src="/img/constructor-3.png"/>
+
+<blockquote>
+<p>由上图可知__proto__是属于每一个<strong>实例的</strong>，是实例化以后的结果</p>
+</blockquote>
+<ul>
+<li><p>那么__proto__是怎么产生的呢？</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Car</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">this</span>.size = <span class="number">122</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> car = <span class="keyword">new</span> Car();</span><br><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment"> * 当实例化的时候，给this隐式地添加__proto__属性,而__proto__只是一个系统定义的属性名而已</span></span><br><span class="line"><span class="comment"> * this:&#123;</span></span><br><span class="line"><span class="comment"> *    __proto__:Car.prototype</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="string">``</span><span class="string">`  </span></span><br><span class="line"><span class="string">- __proto__属性是可以更改吗？</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"> `</span><span class="string">``</span>javascript</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Car</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">this</span>.size = <span class="number">122</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> car = <span class="keyword">new</span> Car();</span><br><span class="line">car.__proto__ = &#123;</span><br><span class="line">    re:<span class="number">1</span></span><br><span class="line">&#125;</span><br><span class="line">car.__proto__;<span class="comment">// &#123; re: 1 &#125;</span></span><br><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment"> * 说明__proto__和普通属性一样可以被赋值修改</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="string">``</span><span class="string">`  </span></span><br><span class="line"><span class="string">### 关于原型的深入理解</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">`</span><span class="string">``</span>javascript</span><br><span class="line">Car.prototype.name = <span class="string">&#x27;A&#x27;</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Car</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> car = <span class="keyword">new</span> Car();</span><br><span class="line">Car.prototype = &#123;</span><br><span class="line">    name: <span class="string">&#x27;B&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(car.name);<span class="comment">// A</span></span><br><span class="line"><span class="built_in">console</span>.log(car.__proto__);<span class="comment">//</span></span><br></pre></td></tr></table></figure></li>
+<li><p>上面的代码就体现出了实例化的时候__proto__的赋值细节</p>
+</li>
+</ul>
+<blockquote>
+<p>在car实例化的时候 this.<strong>proto</strong> = Car.prototype，这个时候的原型还未被修改，所以在使用car.name访问的时候，其实是查找的this.<strong>proto__中保存的属性。所以之后的原型改了不影响已赋值的__proto</strong></p>
+</blockquote>
+<p>而car.__proto__却是：<img src="/img/constructor-4.png"/><br>constructor中的prototype.name = ‘B’,这是为什么？</p>
+<blockquote>
+<p>对于实例car来说，__proto__指向的仍是旧的原型。但是Car.prototype.constructor = Car。而Car中又有Car.prototype,它已经被更新了所以name是’B’</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Car.prototype.name = <span class="string">&#x27;A&#x27;</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Car</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> car = <span class="keyword">new</span> Car();</span><br><span class="line">Car.prototype = &#123;</span><br><span class="line">    name: <span class="string">&#x27;B&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> car2 = <span class="keyword">new</span> Car();</span><br><span class="line"><span class="built_in">console</span>.log(car.__proto__); <span class="comment">// &#123;name: &quot;A&quot;, constructor: ƒ&#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(car2.__proto__); <span class="comment">// &#123;name: &quot;B&quot;&#125;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>可以看出car2.__proto__中的保存的prototype中的constructor丢失了</p>
+</blockquote>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JS基础</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/05/06/JS%E5%9F%BA%E7%A1%80-%E5%8E%9F%E5%9E%8B/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-JS-基础-4-函数" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/05/01/JS-%E5%9F%BA%E7%A1%80-4-%E5%87%BD%E6%95%B0/">JS-基础-4-函数</a>
+    </h1>
+  
+
+        
+        <a href="/2021/05/01/JS-%E5%9F%BA%E7%A1%80-4-%E5%87%BD%E6%95%B0/" class="archive-article-date">
+  	<time datetime="2021-04-30T23:28:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-01</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="函数基础"><a href="#函数基础" class="headerlink" title="函数基础"></a>函数基础</h4>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JS基础</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/05/01/JS-%E5%9F%BA%E7%A1%80-4-%E5%87%BD%E6%95%B0/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-JS-基础-3" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/04/27/JS-%E5%9F%BA%E7%A1%80-3/">JS-基础-3-数据类型转换</a>
+    </h1>
+  
+
+        
+        <a href="/2021/04/27/JS-%E5%9F%BA%E7%A1%80-3/" class="archive-article-date">
+  	<time datetime="2021-04-27T05:56:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-04-27</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="数据类型转换"><a href="#数据类型转换" class="headerlink" title="数据类型转换"></a>数据类型转换</h4><ul>
+<li><h5 id="显式数据类型转换"><a href="#显式数据类型转换" class="headerlink" title="显式数据类型转换"></a>显式数据类型转换</h5><h5 id="其他数据类型转数字"><a href="#其他数据类型转数字" class="headerlink" title="其他数据类型转数字"></a>其他数据类型转数字</h5><ul>
+<li><p>其他数据类型转数字 ：使用Number()</p>
+<ol>
+<li>字符串转数字<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Number</span>(<span class="string">&#x27;123&#x27;</span>); <span class="comment">// 123</span></span><br><span class="line"><span class="built_in">Number</span>(<span class="string">&#x27;aaa&#x27;</span>); <span class="comment">// NaN</span></span><br><span class="line"><span class="built_in">Number</span>(<span class="string">&#x27;1a&#x27;</span>); <span class="comment">// NaN</span></span><br><span class="line"><span class="built_in">Number</span>(<span class="string">&#x27;3.14&#x27;</span>); <span class="comment">// 3.14</span></span><br></pre></td></tr></table></figure></li>
+<li>布尔值转字符串<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Number</span>(<span class="literal">true</span>); <span class="comment">// 1</span></span><br><span class="line"><span class="built_in">Number</span>(<span class="literal">false</span>); <span class="comment">// 0</span></span><br></pre></td></tr></table></figure></li>
+<li>undefined转字符串<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Number</span>(<span class="literal">undefined</span>); <span class="comment">// NaN</span></span><br></pre></td></tr></table></figure></li>
+<li>null转字符串<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Number</span>(<span class="literal">null</span>); <span class="comment">// 0</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+<li><p>其他类型转数字：使用parseInt()</p>
+<ol>
+<li>字符串转数字<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">parseInt</span>(<span class="string">&#x27;231&#x27;</span>); <span class="comment">// 231</span></span><br><span class="line"><span class="built_in">parseInt</span>(<span class="string">&#x27;3.14&#x27;</span>); <span class="comment">// 3</span></span><br><span class="line"><span class="built_in">parseInt</span>(<span class="string">&#x27;3.9&#x27;</span>); <span class="comment">// 3</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 可以看出parseInt方法只是简单的截取整数部分。并不进行四舍五入的运算</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="comment">/*-----------------------*/</span></span><br><span class="line"><span class="built_in">parseInt</span>(<span class="string">&#x27;21aa&#x27;</span>); <span class="comment">// 21</span></span><br><span class="line"><span class="built_in">parseInt</span>(<span class="string">&#x27;2a1&#x27;</span>); <span class="comment">// 2</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意：parseInt():<br>第一个参数若是字符串，它就会对接受的字符串参数进行解析:例如</p>
+<ul>
+<li>‘21aa’,parseInt解析到可转化为数字的字符串’21’再往后解析发现遇到了不可转化为数字的’a’，那么它就会返回数字：21。<strong>也不管之后的字符串中是否有能转化为数字的子串</strong></li>
+</ul>
+</blockquote>
+</li>
+<li>布尔转数字<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">parseInt</span>(<span class="literal">true</span>); <span class="comment">//NaN</span></span><br><span class="line"><span class="built_in">parseInt</span>(<span class="literal">false</span>); <span class="comment">// NaN</span></span><br></pre></td></tr></table></figure></li>
+<li>undefined转数字<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">parseInt</span>(<span class="literal">undefined</span>); <span class="comment">//NaN</span></span><br></pre></td></tr></table></figure></li>
+<li>null转数字<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">parseInt</span>(<span class="literal">null</span>); <span class="comment">//NaN</span></span><br></pre></td></tr></table></figure></li>
+<li>NaN<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">parseInt</span>(<span class="literal">NaN</span>); <span class="comment">// NaN</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li><p>其他类型转数字：使用parseFloat()</p>
+<ol>
+<li>字符串转数字<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">parseFloat</span>(<span class="string">&#x27;231&#x27;</span>); <span class="comment">// 231</span></span><br><span class="line"><span class="built_in">parseFloat</span>(<span class="string">&#x27;2.3&#x27;</span>); <span class="comment">// 2.3</span></span><br><span class="line"><span class="built_in">parseFloat</span>(<span class="string">&#x27;a&#x27;</span>); <span class="comment">// NaN</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * parseFloat()并不能保留想要的小数位</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> num = <span class="number">3.128323</span>;</span><br><span class="line">num.toFixed(<span class="number">2</span>); <span class="comment">// &#x27;3.13&#x27; !注意这里的结果是字符串类型的</span></span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<li>布尔转数字<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">parseFloat</span>(<span class="literal">true</span>); <span class="comment">//NaN</span></span><br><span class="line"><span class="built_in">parseFloat</span>(<span class="literal">false</span>);<span class="comment">// NaN</span></span><br></pre></td></tr></table></figure></li>
+<li>undefined转数字<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">parseFloat</span>(<span class="literal">undefined</span>); <span class="comment">// NaN</span></span><br></pre></td></tr></table></figure></li>
+<li>null转数字<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">parseFloat</span>(<span class="literal">null</span>); <span class="comment">//NaN</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>parseInt(string,radix)<br>其实有两个参数</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">parseInt</span>(<span class="string">&#x27;10&#x27;</span>,<span class="number">16</span>); <span class="comment">// 16</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 添加了第二个参数后含义为：</span></span><br><span class="line"><span class="comment"> * 十六进制中的10 转化为十进制的结果为16</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
+<h5 id="其他数据类型转字符串"><a href="#其他数据类型转字符串" class="headerlink" title="其他数据类型转字符串"></a>其他数据类型转字符串</h5></li>
+</ol>
+</li>
+<li><p>其他数据类型转字符串：String()</p>
+<ol>
+<li>数字转字符串<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">String</span>(<span class="number">123</span>); <span class="comment">// &quot;123&quot;</span></span><br><span class="line"><span class="built_in">String</span>(<span class="number">123.111</span>); <span class="comment">// &quot;123.111&quot;</span></span><br></pre></td></tr></table></figure></li>
+<li>布尔转字符串<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">String</span>(<span class="literal">true</span>); <span class="comment">//&quot;true&quot;</span></span><br><span class="line"><span class="built_in">String</span>(<span class="literal">false</span>); <span class="comment">// &quot;false&quot;</span></span><br></pre></td></tr></table></figure></li>
+<li>undefined 或 null 转字符串<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">     <span class="built_in">String</span>(<span class="literal">null</span>); <span class="comment">// &#x27;null&#x27;</span></span><br><span class="line">     <span class="built_in">String</span>(<span class="literal">undefined</span>); <span class="comment">// &#x27;undefined&#x27;</span></span><br><span class="line">     <span class="string">``</span><span class="string">`     </span></span><br><span class="line"><span class="string">- ##### 隐式数据类型转换</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">  - ######  运算中的隐式转换</span></span><br><span class="line"><span class="string">    `</span><span class="string">``</span>javascript</span><br><span class="line">    <span class="keyword">var</span> a = <span class="string">&#x27;a&#x27;</span> + <span class="number">1</span>; <span class="comment">// a = &#x27;a1&#x27;</span></span><br><span class="line">    <span class="keyword">var</span> b = <span class="string">&#x27;2&#x27;</span> * <span class="number">3</span>; <span class="comment">// b = 6</span></span><br><span class="line">    <span class="keyword">var</span> c = <span class="string">&#x27;123&#x27;</span>;</span><br><span class="line">    <span class="keyword">var</span> d = c++; <span class="comment">// d = 124</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<ul>
+<li>正负运算:在值的前面加上+或-，会进行隐式数据类型转换<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">  +<span class="literal">true</span>; <span class="comment">// 1</span></span><br><span class="line">  -<span class="literal">true</span></span><br><span class="line"></span><br><span class="line">  +<span class="string">&#x27;123&#x27;</span>; <span class="comment">// 123</span></span><br><span class="line">  -<span class="string">&#x27;123&#x27;</span>; <span class="comment">// -123</span></span><br><span class="line">  +<span class="string">&#x27;12a&#x27;</span>; <span class="comment">// NaN</span></span><br><span class="line"></span><br><span class="line">  +<span class="literal">null</span>; <span class="comment">// 0</span></span><br><span class="line">  -<span class="literal">null</span>; <span class="comment">// -0</span></span><br><span class="line"></span><br><span class="line">  +<span class="literal">undefined</span>; <span class="comment">// NaN</span></span><br><span class="line">  -<span class="literal">undefined</span>; <span class="comment">// NaN</span></span><br><span class="line">  <span class="string">``</span><span class="string">`  </span></span><br><span class="line"><span class="string">- ###### 比较中的隐式转换</span></span><br><span class="line"><span class="string"> &gt;如果比较运算符的两边数据类型不相等。比较的时候都将运算符两边的数据类型转化为数字类型。**但是null类型和undefined类型既不&gt;0，也不&lt;0** </span></span><br><span class="line"><span class="string"> `</span><span class="string">``</span>javascript</span><br><span class="line"> <span class="keyword">var</span> a = <span class="string">&#x27;1&#x27;</span> &gt; <span class="number">2</span>; <span class="comment">// false 字符串1先转换为数字1，之后1与2比较</span></span><br><span class="line"> a = <span class="string">&#x27;1&#x27;</span> == <span class="literal">true</span>; <span class="comment">// a = true</span></span><br><span class="line"> a = <span class="string">&#x27;0&#x27;</span> == <span class="literal">null</span>; <span class="comment">// false</span></span><br><span class="line"> a = <span class="string">&#x27;0&#x27;</span> == <span class="literal">undefined</span>; <span class="comment">// false</span></span><br><span class="line"> a = <span class="number">0</span> == <span class="literal">null</span>; <span class="comment">// false !注意 </span></span><br><span class="line"> a = <span class="number">0</span> &gt;= <span class="literal">null</span>; <span class="comment">// true !  注意</span></span><br><span class="line"> a = <span class="number">0</span> &lt; <span class="literal">null</span>; <span class="comment">// false</span></span><br><span class="line"> a = <span class="number">0</span> &gt;= <span class="literal">undefined</span>; <span class="comment">// false</span></span><br><span class="line"> a = <span class="number">0</span> &lt;= <span class="literal">undefined</span>; <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>=== 全等运算<strong>不进行数据类型转换</strong></p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="判断NaN：isNaN-方法"><a href="#判断NaN：isNaN-方法" class="headerlink" title="判断NaN：isNaN()方法"></a>判断NaN：isNaN()方法</h5><ul>
+<li>把参数先转换为Number类型，再把结果与NaN进行比较</li>
+</ul>
+<pre><code class="javascript">isNaN(&#39;123&#39;); // false
+isNaN(&#39;1qq2&#39;); // true
+
+isNaN(true); // false
+isNaN(false); // false
+
+isNaN(null); //false
+isNaN(undefined); //true
+</code></pre>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JS基础</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/04/27/JS-%E5%9F%BA%E7%A1%80-3/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-JS-基础-2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/04/26/JS-%E5%9F%BA%E7%A1%80-2/">JS-基础-2-运算</a>
+    </h1>
+  
+
+        
+        <a href="/2021/04/26/JS-%E5%9F%BA%E7%A1%80-2/" class="archive-article-date">
+  	<time datetime="2021-04-26T02:27:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-04-26</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="运算符-，-，-，-，-，-，-，–"><a href="#运算符-，-，-，-，-，-，-，–" class="headerlink" title="运算符 +，-，*，/，()，%，++，–"></a>运算符 +，-，*，/，()，%，++，–</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">1</span>,</span><br><span class="line">    b = <span class="number">2</span>,</span><br><span class="line">    d = <span class="number">3</span>;</span><br><span class="line"><span class="keyword">var</span> c = (a+b) * d;</span><br><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment"> * 1.声明变量c</span></span><br><span class="line"><span class="comment"> * 2.()优先级高，先计算(a+b)</span></span><br><span class="line"><span class="comment"> * 3.将计算的(a+b)的值与d的值相乘</span></span><br><span class="line"><span class="comment"> * 4.将以上计算的结果赋值给a</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>+</p>
+<blockquote>
+<p> + 在JS中有两种不同的用途</p>
+</blockquote>
+<ol>
+<li>数学运算</li>
+<li>字符串拼接</li>
+</ol>
+<ul>
+<li><p>任何数据类型的值 + 字符串，结果都是字符串</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> c = <span class="string">&#x27;s&#x27;</span> + <span class="number">1</span> + <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+
+<img src="/img/字符串拼接-1.png"/>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> c = <span class="number">1</span> + <span class="number">1</span> + <span class="string">&#x27;s&#x27;</span> + (<span class="number">1</span> + <span class="number">1</span>);</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 按照从左往右的运算顺序：</span></span><br><span class="line"><span class="comment"> *   1.(1 + 1) = 2</span></span><br><span class="line"><span class="comment"> *   2. 1 + 1 = 2</span></span><br><span class="line"><span class="comment"> *   3. 2 + &#x27;s&#x27; = &#x27;2s&#x27;</span></span><br><span class="line"><span class="comment"> *   4. &#x27;2s&#x27; + 2 = &#x27;2s2&#x27;</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>/</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> c = <span class="number">0</span> / <span class="number">0</span>; <span class="comment">// c = NaN:Not a Number -&gt; NaN属于数字类型</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a = <span class="number">1</span> / <span class="number">0</span>; <span class="comment">// a = Infinity -&gt; 属于数字类型</span></span><br><span class="line"><span class="keyword">var</span> b = -<span class="number">1</span> / <span class="number">0</span>; <span class="comment">// b = -Infinity -&gt; 属于数字类型</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">1</span> / <span class="number">2</span>; <span class="comment">// a = 0.5</span></span><br></pre></td></tr></table></figure></li>
+<li><p>% :取余运算符</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">4</span> % <span class="number">3</span>; <span class="comment">//a = 1,4除以3的余数</span></span><br><span class="line"><span class="keyword">var</span> b = <span class="number">5.5</span> % <span class="number">2</span>; <span class="comment">// b = 1.5</span></span><br><span class="line"><span class="keyword">var</span> c = -<span class="number">4</span> % <span class="number">2</span>; <span class="comment">// -0</span></span><br></pre></td></tr></table></figure></li>
+<li><p>++ :递增  –：递减</p>
+<ul>
+<li>后置递增：a++,先返回值，返回值之后再加一</li>
+<li>前置递增：++a,会把值加一后返回</li>
+<li>递减同理</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">1</span>,</span><br><span class="line">    c;</span><br><span class="line">c = a++ + ++a; <span class="comment">// c = 4, a = 3</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 1. a++返回1</span></span><br><span class="line"><span class="comment"> * 2. 1 + (2 + 1)</span></span><br><span class="line"><span class="comment"> * 3. 把4赋值给c</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">5</span>,</span><br><span class="line">    c;</span><br><span class="line">c = --a + a++; <span class="comment">// a = 4,c = 8</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 1. --a:5-1,返回4</span></span><br><span class="line"><span class="comment"> * 2. a++:返回4,返回后a = a+1</span></span><br><span class="line"><span class="comment"> * c = 4 + 4</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h4 id="比较运算符"><a href="#比较运算符" class="headerlink" title="比较运算符"></a>比较运算符</h4><ul>
+<li>&gt; , &gt;= , &lt; , &lt;= </li>
+</ul>
+<blockquote>
+<p>需要注意两点：</p>
+</blockquote>
+<ol>
+<li><p>Number 与 String比较，将String转化成Number再比较</p>
+</li>
+<li><p>String 与String比较，依次从左向右比较每个字符所对应的的ASCII码</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#x27;4&#x27;</span> &gt; <span class="number">1</span>;<span class="comment">//true</span></span><br><span class="line"><span class="string">&#x27;2.1&#x27;</span> &gt; <span class="string">&#x27;11&#x27;</span>;<span class="comment">//true 依次比较ASCII码：字符2ASCII &gt; 字符1ASCII，为true则直接返回true</span></span><br></pre></td></tr></table></figure>
+<p>ASCII表</p>
+</li>
+</ol>
+<ul>
+<li><p>== , ===</p>
+<ol>
+<li>== 是不看数据类型的，也就是说表面的值相等即可<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> == <span class="string">&#x27;1&#x27;</span>;<span class="comment">//true</span></span><br></pre></td></tr></table></figure></li>
+<li>=== 要求更严格，要求<strong>值和数据类型都相等</strong></li>
+</ol>
+</li>
+</ul>
+<blockquote>
+<p>! NaN == NaN 为false。可以看出NaN与 包括自己在内的任何值都不相等</p>
+</blockquote>
+<h4 id="逻辑运算符"><a href="#逻辑运算符" class="headerlink" title="逻辑运算符"></a>逻辑运算符</h4><blockquote>
+<p>注意： undefined , null , NaN , ‘’ , 0 , false 这些值一定为假</p>
+</blockquote>
+<ul>
+<li><p>&amp;&amp; </p>
+<blockquote>
+<p>遇到真，就继续往后判断<br>遇到假，就直接将假值返回</p>
+ <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0</span> &amp;&amp; <span class="number">1</span> <span class="comment">//0,遇到0其值为假，直接返回假值-&gt;0</span></span><br><span class="line"><span class="number">1</span> &amp;&amp; <span class="number">1</span> <span class="comment">//1</span></span><br><span class="line"><span class="number">1</span> &amp;&amp; <span class="number">0</span> <span class="comment">// 0,遇到1值为真，继续向后判断，0值为假，返回假值0</span></span><br><span class="line"><span class="number">1</span> &amp;&amp; <span class="number">1</span> <span class="comment">//1</span></span><br></pre></td></tr></table></figure></blockquote>
+</li>
+<li><p>|| </p>
+<blockquote>
+<p>遇到真，就之间返回这个真值<br>遇到假，就继续往后判断</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> || <span class="number">0</span> <span class="comment">// 1 遇到1，值为真，直接返回真值-&gt;1</span></span><br><span class="line"><span class="number">1</span> || <span class="number">1</span> <span class="comment">// 1</span></span><br><span class="line"><span class="number">0</span> || <span class="number">0</span> <span class="comment">//0</span></span><br><span class="line"><span class="number">0</span> || <span class="number">1</span> <span class="comment">//1 遇到0，值为假，继续向后判断，1为真，直接返回这个真值1</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>！</p>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = !<span class="number">1</span>; <span class="comment">// false</span></span><br><span class="line">a = !a; <span class="comment">//a= a的非值</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="分支语句"><a href="#分支语句" class="headerlink" title="分支语句"></a>分支语句</h3><ul>
+<li><p>if语句</p>
+<ul>
+<li>if结构:对于<strong>每一个</strong>if语句都要判断一下表达式是否满足条件<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(a &gt; <span class="number">0</span>)&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(b &gt;<span class="number">0</span>)&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure></li>
+<li>if-else结构:适用于有明确的互斥条件的逻辑，遇到一个符合调的分支后，就不检查之后的if分支了<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(a &gt; <span class="number">1</span>)&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;<span class="keyword">else</span> <span class="keyword">if</span>( a &lt; <span class="number">0</span> &amp;&amp; a &gt; -<span class="number">1</span>)&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;<span class="keyword">else</span> <span class="keyword">if</span>(a &lt;= -<span class="number">1</span>)&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>switch-case 语句</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">switch</span>(表达式)&#123;</span><br><span class="line">    <span class="keyword">case</span> 表达式<span class="number">1</span>:</span><br><span class="line">        代码块;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> 表达式<span class="number">2</span>:</span><br><span class="line">        代码块;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">        ...</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">        代码块;</span><br><span class="line">       </span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>if与switch的选择：</p>
+<ol>
+<li>当要判断的变量是否是一个准确的值的时候，switch结构更适合。</li>
+<li>当要判断变量出于什么范围的时候，if结构更适合</li>
+</ol>
+</blockquote>
+</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JS基础</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/04/26/JS-%E5%9F%BA%E7%A1%80-2/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-JS-基础-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/04/25/JS-%E5%9F%BA%E7%A1%80-1/">JS-基础-1</a>
+    </h1>
+  
+
+        
+        <a href="/2021/04/25/JS-%E5%9F%BA%E7%A1%80-1/" class="archive-article-date">
+  	<time datetime="2021-04-25T09:14:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-04-25</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="浏览器内核"><a href="#浏览器内核" class="headerlink" title="浏览器内核"></a>浏览器内核</h4><ul>
+<li>IE — trident</li>
+<li>Chrome — webkit blink</li>
+<li>Safari — webkit</li>
+<li>firefox — gecko</li>
+<li>opera — presto</li>
+</ul>
+<h4 id="浏览器的发展史"><a href="#浏览器的发展史" class="headerlink" title="浏览器的发展史"></a>浏览器的发展史</h4><h4 id="编程语言"><a href="#编程语言" class="headerlink" title="编程语言"></a>编程语言</h4><ul>
+<li>编译型<blockquote>
+<p>源码 -&gt; 编译器 -&gt; 机器语言 -&gt; 可执行文件<br>有跨平台的问题</p>
+</blockquote>
+</li>
+<li>解释型<blockquote>
+<p>源码 -&gt; 解释器 -&gt; 解释一行执行一行<br>不需要根据不同的系统平台进行移植</p>
+</blockquote>
+</li>
+</ul>
+<h4 id="脚本语言"><a href="#脚本语言" class="headerlink" title="脚本语言"></a>脚本语言</h4><blockquote>
+<p>脚本语言又被称为扩建的语言，或者动态语言，是一种编程语言，用来控制软件应用程序，只在被调用时进行解释或编译</p>
+</blockquote>
+<ul>
+<li>客户端脚本：如JavaScript</li>
+<li>服务端脚本：如PHP</li>
+</ul>
+<h4 id="脚本引擎"><a href="#脚本引擎" class="headerlink" title="脚本引擎"></a>脚本引擎</h4><blockquote>
+<p>脚本引擎，就是<strong>一个计算机编程语言的解释器</strong>，如用于建网站的asp、php等，它的功能是解释执行用户的程序文本，将它译成计算机能执行的机器代码，完成一系列的功能。</p>
+</blockquote>
+<ul>
+<li><p>JS引擎：JavaScript引擎是一个专门处理JavaScript脚本的虚拟机，一般会附带在网页浏览器之中。</p>
+<h4 id="ECMAScript"><a href="#ECMAScript" class="headerlink" title="ECMAScript"></a>ECMAScript</h4></li>
+<li><p>ECMA：European Computer Manufactures Association(欧洲计算机制造商学会)，用来评估、开发、认可电信和计算机标准</p>
+</li>
+<li><p>ECMA-262：<strong>脚本语言规范</strong> ECMAScript</p>
+</li>
+</ul>
+<h4 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h4><p>JavaScript三个组成部分</p>
+<ul>
+<li><p>ECMAScript</p>
+</li>
+<li><p>DOM ：document Object model</p>
+</li>
+<li><p>BOM ：browser Object model</p>
+<p>JavaScript在浏览其中执行需要一个脚本引擎来解释代码的含义：JS引擎</p>
+</li>
+<li><h4 id="为什么JavaScript是单线程的呢？"><a href="#为什么JavaScript是单线程的呢？" class="headerlink" title="为什么JavaScript是单线程的呢？"></a>为什么JavaScript是单线程的呢？</h4><blockquote>
+<p>JavaScript 的单线程，与它的用途有关。作为浏览器脚本语言，JavaScript 的主要用途是与用户互动，以及<strong>操作 DOM</strong>。这决定了它只能是单线程，否则会带来很复杂的同步问题。比如，假定JavaScript 同时有两个线程，一个线程在某个 DOM 节点上添加内容，另一个线程删除了这个节点，这时浏览器应该以哪个线程为准？也就是说浏览器不能限制子线程的行为，所以它必须是单线程的。</p>
+</blockquote>
+</li>
+<li><h4 id="JavaScript是单线程的如何执行异步程序代码呢？"><a href="#JavaScript是单线程的如何执行异步程序代码呢？" class="headerlink" title="JavaScript是单线程的如何执行异步程序代码呢？"></a>JavaScript是单线程的如何执行异步程序代码呢？</h4><blockquote>
+<p>JS引擎通过轮转时间片算法来实现异步</p>
+</blockquote>
+<ol>
+<li>将任务一，任务二，任务三…切片</li>
+<li>将切分的任务随机排列，放入队列中</li>
+<li>按照这个队列的顺序，将任务送入JS线程</li>
+<li>JS线程按照时间片执行任务</li>
+</ol>
+</li>
+</ul>
+<h4 id="JavaScript语法"><a href="#JavaScript语法" class="headerlink" title="JavaScript语法"></a>JavaScript语法</h4><ul>
+<li><p>引用JS脚本</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span>&gt;</span></span><br><span class="line">    js代码..</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;/js文件&quot;</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 利用type属性编写模板 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/tpl&quot;</span>&gt;</span></span><br><span class="line"><span class="handlebars"><span class="xml"><span class="comment">&lt;!-- 浏览器不能识别这种类型的脚本文件，所以选择不执行。后续可以通过js来替换掉</span></span><span class="template-variable">&#123;&#123;&#125;&#125;</span><span class="xml"><span class="comment">中的变量，把模板更新到HTML中 --&gt;</span></span></span></span><br><span class="line"><span class="handlebars"><span class="xml">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><span class="template-variable">&#123;&#123; <span class="name">module</span> &#125;&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span></span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>变量</p>
+<ul>
+<li><p>声明变量</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a;</span><br><span class="line"><span class="string">``</span><span class="string">`  </span></span><br><span class="line"><span class="string">- 变量赋值</span></span><br><span class="line"><span class="string">`</span><span class="string">``</span>javascript</span><br><span class="line">a = <span class="number">3</span>;</span><br></pre></td></tr></table></figure></li>
+<li><p>变量命名规范</p>
+<ol>
+<li>不能以数字开头</li>
+<li>可以以_ 或 $ 开头</li>
+<li>变量名中间可以包含数字、字符、_、$</li>
+<li>保留字和关键字不可以作为变量名</li>
+<li> 命名语义化，结构化。如：css中样式类会被js引用则命名为:j_body等</li>
+<li> 小驼峰的书写格式：myFirstName</li>
+</ol>
+<h4 id="JS的值"><a href="#JS的值" class="headerlink" title="JS的值"></a>JS的值</h4></li>
+</ul>
+</li>
+<li><p>基本数据类型</p>
+<ol>
+<li>Number</li>
+<li>String</li>
+<li>Boolean</li>
+<li>undefined</li>
+<li>null</li>
+<li>Symbol</li>
+</ol>
+<ul>
+<li>基本数据类型与内存<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">var</span> b = a;</span><br><span class="line">a = <span class="number">3</span>;</span><br></pre></td></tr></table></figure>
+执行上述代码后内存中会发生什么？</li>
+</ul>
+<img src="/img/栈内存-1.png"/>
+<img src="/img/栈内存-2.png"/>
+</li>
+<li><p>引用数据类型</p>
+<ul>
+<li>常用：object,array,function,date,RegExp</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>];</span><br><span class="line"><span class="keyword">var</span> arr2 = arr;</span><br><span class="line">arr = [<span class="number">1</span>,<span class="number">2</span>];</span><br></pre></td></tr></table></figure>
+<p>执行上述代码后内存中会发生什么？</p>
+<img src="/img/堆内存.png"/>
+</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JS基础</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/04/25/JS-%E5%9F%BA%E7%A1%80-1/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Node-js-JSONP" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -590,395 +1282,6 @@
 
 
   
-    <article id="post-CSS-link-import" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/03/25/CSS-link-import/">CSS-link&amp;@import</a>
-    </h1>
-  
-
-        
-        <a href="/2021/03/25/CSS-link-import/" class="archive-article-date">
-  	<time datetime="2021-03-25T10:50:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-25</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="把CSS应用到HTML上"><a href="#把CSS应用到HTML上" class="headerlink" title="把CSS应用到HTML上"></a>把CSS应用到HTML上</h3><h4 id="link标签"><a href="#link标签" class="headerlink" title="link标签"></a>link标签</h4><ul>
-<li><p>link标签必须放在head标签中，不能放在其他元素中。Web浏览器在遇到link标签时，会查找并加载指定的样式表，使用样式表中的样式渲染HTML文档</p>
-</li>
-<li><p>link引入的样式表中只能有CSS规则和CSS注释。</p>
-</li>
-<li><p>可以使用link配置候选样式表</p>
-</li>
-</ul>
-<p>如下，rel(relation)指定关系是样式表，type的值始终是text/css：说明通过link标签加载的数据类型。href指明样式表的URL，可以是绝对地址也可以是相对地址。media(其值可以是：screen，print，all等媒体描述符)</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span> <span class="attr">type</span>=<span class="string">&quot;text/css&quot;</span> <span class="attr">href</span>=<span class="string">&quot;&quot;</span> <span class="attr">media</span>=<span class="string">&quot;screen,print&quot;</span> /&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>设置候选样式表(感觉不常用)</li>
-</ul>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;alernate stylesheet&quot;</span> <span class="attr">type</span>=<span class="string">&quot;text/css&quot;</span> <span class="attr">href</span>=<span class="string">&quot;&quot;</span> <span class="attr">media</span>=<span class="string">&quot;screen,print&quot;</span> <span class="attr">title</span>=<span class="string">&quot;Default&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;alernate stylesheet&quot;</span> <span class="attr">type</span>=<span class="string">&quot;text/css&quot;</span> <span class="attr">href</span>=<span class="string">&quot;&quot;</span> <span class="attr">media</span>=<span class="string">&quot;screen,print&quot;</span> <span class="attr">title</span>=<span class="string">&quot;big Text&quot;</span>/&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h4 id="import指令"><a href="#import指令" class="headerlink" title="@import指令"></a>@import指令</h4><ul>
-<li>@import也会加载外部样式表。在HTML中@import指令必须存在于style标签中，而且必须放在其他CSS规则之前才能起作用</li>
-</ul>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="css"><span class="keyword">@import</span> url(sheet.css) screen;</span></span><br><span class="line"><span class="css"><span class="keyword">@import</span> url(sheet1.css);</span></span><br><span class="line"><span class="css"><span class="selector-tag">h2</span>&#123;</span></span><br><span class="line"><span class="css"><span class="attribute">color</span>:red;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h4 id="import与link的不同"><a href="#import与link的不同" class="headerlink" title="@import与link的不同"></a>@import与link的不同</h4><ul>
-<li><p>link可以指定多个候选样式表</p>
-</li>
-<li><p>@import不可以指定候选样式表</p>
-</li>
-<li><p>@import不仅可以在style中使用，还可以在.css文件中引入CSS</p>
-</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">CSS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/03/25/CSS-link-import/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-前端性能优化-2节流" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/03/19/%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96-2%E8%8A%82%E6%B5%81/">前端性能优化-2节流</a>
-    </h1>
-  
-
-        
-        <a href="/2021/03/19/%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96-2%E8%8A%82%E6%B5%81/" class="archive-article-date">
-  	<time datetime="2021-03-19T01:54:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-19</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 节流：减少一定时间内触发的频率 */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">t</span>(<span class="params">fn,delay</span>)</span>&#123;</span><br><span class="line">          <span class="keyword">let</span> begin = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="keyword">let</span> cur = <span class="keyword">new</span> <span class="built_in">Date</span>().getTime();<span class="comment">//单位毫秒，1970年一月一号距今的毫秒数</span></span><br><span class="line">            <span class="keyword">if</span>(cur-begin&gt;delay)&#123;</span><br><span class="line">                fn.apply(<span class="built_in">this</span>,<span class="built_in">arguments</span>);</span><br><span class="line">                begin = cur;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">节流</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/03/19/%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96-2%E8%8A%82%E6%B5%81/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-前端性能优化-1防抖" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/03/19/%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96-1%E9%98%B2%E6%8A%96/">前端性能优化-1防抖</a>
-    </h1>
-  
-
-        
-        <a href="/2021/03/19/%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96-1%E9%98%B2%E6%8A%96/" class="archive-article-date">
-  	<time datetime="2021-03-19T01:06:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-19</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* javascript :应用需求例如：限制用户高频率点击提交按钮，但是第一次点击时应快速响应*/</span></span><br><span class="line"><span class="keyword">let</span> btn = <span class="built_in">document</span>.getElementById(<span class="string">&quot;btn&quot;</span>);</span><br><span class="line">      btn.addEventListener(<span class="string">&quot;click&quot;</span>, debounce(submit,<span class="number">1000</span>,<span class="literal">true</span>), <span class="literal">false</span>);</span><br><span class="line">      <span class="function"><span class="keyword">function</span> <span class="title">submit</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="number">1</span>);</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">       <span class="function"><span class="keyword">function</span> <span class="title">debounce</span>(<span class="params">fn, wait, immediate</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">let</span> timeout, args, context, timestamp, result;</span><br><span class="line">        <span class="keyword">let</span> later = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">          <span class="keyword">let</span> last = <span class="built_in">Date</span>.now() - timestamp; <span class="comment">//timestamp:存储上一次触发的时间</span></span><br><span class="line">          <span class="keyword">if</span> (last &lt; wait &amp;&amp; last &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="comment">//方法不可以立即执行，延迟执行</span></span><br><span class="line">            timeout = <span class="built_in">setTimeout</span>(later, wait - last);</span><br><span class="line">          &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">//到了可以立即触发的点</span></span><br><span class="line">            timeout = <span class="literal">null</span>;</span><br><span class="line">            <span class="keyword">if</span> (!immediate) &#123;</span><br><span class="line">              result = fn.apply(context, args);</span><br><span class="line">              context = args = <span class="literal">null</span>;</span><br><span class="line">            &#125;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">//        console.log(timeout, timestamp);</span></span><br><span class="line">          context = <span class="built_in">this</span>;</span><br><span class="line">          args = <span class="built_in">arguments</span>;</span><br><span class="line">          timestamp = <span class="built_in">Date</span>.now();</span><br><span class="line">          <span class="keyword">let</span> callNow = immediate &amp;&amp; !timeout; <span class="comment">//判断是否立即执行</span></span><br><span class="line">          <span class="keyword">if</span> (!timeout) &#123;</span><br><span class="line">            <span class="comment">//如果未设置定时器</span></span><br><span class="line">            timeout = <span class="built_in">setTimeout</span>(later, wait);</span><br><span class="line">          &#125;</span><br><span class="line">          <span class="keyword">if</span> (callNow) &#123;</span><br><span class="line">            result = fn.apply(context, args);</span><br><span class="line">            context = args = <span class="literal">null</span>;</span><br><span class="line">          &#125;</span><br><span class="line">          <span class="keyword">return</span> result;</span><br><span class="line">        &#125;;</span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">防抖</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/03/19/%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96-1%E9%98%B2%E6%8A%96/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-关于跨域的那些事-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/03/15/%E5%85%B3%E4%BA%8E%E8%B7%A8%E5%9F%9F%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B-1/">关于跨域的那些事-1</a>
-    </h1>
-  
-
-        
-        <a href="/2021/03/15/%E5%85%B3%E4%BA%8E%E8%B7%A8%E5%9F%9F%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B-1/" class="archive-article-date">
-  	<time datetime="2021-03-15T01:22:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-15</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>其实这个跨域是狭义上的跨域，由于浏览器的同源策略限制而产生的</p>
-<h3 id="同源策略？"><a href="#同源策略？" class="headerlink" title="同源策略？"></a>同源策略？</h3><p>同源：协议+域名+端口三者相同（严格意义上的）。<br>同源策略/SOP（<strong>Same origin policy</strong>）是一种约定，由Netscape公司1995年引入浏览器，它是浏览器最核心也最基本的安全功能，如果缺少了同源策略，浏览器很容易受到<a>XSS</a>、<a>CSFR</a>等攻击。</p>
-<h2 id="跨域解决方案"><a href="#跨域解决方案" class="headerlink" title="跨域解决方案"></a>跨域解决方案</h2><ul>
-<li>通过jsonp跨域</li>
-</ul>
-<p>我发现在HTML页面中引入一个外部网址的js文件是被浏览器所允许的。经过考证，原来：通常为了<strong>减轻web服务器的负载</strong>，把<strong>js、css，img</strong>等静态资源分离到另一台<strong>独立域名</strong>的服务器上，在html页面中再通过相应的标签从不同域名下加载静态资源，而被浏览器允许，基于此原理，我们可以通过动态创建script，再请求一个带参网址实现跨域通信</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">跨域</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/03/15/%E5%85%B3%E4%BA%8E%E8%B7%A8%E5%9F%9F%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B-1/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-CSS-行内元素排版-inline-line-height" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/03/14/CSS-%E8%A1%8C%E5%86%85%E5%85%83%E7%B4%A0%E6%8E%92%E7%89%88-inline-line-height/">CSS-行内元素排版-inline&amp;line-height</a>
-    </h1>
-  
-
-        
-        <a href="/2021/03/14/CSS-%E8%A1%8C%E5%86%85%E5%85%83%E7%B4%A0%E6%8E%92%E7%89%88-inline-line-height/" class="archive-article-date">
-  	<time datetime="2021-03-14T02:04:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-14</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>在简书上看到的一篇比较详细的文章：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/b26da42bcdf1">https://www.jianshu.com/p/b26da42bcdf1</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/03/14/CSS-%E8%A1%8C%E5%86%85%E5%85%83%E7%B4%A0%E6%8E%92%E7%89%88-inline-line-height/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
@@ -1128,14 +1431,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">异步编程</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Promise</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">移动端</a>
               </li>
              
@@ -1160,14 +1455,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Promsie实现</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">跨域</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">防抖</a>
               </li>
              
@@ -1185,6 +1472,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Web协议详解与实包</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">JS基础</a>
               </li>
             
             <div class="clearfix"></div>

@@ -152,36 +152,55 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-JS-Promise实现-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-CSS-link-import" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2021/03/14/JS-Promise%E5%AE%9E%E7%8E%B0-1/">JS-Promise实现-1</a>
+      <a class="article-title" href="/2021/03/25/CSS-link-import/">CSS-link&amp;@import</a>
     </h1>
   
 
         
-        <a href="/2021/03/14/JS-Promise%E5%AE%9E%E7%8E%B0-1/" class="archive-article-date">
-  	<time datetime="2021-03-14T00:40:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-14</time>
+        <a href="/2021/03/25/CSS-link-import/" class="archive-article-date">
+  	<time datetime="2021-03-25T10:50:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-25</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>决定从今天开始自己实现一个Promise，希望可以成功吧~</p>
-<p>首先原生Promise在使用的时候需要</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;&#125;)</span><br></pre></td></tr></table></figure>
-<p>要向构造器传递一个<strong>函数</strong>，而且初始的Promise<strong>状态</strong>为pending</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyPromise</span></span>&#123;</span><br><span class="line">    <span class="keyword">static</span> PENDING = <span class="string">&quot;pending&quot;</span>;<span class="comment">//既然状态每个实例都要使用，就设成静态变量吧</span></span><br><span class="line">    <span class="keyword">static</span> FULFILLED = <span class="string">&quot;fulfilled&quot;</span>;</span><br><span class="line">    <span class="keyword">static</span> REJECT = <span class="string">&quot;reject&quot;</span>;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">executor</span>)</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>.state = MyPromise.PENDING;</span><br><span class="line">        <span class="built_in">this</span>.val = <span class="literal">null</span>;<span class="comment">//原生的Promise中每个状态都对应一个值</span></span><br><span class="line">        executor(<span class="built_in">this</span>.resolve,<span class="built_in">this</span>.reject);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">resolve</span>(<span class="params">value</span>)</span>&#123;</span><br><span class="line">        <span class="comment">/* 执行即修改状态 */</span></span><br><span class="line">        <span class="built_in">this</span>.state = MyPromise.FULFILLED;</span><br><span class="line">        <span class="built_in">this</span>.val = value;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">reject</span>(<span class="params">reason</span>)</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>.state = MyPromise.REJECT;</span><br><span class="line">        <span class="built_in">this</span>.val = reason;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>执行以下看看</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> p = <span class="keyword">new</span> MyPromise(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="built_in">this</span>);<span class="comment">//在这个箭头函数中this指向window</span></span><br><span class="line">    resolve(<span class="string">&quot;成功&quot;</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>结果凉凉：<img src="/img/Promise-实现-1.png"/><br>执行一下p.resolve();输出undefined,this丢失了！,解决this丢失的问题可以使用bind</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyPromise</span></span>&#123;</span><br><span class="line">    <span class="keyword">static</span> PENDING = <span class="string">&quot;pending&quot;</span>;<span class="comment">//既然状态每个实例都要使用，就设成静态变量吧</span></span><br><span class="line">    <span class="keyword">static</span> FULFILLED = <span class="string">&quot;fulfilled&quot;</span>;</span><br><span class="line">    <span class="keyword">static</span> REJECT = <span class="string">&quot;reject&quot;</span>;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">executor</span>)</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>.state = MyPromise.PENDING;</span><br><span class="line">        <span class="built_in">this</span>.val = <span class="literal">null</span>;<span class="comment">//原生的Promise中每个状态都对应一个值</span></span><br><span class="line">        executor(<span class="built_in">this</span>.resolve.bind(<span class="built_in">this</span>),<span class="built_in">this</span>.reject.bind(<span class="built_in">this</span>));<span class="comment">//this.resolve.bind(this)返回一个新的绑定函数：resolve,其中的this指向MyPromise实例</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">resolve</span>(<span class="params">value</span>)</span>&#123;</span><br><span class="line">        <span class="comment">/* 执行即修改状态 */</span></span><br><span class="line">        <span class="built_in">this</span>.state = MyPromise.FULFILLED;</span><br><span class="line">        <span class="built_in">this</span>.val = value;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">reject</span>(<span class="params">reason</span>)</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>.state = MyPromise.REJECT;</span><br><span class="line">        <span class="built_in">this</span>.val = reason;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> p = <span class="keyword">new</span> MyPromise(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</span><br><span class="line">    resolve(<span class="string">&quot;成功&quot;</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(p);<span class="comment">//MyPromise &#123;state: &quot;fulfilled&quot;, val: &quot;成功&quot;&#125;</span></span><br></pre></td></tr></table></figure>
+        <h3 id="把CSS应用到HTML上"><a href="#把CSS应用到HTML上" class="headerlink" title="把CSS应用到HTML上"></a>把CSS应用到HTML上</h3><h4 id="link标签"><a href="#link标签" class="headerlink" title="link标签"></a>link标签</h4><ul>
+<li><p>link标签必须放在head标签中，不能放在其他元素中。Web浏览器在遇到link标签时，会查找并加载指定的样式表，使用样式表中的样式渲染HTML文档</p>
+</li>
+<li><p>link引入的样式表中只能有CSS规则和CSS注释。</p>
+</li>
+<li><p>可以使用link配置候选样式表</p>
+</li>
+</ul>
+<p>如下，rel(relation)指定关系是样式表，type的值始终是text/css：说明通过link标签加载的数据类型。href指明样式表的URL，可以是绝对地址也可以是相对地址。media(其值可以是：screen，print，all等媒体描述符)</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span> <span class="attr">type</span>=<span class="string">&quot;text/css&quot;</span> <span class="attr">href</span>=<span class="string">&quot;&quot;</span> <span class="attr">media</span>=<span class="string">&quot;screen,print&quot;</span> /&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>设置候选样式表(感觉不常用)</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;alernate stylesheet&quot;</span> <span class="attr">type</span>=<span class="string">&quot;text/css&quot;</span> <span class="attr">href</span>=<span class="string">&quot;&quot;</span> <span class="attr">media</span>=<span class="string">&quot;screen,print&quot;</span> <span class="attr">title</span>=<span class="string">&quot;Default&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;alernate stylesheet&quot;</span> <span class="attr">type</span>=<span class="string">&quot;text/css&quot;</span> <span class="attr">href</span>=<span class="string">&quot;&quot;</span> <span class="attr">media</span>=<span class="string">&quot;screen,print&quot;</span> <span class="attr">title</span>=<span class="string">&quot;big Text&quot;</span>/&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="import指令"><a href="#import指令" class="headerlink" title="@import指令"></a>@import指令</h4><ul>
+<li>@import也会加载外部样式表。在HTML中@import指令必须存在于style标签中，而且必须放在其他CSS规则之前才能起作用</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="css"><span class="keyword">@import</span> url(sheet.css) screen;</span></span><br><span class="line"><span class="css"><span class="keyword">@import</span> url(sheet1.css);</span></span><br><span class="line"><span class="css"><span class="selector-tag">h2</span>&#123;</span></span><br><span class="line"><span class="css"><span class="attribute">color</span>:red;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="import与link的不同"><a href="#import与link的不同" class="headerlink" title="@import与link的不同"></a>@import与link的不同</h4><ul>
+<li><p>link可以指定多个候选样式表</p>
+</li>
+<li><p>@import不可以指定候选样式表</p>
+</li>
+<li><p>@import不仅可以在style中使用，还可以在.css文件中引入CSS</p>
+</li>
+</ul>
+
       
 
       
@@ -194,7 +213,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Promsie实现</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">CSS</a>
         		</li>
       		
 		</ul>
@@ -204,7 +223,216 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2021/03/14/JS-Promise%E5%AE%9E%E7%8E%B0-1/">展开全文 >></a>
+          <a class="article-more-a" href="/2021/03/25/CSS-link-import/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-前端性能优化-2节流" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/03/19/%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96-2%E8%8A%82%E6%B5%81/">前端性能优化-2节流</a>
+    </h1>
+  
+
+        
+        <a href="/2021/03/19/%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96-2%E8%8A%82%E6%B5%81/" class="archive-article-date">
+  	<time datetime="2021-03-19T01:54:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-19</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 节流：减少一定时间内触发的频率 */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">t</span>(<span class="params">fn,delay</span>)</span>&#123;</span><br><span class="line">          <span class="keyword">let</span> begin = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="keyword">let</span> cur = <span class="keyword">new</span> <span class="built_in">Date</span>().getTime();<span class="comment">//单位毫秒，1970年一月一号距今的毫秒数</span></span><br><span class="line">            <span class="keyword">if</span>(cur-begin&gt;delay)&#123;</span><br><span class="line">                fn.apply(<span class="built_in">this</span>,<span class="built_in">arguments</span>);</span><br><span class="line">                begin = cur;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">节流</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/03/19/%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96-2%E8%8A%82%E6%B5%81/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-前端性能优化-1防抖" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/03/19/%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96-1%E9%98%B2%E6%8A%96/">前端性能优化-1防抖</a>
+    </h1>
+  
+
+        
+        <a href="/2021/03/19/%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96-1%E9%98%B2%E6%8A%96/" class="archive-article-date">
+  	<time datetime="2021-03-19T01:06:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-19</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* javascript :应用需求例如：限制用户高频率点击提交按钮，但是第一次点击时应快速响应*/</span></span><br><span class="line"><span class="keyword">let</span> btn = <span class="built_in">document</span>.getElementById(<span class="string">&quot;btn&quot;</span>);</span><br><span class="line">      btn.addEventListener(<span class="string">&quot;click&quot;</span>, debounce(submit,<span class="number">1000</span>,<span class="literal">true</span>), <span class="literal">false</span>);</span><br><span class="line">      <span class="function"><span class="keyword">function</span> <span class="title">submit</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="number">1</span>);</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">       <span class="function"><span class="keyword">function</span> <span class="title">debounce</span>(<span class="params">fn, wait, immediate</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">let</span> timeout, args, context, timestamp, result;</span><br><span class="line">        <span class="keyword">let</span> later = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">          <span class="keyword">let</span> last = <span class="built_in">Date</span>.now() - timestamp; <span class="comment">//timestamp:存储上一次触发的时间</span></span><br><span class="line">          <span class="keyword">if</span> (last &lt; wait &amp;&amp; last &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="comment">//方法不可以立即执行，延迟执行</span></span><br><span class="line">            timeout = <span class="built_in">setTimeout</span>(later, wait - last);</span><br><span class="line">          &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">//到了可以立即触发的点</span></span><br><span class="line">            timeout = <span class="literal">null</span>;</span><br><span class="line">            <span class="keyword">if</span> (!immediate) &#123;</span><br><span class="line">              result = fn.apply(context, args);</span><br><span class="line">              context = args = <span class="literal">null</span>;</span><br><span class="line">            &#125;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">//        console.log(timeout, timestamp);</span></span><br><span class="line">          context = <span class="built_in">this</span>;</span><br><span class="line">          args = <span class="built_in">arguments</span>;</span><br><span class="line">          timestamp = <span class="built_in">Date</span>.now();</span><br><span class="line">          <span class="keyword">let</span> callNow = immediate &amp;&amp; !timeout; <span class="comment">//判断是否立即执行</span></span><br><span class="line">          <span class="keyword">if</span> (!timeout) &#123;</span><br><span class="line">            <span class="comment">//如果未设置定时器</span></span><br><span class="line">            timeout = <span class="built_in">setTimeout</span>(later, wait);</span><br><span class="line">          &#125;</span><br><span class="line">          <span class="keyword">if</span> (callNow) &#123;</span><br><span class="line">            result = fn.apply(context, args);</span><br><span class="line">            context = args = <span class="literal">null</span>;</span><br><span class="line">          &#125;</span><br><span class="line">          <span class="keyword">return</span> result;</span><br><span class="line">        &#125;;</span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">防抖</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/03/19/%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96-1%E9%98%B2%E6%8A%96/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-CSS-行内元素排版-inline-line-height" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/03/14/CSS-%E8%A1%8C%E5%86%85%E5%85%83%E7%B4%A0%E6%8E%92%E7%89%88-inline-line-height/">CSS-行内元素排版-inline&amp;line-height</a>
+    </h1>
+  
+
+        
+        <a href="/2021/03/14/CSS-%E8%A1%8C%E5%86%85%E5%85%83%E7%B4%A0%E6%8E%92%E7%89%88-inline-line-height/" class="archive-article-date">
+  	<time datetime="2021-03-14T02:04:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-14</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在简书上看到的一篇比较详细的文章：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/b26da42bcdf1">https://www.jianshu.com/p/b26da42bcdf1</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/03/14/CSS-%E8%A1%8C%E5%86%85%E5%85%83%E7%B4%A0%E6%8E%92%E7%89%88-inline-line-height/">展开全文 >></a>
         </p>
       
 
@@ -568,220 +796,6 @@
 
 
   
-    <article id="post-异步编程与Promise-3" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/03/11/%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B%E4%B8%8EPromise-3/">异步编程与Promise-3</a>
-    </h1>
-  
-
-        
-        <a href="/2021/03/11/%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B%E4%B8%8EPromise-3/" class="archive-article-date">
-  	<time datetime="2021-03-11T01:04:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-11</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="Promise的语法糖：async与await"><a href="#Promise的语法糖：async与await" class="headerlink" title="Promise的语法糖：async与await"></a>Promise的语法糖：async与await</h3><p>以前写Promise时需要这种结构</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</span><br><span class="line">    resolve();</span><br><span class="line">&#125;)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>而async就是Promise的语法糖写法</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">promise</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* 被async修饰的函数，执行结果返回一个Promise对象 */</span></span><br><span class="line"><span class="built_in">console</span>.log(promise());<span class="comment">//Promise &#123;&lt;fulfilled&gt;: undefined&#125;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>以前写Promise.then</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</span><br><span class="line">    resolve(<span class="string">&quot;success&quot;</span>);</span><br><span class="line">&#125;)</span><br><span class="line"> .then(<span class="function"><span class="params">msg</span>=&gt;</span>&#123;</span><br><span class="line">     <span class="keyword">return</span> <span class="string">&quot;传递给下一个then的参数&quot;</span>;</span><br><span class="line"> &#125;)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>而await就是then的语法糖写法</p>
-<p>await 右侧的表达式一般为 promise 对象, 但也可以是其它的值:</p>
-<ul>
-<li><p>如果表达式是 promise 对象, await 返回的是 promise 成功的值</p>
-</li>
-<li><p>如果表达式是其它值, 直接将此值作为 await 的返回值</p>
-</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">myPromise</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="comment">/* await相当于函数myPromise返回的Promise对象调用then */</span></span><br><span class="line">    <span class="keyword">let</span> param = <span class="keyword">await</span> <span class="string">&quot;参数1&quot;</span>;<span class="comment">/* param接受了“参数1”，而“参数1”相当于 .then(msg=&gt;&#123; return &quot;参数1&quot;;&#125;)中Return的内容*/</span></span><br><span class="line">    <span class="built_in">console</span>.log(param);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(myPromise());<span class="comment">//参数1</span></span><br><span class="line"><span class="comment">/* ----------------------------------------------------------------------------------------------------------- */</span></span><br><span class="line"><span class="comment">/* 同样也可以返回Promise对象 */</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">promise</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> p2 = <span class="keyword">await</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</span><br><span class="line">        resolve(<span class="string">&quot;p2-fullfiled&quot;</span>);</span><br><span class="line">    &#125;);<span class="comment">/* p2状态为fullfiled */</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">console</span>.log(p2);<span class="comment">//p2-fullfiled</span></span><br><span class="line">    <span class="keyword">let</span> p3 = <span class="keyword">await</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="params">resolve</span>=&gt;</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(p2+<span class="string">&quot;-收到&quot;</span>);<span class="comment">//p2-fullfiled-收到</span></span><br><span class="line">    &#125;);<span class="comment">/* p3没有执行回调函数且无异常，状态为pending */</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> p4 = <span class="keyword">await</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="params">resolve</span>=&gt;</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(p3);<span class="comment">//Promise &#123;&lt;pending&gt;&#125;</span></span><br><span class="line">    &#125;);<span class="comment">/* p4 等待p3状态改变后执行 */</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* ----------------------------------------------------------------------------------------------------------- */</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">promise</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> p2 = <span class="keyword">await</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</span><br><span class="line">        reject(<span class="string">&quot;p2-rejected&quot;</span>);<span class="comment">/* 此处rejected ，之后的代码不执行直接进入catch*/</span></span><br><span class="line">    &#125;);  </span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;p2 &quot;</span>+p2);</span><br><span class="line">    <span class="keyword">let</span> p3 = <span class="keyword">await</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="params">resolve</span>=&gt;</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(p2+<span class="string">&quot;-收到&quot;</span>);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> p4 = <span class="keyword">await</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="params">resolve</span>=&gt;</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(p3);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;<span class="keyword">catch</span>(e)&#123; <span class="built_in">console</span>.log(<span class="string">&quot;error:&quot;</span>+e) &#125;  </span><br><span class="line">&#125;</span><br><span class="line">promise();<span class="comment">//error:p2-rejected</span></span><br></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">异步编程</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Promise</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/03/11/%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B%E4%B8%8EPromise-3/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-异步编程与Promise-2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/03/09/%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B%E4%B8%8EPromise-2/">异步编程与Promise-2</a>
-    </h1>
-  
-
-        
-        <a href="/2021/03/09/%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B%E4%B8%8EPromise-2/" class="archive-article-date">
-  	<time datetime="2021-03-09T01:21:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="Ajax"><a href="#Ajax" class="headerlink" title="Ajax"></a>Ajax</h4><p>Asynchronous JavaScript And XML</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 步骤一：发送HTTP请求，使用XMLHttpRequest对象与服务器进行通信 */</span></span><br><span class="line"><span class="keyword">let</span> xhr = <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line">xhr.onreadystatechange = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;<span class="comment">//不管状态码改变后是否意味着成功，都会执行函数</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 该功能需要检查请求的状态。如果状态的值为XMLHttpRequest.DONE（对应于4），则表示已收到完整的服务器响应，可以继续处理它。 */</span></span><br><span class="line">    <span class="keyword">if</span>(xhr.readyState === XMLHttpRequest.NODE)&#123;</span><br><span class="line">         <span class="comment">/* 接下来，检查HTTP响应的HTTP响应状态代码 。在下面的示例中，我们通过检查200 OK响应代码来区分AJAX调用成功与否。 */</span></span><br><span class="line">         <span class="keyword">if</span>(xhr.status === <span class="number">200</span>)&#123;</span><br><span class="line">             <span class="built_in">console</span>.log(xhr.responseText);</span><br><span class="line">         &#125;</span><br><span class="line">         <span class="keyword">else</span>&#123;</span><br><span class="line">             <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">&#x27;请求出错&#x27;</span>);</span><br><span class="line">         &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;<span class="comment">/* 请求更改状态时调用该函数 */</span></span><br><span class="line">xhr.open(<span class="string">&#x27;get&#x27;</span>,<span class="string">&#x27;url&#x27;</span>,<span class="literal">true</span>);<span class="comment">/* 打开一个请求 ,第三个参数为是否异步默认值为true*/</span></span><br><span class="line">xhr.send();<span class="comment">/* 向服务器发送数据 */</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<ul>
-<li>readyState值的完整列表<ul>
-<li>0（未初始化）或（请求未初始化）</li>
-<li>1（正在加载）或（已建立服务器连接）</li>
-<li>2（已加载）或（已收到请求）</li>
-<li>3（交互式）或（处理请求）</li>
-<li>4（完成）或（请求已完成，响应已准备就绪）</li>
-</ul>
-</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Ajax的封装 */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Ajax</span>(<span class="params">url,callback</span>)</span>&#123;</span><br><span class="line"><span class="keyword">let</span> xhr = <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line">xhr.open(<span class="string">&#x27;GET&#x27;</span>,url);</span><br><span class="line">xhr.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;<span class="comment">/* onload只有在readyState为4时执行 */</span></span><br><span class="line">    <span class="keyword">if</span>(xhr.status === <span class="number">200</span>)&#123;</span><br><span class="line">        callback();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">&quot;加载失败&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="使用Promise封装Ajaxs"><a href="#使用Promise封装Ajaxs" class="headerlink" title="使用Promise封装Ajaxs"></a>使用Promise封装Ajaxs</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Ajax</span>(<span class="params">url</span>)</span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> xhr = <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line">    xhr.open(<span class="string">&#x27;GET&#x27;</span>,url);</span><br><span class="line">    xhr.send();</span><br><span class="line">    xhr.onreadystatechange=<span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;<span class="built_in">console</span>.log(url,xhr.readyState);&#125;</span><br><span class="line">    xhr.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;<span class="comment">/* onload只有在readyState为4时执行 */</span></span><br><span class="line">        <span class="keyword">if</span>(xhr.status === <span class="number">200</span>)&#123;</span><br><span class="line">            resolve((<span class="built_in">this</span>.response));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            reject(<span class="string">&quot;加载失败&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    xhr.onerror = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; reject(<span class="built_in">this</span>); &#125; </span><br><span class="line">    &#125;).then(<span class="function"><span class="params">msg</span>=&gt;</span>&#123; <span class="built_in">console</span>.log(msg+<span class="number">1</span>) &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 使用的时候 */</span></span><br><span class="line">Ajax(<span class="string">&quot;Http://localhost:8082/hrt/f1&quot;</span>)<span class="comment">/* 因为Return的还是一个Promise */</span></span><br><span class="line">    .then(<span class="function"><span class="params">data</span>=&gt;</span>&#123; ... &#125;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h4 id="Promise多种错误检测与catch的使用"><a href="#Promise多种错误检测与catch的使用" class="headerlink" title="Promise多种错误检测与catch的使用"></a>Promise多种错误检测与catch的使用</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 当在Promise构造器内抛出一个错误时，自动认为rejected*/</span></span><br><span class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">&quot;错误&quot;</span>);</span><br><span class="line">&#125;).then(<span class="literal">null</span>,<span class="function"><span class="params">reject</span>=&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;失败&#x27;</span>)</span><br><span class="line">&#125;);<span class="comment">//输出失败</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* 使用try-catch结构的时候 */</span></span><br><span class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">try</span>&#123;</span><br><span class="line">        a.name = <span class="string">&quot;liqianru&quot;</span>;</span><br><span class="line">    &#125;<span class="keyword">catch</span>&#123;</span><br><span class="line">       reject();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;).then(<span class="literal">null</span>,<span class="function"><span class="params">reject</span>=&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;失败&#x27;</span>)</span><br><span class="line">&#125;);<span class="comment">//输出失败</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</span><br><span class="line">    resolve();</span><br><span class="line">&#125;).then(<span class="function"><span class="params">msg</span>=&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;成功1&quot;</span>);</span><br><span class="line">    b.name = <span class="string">&quot;liqianru2&quot;</span>;</span><br><span class="line">&#125;).then(<span class="function"><span class="params">msg</span>=&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;成功1&quot;</span>);</span><br><span class="line">&#125;).catch(<span class="function"><span class="params">msg</span>=&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">`错误：<span class="subst">$&#123;msg&#125;</span>`</span>);</span><br><span class="line">&#125;);<span class="comment">//输出成功1  错误：ReferenceError: b is not defined</span></span><br><span class="line"><span class="comment">/* b.name = &quot;liqianru2&quot;;抛出异常当前的Promise为rejected，但是紧后面的then没有写reject回调函数，所以被catch捕获 */</span></span><br></pre></td></tr></table></figure>
-<h4 id="finally的使用"><a href="#finally的使用" class="headerlink" title="finally的使用"></a>finally的使用</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 有点类似JAVA中的try-catch-finally的结构 */</span></span><br><span class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</span><br><span class="line">    resolve();</span><br><span class="line">&#125;).then(<span class="function"><span class="params">msg</span>=&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;成功1&quot;</span>);</span><br><span class="line">    b.name = <span class="string">&quot;liqianru2&quot;</span>;</span><br><span class="line">&#125;).then(<span class="function"><span class="params">msg</span>=&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;成功1&quot;</span>);</span><br><span class="line">&#125;).catch(<span class="function"><span class="params">msg</span>=&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">`错误：<span class="subst">$&#123;msg&#125;</span>`</span>);</span><br><span class="line">&#125;).finally(<span class="function">()=&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;永远会执行&quot;</span>);</span><br><span class="line">&#125;);<span class="comment">//输出成功1  错误：ReferenceError: b is not defined 永远会执行</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h4 id="Promise队列原理-使用map实现"><a href="#Promise队列原理-使用map实现" class="headerlink" title="Promise队列原理-使用map实现"></a>Promise队列原理-使用map实现</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">queue</span>(<span class="params">queue</span>)</span>&#123;</span><br><span class="line"><span class="keyword">let</span> promise = <span class="built_in">Promise</span>.resolve();</span><br><span class="line">queue.map(<span class="function">(<span class="params">v</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="comment">/* promise.then 返回了一个新的Promise，且状态为pending */</span></span><br><span class="line">     promise = promise.then(<span class="function">()=&gt;</span>&#123;</span><br><span class="line">         <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="params">resolve</span>=&gt;</span>&#123;</span><br><span class="line">             <span class="built_in">console</span>.log(v);<span class="comment">//所以执行函数只会输出1</span></span><br><span class="line">         &#125;)</span><br><span class="line">     &#125;);</span><br><span class="line">&#125;)</span><br><span class="line">&#125;</span><br><span class="line">queue([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]);</span><br><span class="line"><span class="comment">/* ------------------------------------------------------------- */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">queue</span>(<span class="params">queue</span>)</span>&#123;</span><br><span class="line"><span class="keyword">let</span> promise = <span class="built_in">Promise</span>.resolve();</span><br><span class="line">queue.map(<span class="function">(<span class="params">v</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="comment">/* promise.then 返回了一个新的Promise，且状态为fullfiled */</span></span><br><span class="line">     promise = promise.then(<span class="function">()=&gt;</span>&#123;</span><br><span class="line">         <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="params">resolve</span>=&gt;</span>&#123;</span><br><span class="line">             <span class="built_in">console</span>.log(v);<span class="comment">//所以执行函数会输出数组内容</span></span><br><span class="line">             resolve();</span><br><span class="line">         &#125;)</span><br><span class="line">     &#125;);</span><br><span class="line">&#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h4 id="Promise队列原理-使用reduce实现"><a href="#Promise队列原理-使用reduce实现" class="headerlink" title="Promise队列原理-使用reduce实现"></a>Promise队列原理-使用reduce实现</h4><ul>
-<li>Promise队列：上一个任务没有执行完，下一个任务会等待执行</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">queue</span>(<span class="params">queue</span>)</span>&#123;</span><br><span class="line"><span class="keyword">let</span> p = <span class="built_in">Promise</span>.resolve();<span class="comment">/* 利用reduce第一个参数的特点，给它赋一个初始值p */</span></span><br><span class="line">queue.reduce(<span class="function">(<span class="params">promise,cur</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> promise.then(<span class="function">()=&gt;</span>&#123;<span class="comment">/* 第一次：promise = p，所以promise.then立即执行 */</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="params">resolve</span>=&gt;</span>&#123;<span class="comment">/* promise.then 返回了一个新Promise 状态:pending */</span></span><br><span class="line">            <span class="built_in">console</span>.log(cur);</span><br><span class="line">           <span class="comment">/*  resolve(); 如果此处加上状态转换，promise就为当前返回的Promise对象*/</span></span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;,p);</span><br><span class="line">&#125;</span><br><span class="line">queue([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]);<span class="comment">//1</span></span><br><span class="line"><span class="comment">/* ----------------------------------------------------------------------------------- */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">queue</span>(<span class="params">queue</span>)</span>&#123;</span><br><span class="line"><span class="keyword">let</span> p = <span class="built_in">Promise</span>.resolve();<span class="comment">/* 利用reduce第一个参数的特点，给它赋一个初始值p */</span></span><br><span class="line">queue.reduce(<span class="function">(<span class="params">promise,cur</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> promise.then(<span class="function">()=&gt;</span>&#123;<span class="comment">/* 第一次：promise = p，所以promise.then立即执行 */</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="params">resolve</span>=&gt;</span>&#123;<span class="comment">/* promise.then 返回了一个新Promise 状态:fullfiled */</span></span><br><span class="line">            <span class="built_in">console</span>.log(cur);</span><br><span class="line">            resolve();</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;,p);</span><br><span class="line">&#125;</span><br><span class="line">queue([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]);<span class="comment">//1 2 3</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="Promise其他API"><a href="#Promise其他API" class="headerlink" title="Promise其他API"></a>Promise其他API</h4><ul>
-<li><p>使用Promise.resolve()[可以用它做缓存]，Promise.reject()</p>
-</li>
-<li><p>Promise.all-同时执行多个并行的异步操作(最终Promise.all会返回一个Promise数组。且同时执行的异步操作要成功一起成功，有一个失败就都失败)</p>
-<ul>
-<li><p>任何一个 Promise 执行失败就会调用 catch方法</p>
-</li>
-<li><p>适用于一次发送多个异步操作</p>
-</li>
-<li><p>参数必须是可迭代类型，如Array/Set</p>
-</li>
-<li><p>成功后返回 promise 结果的有序数组</p>
-</li>
-</ul>
-</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> p1 = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">()=&gt;</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;第一个异步&#x27;</span>);</span><br><span class="line">        resolve();</span><br><span class="line">    &#125;,<span class="number">1000</span>)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">let</span> p2 = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">()=&gt;</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;第2个异步&#x27;</span>);</span><br><span class="line">        resolve();</span><br><span class="line">    &#125;,<span class="number">1000</span>)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">Promise</span>.all([p,p2]);<span class="comment">//都是解决状态，[[PromiseResult]]: Array(2)</span></span><br><span class="line"><span class="comment">/* -------------------------------------------------------------- */</span></span><br><span class="line"><span class="keyword">let</span> p1 = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">()=&gt;</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;第一个异步&#x27;</span>);</span><br><span class="line">        resolve();</span><br><span class="line">    &#125;,<span class="number">1000</span>)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">let</span> p2 = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">()=&gt;</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;第2个异步&#x27;</span>);</span><br><span class="line">        reject(<span class="string">&#x27;p2error&#x27;</span>);</span><br><span class="line">    &#125;,<span class="number">1000</span>)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">Promise</span>.all([p,p2]);</span><br><span class="line"><span class="comment">/* 输出：</span></span><br><span class="line"><span class="comment">第一个异步</span></span><br><span class="line"><span class="comment">第2个异步</span></span><br><span class="line"><span class="comment">Uncaught (in promise) p2error ,由于没有对应reject的处理所以报错*/</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">Promise</span>.all([p,p2]).catch(<span class="function">(<span class="params">reason</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(reason)</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">/* 输出：第一个异步</span></span><br><span class="line"><span class="comment">         第2个异步</span></span><br><span class="line"><span class="comment">         p2error */</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>Promise.allSettled()，即使并行的异步操作又失败的，也会保存下来</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> p1 = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">()=&gt;</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;第一个异步&#x27;</span>);</span><br><span class="line">        resolve();</span><br><span class="line">    &#125;,<span class="number">1000</span>)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">let</span> p2 = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">()=&gt;</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;第2个异步&#x27;</span>);</span><br><span class="line">        reject(<span class="string">&#x27;p2error&#x27;</span>);</span><br><span class="line">    &#125;,<span class="number">1000</span>)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">Promise</span>.allSettled([p1,p2]);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>输出<br><img src="/img/Promise.allSettled-1.png"/></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">异步编程</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Promise</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/03/09/%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B%E4%B8%8EPromise-2/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
     <article id="post-JS-对象-3" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -902,132 +916,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2021/03/07/%E7%A7%BB%E5%8A%A8%E7%AB%AF-%E6%97%A0%E7%BC%9D%E6%BB%91%E5%B1%8F-2/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-JS-对象-2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/03/07/JS-%E5%AF%B9%E8%B1%A1-2/">JS-对象-2</a>
-    </h1>
-  
-
-        
-        <a href="/2021/03/07/JS-%E5%AF%B9%E8%B1%A1-2/" class="archive-article-date">
-  	<time datetime="2021-03-07T02:07:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-07</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="对象的复制"><a href="#对象的复制" class="headerlink" title="对象的复制"></a>对象的复制</h3><h5 id="浅拷贝的几种方式"><a href="#浅拷贝的几种方式" class="headerlink" title="浅拷贝的几种方式"></a>浅拷贝的几种方式</h5><p>我们知道当一个对象a赋值给另一个对象b的时候，是把a地址赋值，我们之后操作修改b的时候也会更改a中的内容。我们不希望这种情况发生，所以就想要给b新开辟一个内存，再把a中的内容复制。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 方式一：循环 */</span></span><br><span class="line"><span class="keyword">let</span> a = &#123; <span class="attr">name</span>:<span class="string">&#x27;liqianru&#x27;</span>,<span class="attr">lesson</span>:<span class="string">&#x27;js&#x27;</span>&#125;;</span><br><span class="line"><span class="keyword">let</span> b = &#123;&#125;;</span><br><span class="line"><span class="keyword">for</span>( <span class="keyword">let</span> key <span class="keyword">in</span> a )&#123;</span><br><span class="line">    b[key] = a[key];</span><br><span class="line">&#125;</span><br><span class="line">b.name = <span class="string">&#x27;liqianru2&#x27;</span>;</span><br><span class="line"><span class="comment">/* a:&#123; name:&#x27;liqianru&#x27;,lesson:&#x27;js&#x27;&#125;</span></span><br><span class="line"><span class="comment">   b:&#123; name:&#x27;liqianru2&#x27;,lesson:&#x27;js&#x27;&#125; */</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 方式二：Object.assign */</span></span><br><span class="line"><span class="keyword">let</span> a = &#123; <span class="attr">name</span>:<span class="string">&#x27;liqianru&#x27;</span>,<span class="attr">lesson</span>:<span class="string">&#x27;js&#x27;</span>&#125;;</span><br><span class="line"><span class="keyword">let</span> b = <span class="built_in">Object</span>.assign(&#123;&#125;,a);</span><br><span class="line">b.name = <span class="string">&#x27;liqianru2&#x27;</span>;</span><br><span class="line"><span class="comment">/* a:&#123; name:&#x27;liqianru&#x27;,lesson:&#x27;js&#x27;&#125;</span></span><br><span class="line"><span class="comment">   b:&#123; name:&#x27;liqianru2&#x27;,lesson:&#x27;js&#x27;&#125; */</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 方式三：展开语法 */</span></span><br><span class="line"><span class="keyword">let</span> a = &#123; <span class="attr">name</span>:<span class="string">&#x27;liqianru&#x27;</span>,<span class="attr">lesson</span>:<span class="string">&#x27;js&#x27;</span>&#125;;</span><br><span class="line"><span class="keyword">let</span> b = &#123;...a&#125;;</span><br><span class="line">b.name = <span class="string">&#x27;liqianru2&#x27;</span>;</span><br><span class="line"><span class="comment">/* a:&#123; name:&#x27;liqianru&#x27;,lesson:&#x27;js&#x27;&#125;</span></span><br><span class="line"><span class="comment">   b:&#123; name:&#x27;liqianru2&#x27;,lesson:&#x27;js&#x27;&#125; */</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>可以发现，这种复制，都是复制的单层的属性，没有出现要复制的属性仍是一个对象的这种嵌套的情况，我们称这种复制叫浅拷贝。</li>
-</ul>
-<h5 id="对象的深拷贝"><a href="#对象的深拷贝" class="headerlink" title="对象的深拷贝"></a>对象的深拷贝</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"> </span><br><span class="line"><span class="keyword">let</span> obj = &#123;</span><br><span class="line">    name:<span class="string">&#x27;liqianru&#x27;</span>,</span><br><span class="line">    lessons:[</span><br><span class="line">        &#123; <span class="attr">name</span>:<span class="string">&#x27;js&#x27;</span> &#125;,</span><br><span class="line">        &#123; <span class="attr">name</span>:<span class="string">&#x27;css&#x27;</span> &#125;</span><br><span class="line">    ],</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">deep</span>(<span class="params">obj</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> result = &#123;&#125;;</span><br><span class="line">    obj <span class="keyword">instanceof</span> <span class="built_in">Array</span>?result=[]:<span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">for</span>( <span class="keyword">let</span> key <span class="keyword">in</span> obj )&#123;</span><br><span class="line">        result[key]= <span class="keyword">typeof</span> obj[key]==<span class="string">&#x27;object&#x27;</span>?deep(obj[key]):obj[key];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h4 id="对象的封装"><a href="#对象的封装" class="headerlink" title="对象的封装"></a>对象的封装</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/* 封装：把数据和它相关的行为打包（封装）起来。 隐藏实现信息、细节，只暴露需要的 API */</span></span><br><span class="line">封装模式：</span><br><span class="line">工厂模式</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">objectFactory</span>(<span class="params">name,age</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> obj = &#123;</span><br><span class="line">        name,</span><br><span class="line">        age,</span><br><span class="line">        <span class="function"><span class="title">show</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">`我的名字：<span class="subst">$&#123;<span class="built_in">this</span>.name&#125;</span>`</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">return</span> obj;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> user1 = objectFactory(<span class="string">&#x27;liqianru&#x27;</span>,<span class="number">20</span>);</span><br><span class="line"><span class="keyword">let</span> user2 = objectFactory(<span class="string">&#x27;liqianru2&#x27;</span>,<span class="number">21</span>);</span><br><span class="line"></span><br><span class="line">构造函数模式</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name, age, job</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">this</span>.name = name;</span><br><span class="line">    <span class="built_in">this</span>.age = age;</span><br><span class="line">    <span class="built_in">this</span>.job = job;</span><br><span class="line">    <span class="built_in">this</span>.sayName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        alert(<span class="built_in">this</span>.name);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> person1 = <span class="keyword">new</span> Person(<span class="string">&quot;John&quot;</span>, <span class="number">18</span>, <span class="string">&quot;Teacher&quot;</span>);</span><br><span class="line"><span class="keyword">var</span> person2 = <span class="keyword">new</span> Person(<span class="string">&quot;Greg&quot;</span>, <span class="number">30</span>, <span class="string">&quot;Doctor&quot;</span>);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h4 id="对象的属性特征"><a href="#对象的属性特征" class="headerlink" title="对象的属性特征"></a>对象的属性特征</h4><p>能不能对对象的属性设置一些特征：例如不可枚举，只读等特征</p>
-<ul>
-<li>查看对象属性特征</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> obj = &#123; <span class="attr">name</span>:<span class="string">&#x27;liqianru&#x27;</span>,<span class="attr">lesson</span>:<span class="string">&#x27;js&#x27;</span> &#125;;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">JSON</span>.stringify(<span class="built_in">Object</span>.getOwnPropertyDescriptor(obj,<span class="string">&#x27;name&#x27;</span>)));</span><br><span class="line"><span class="comment">/* 输出：&#123;&quot;value&quot;:&quot;liqianru&quot;,&quot;writable&quot;:true,&quot;enumerable&quot;:true,&quot;configurable&quot;:true&#125; */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* 获得对象的所有属性特征 */</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">JSON</span>.stringify(<span class="built_in">Object</span>.getOwnPropertyDescriptors(obj)));</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<ul>
-<li>修改属性</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* defineProperty可以为对象新增属性并设置其特征（默认值为false），也可以对现有属性修改其特征 。还可以为属性设置访问器*/</span></span><br><span class="line"><span class="built_in">Object</span>.defineProperty(obj,<span class="string">&#x27;grade&#x27;</span>,&#123;</span><br><span class="line"></span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">/* 在严格模式下对不可修改的属性进行修改会报错 */</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">Object</span>.defineProperty(obj,<span class="string">&#x27;name&#x27;</span>,&#123;</span><br><span class="line">    enumerable:<span class="literal">false</span>,<span class="comment">//不可枚举</span></span><br><span class="line">    configurable:<span class="literal">false</span><span class="comment">//不可配置：不可用defineProperty修改，也不可删除</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 批量设置 */</span></span><br><span class="line"><span class="built_in">Object</span>.definePorperties(obj,&#123;</span><br><span class="line">    name:&#123;</span><br><span class="line">        enumerable:<span class="literal">false</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    grade:&#123;</span><br><span class="line">        writable:<span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<ul>
-<li>设置对象为不可添加属性的对象（扩展）</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span>.preventExtensions(obj);</span><br><span class="line">obj.id = <span class="number">1</span>;<span class="comment">//属性添加失败，在严格模式下会报错</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* 判断一个对象是否可添加属性 */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(<span class="built_in">Object</span>.isExtensible(obj))&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h4 id="封闭对象"><a href="#封闭对象" class="headerlink" title="封闭对象"></a>封闭对象</h4><p>封闭对象：使对象不可添加属性，不可删除，不可修改属性特征，当前属性的值只要原来是可写的就可以改变。当对象需要被保护的时候可用</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="built_in">Object</span>.seal(obj);</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 判断 */</span></span><br><span class="line"><span class="keyword">if</span>(!<span class="built_in">Object</span>.isSealed(obj))&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="冻结对象"><a href="#冻结对象" class="headerlink" title="冻结对象"></a>冻结对象</h4><p>封闭对象：冻结了一个对象则不能向这个对象添加新的属性，不能删除已有属性，不能修改该对象已有属性的可枚举性、可配置性、可写性，以及不能修改已有属性的值。此外，冻结一个对象后该对象的原型也不能被修改。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span>.freeze(obj);</span><br></pre></td></tr></table></figure>
-<h4 id="使用访问器-setter-getter-保护数据"><a href="#使用访问器-setter-getter-保护数据" class="headerlink" title="使用访问器(setter,getter)保护数据"></a>使用访问器(setter,getter)保护数据</h4><p>使用场景：当我设置了对象user，里面的属性的值可以被随意更改，对数据的质量没有把关。访问器就起到了把关的作用</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 初识 */</span></span><br><span class="line"><span class="keyword">let</span> user=&#123;</span><br><span class="line">    data:&#123; <span class="attr">name</span>:<span class="string">&#x27;liqianru&#x27;</span>,<span class="attr">age</span>:<span class="number">20</span> &#125;,<span class="comment">/*  */</span></span><br><span class="line">    <span class="keyword">set</span> <span class="title">age</span>(<span class="params">value</span>)&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">typeof</span> value != <span class="string">&#x27;number&#x27;</span> || value&gt;<span class="number">100</span> || value &lt;<span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">&quot;年龄格式错误&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="built_in">this</span>.data.age = value;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="keyword">get</span> <span class="title">age</span>()&#123; <span class="keyword">return</span>  <span class="built_in">this</span>.data.age; &#125;</span><br><span class="line">&#125;</span><br><span class="line">user.age = <span class="number">20</span>;<span class="comment">/* Uncaught Error: 年龄格式错误 */</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>访问器的优先级</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> user=&#123;</span><br><span class="line">    name:<span class="string">&#x27;liqianru&#x27;</span>,</span><br><span class="line">    age:<span class="number">10</span>,<span class="comment">/* 当对象中同时暴露属性age和伪属性age时，谁的优先级高？ */</span></span><br><span class="line">    <span class="keyword">set</span> <span class="title">age</span>(<span class="params">value</span>)&#123;</span><br><span class="line">        <span class="comment">/* if(typeof value != &#x27;number&#x27; || value&gt;100 || value &lt;0)&#123;</span></span><br><span class="line"><span class="comment">            throw new Error(&quot;年龄格式错误&quot;);</span></span><br><span class="line"><span class="comment">        &#125;</span></span><br><span class="line"><span class="comment">        else&#123;</span></span><br><span class="line"><span class="comment">            this.age = value;</span></span><br><span class="line"><span class="comment">        &#125; */</span></span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;setter&#x27;</span>);</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="keyword">get</span> <span class="title">age</span>()&#123; <span class="keyword">return</span>  <span class="built_in">this</span>.age; &#125;</span><br><span class="line">&#125;</span><br><span class="line">user.age = <span class="number">22</span>;<span class="comment">//输出setter,说明访问器的优先级高，且输出user时&#123;name: &quot;liqianru&quot;&#125;，age没了，所以我们才要吧对象的属性放到data中，避免这种冲突</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>使用访问器伪造属性</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> lesson = &#123;</span><br><span class="line">    list:[</span><br><span class="line">        &#123;<span class="attr">name</span>:<span class="string">&#x27;js&#x27;</span>,<span class="attr">price</span>:<span class="number">100</span>&#125;,</span><br><span class="line">        &#123;<span class="attr">name</span>:<span class="string">&#x27;css&#x27;</span>,<span class="attr">price</span>:<span class="number">140</span>&#125;,</span><br><span class="line">        &#123;<span class="attr">name</span>:<span class="string">&#x27;vue&#x27;</span>,<span class="attr">price</span>:<span class="number">40</span>&#125;,</span><br><span class="line">    ],</span><br><span class="line">    <span class="keyword">get</span> <span class="title">total</span>()&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>.list.reduce(<span class="function">(<span class="params">sum,cur</span>)=&gt;</span>&#123;  <span class="keyword">return</span> sum+cur.price;  &#125;,<span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment">lesson.total=&gt;280</span></span><br><span class="line"><span class="comment">同时lesson.total不可修改</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<ul>
-<li>使用访问器批量设置属性</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> user = &#123;</span><br><span class="line">    name:<span class="string">&#x27;&#x27;</span>,</span><br><span class="line">    lesson:<span class="string">&#x27;&#x27;</span>,</span><br><span class="line">    <span class="keyword">set</span> <span class="title">data</span>(<span class="params">v</span>)&#123;</span><br><span class="line">         [<span class="built_in">this</span>.name,<span class="built_in">this</span>.lesson]=v.split(<span class="string">&quot;,&quot;</span>);</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="keyword">get</span> <span class="title">data</span>()&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">`<span class="subst">$&#123;<span class="built_in">this</span>.name&#125;</span>-<span class="subst">$&#123;<span class="built_in">this</span>.lesson&#125;</span>`</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">user.data = <span class="string">&quot;liqianru,js&quot;</span>;</span><br><span class="line"><span class="comment">/* user:&#123;name: &quot;liqianru&quot;, lesson: &quot;js&quot;&#125; */</span></span><br></pre></td></tr></table></figure>
-<h4 id="TOKEN读写操作"><a href="#TOKEN读写操作" class="headerlink" title="TOKEN读写操作"></a>TOKEN读写操作</h4><ul>
-<li>什么是TOKEN（令牌）？</li>
-</ul>
-<p>Auth0中的解释：TOKEN分为两类： ID tokens and access tokens.<br>ID tokens：用于身份验证<br>access tokens：拥有这个令牌可以获取到API的使用权<br>所以就需要存储这些TOKEN，就可以使用访问器</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"> </span><br><span class="line"><span class="keyword">let</span> Request = &#123;</span><br><span class="line">    <span class="keyword">set</span> <span class="title">token</span>(<span class="params">content</span>)&#123;</span><br><span class="line">        <span class="built_in">localStorage</span>.setItem(<span class="string">&quot;token&quot;</span>,content);</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="keyword">get</span> <span class="title">token</span>()&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">localStorage</span>.getItem(<span class="string">&quot;token&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h4 id="构造函数-amp-class中使用访问器"><a href="#构造函数-amp-class中使用访问器" class="headerlink" title="构造函数&amp;class中使用访问器"></a>构造函数&amp;class中使用访问器</h4><ul>
-<li>构造函数</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">User</span>(<span class="params">name,age</span>)</span>&#123;</span><br><span class="line">   <span class="keyword">let</span> data = &#123; name,age &#125;;<span class="comment">//构造函数内的私有属性</span></span><br><span class="line">   <span class="built_in">Object</span>.defineProperties(<span class="built_in">this</span>,&#123;<span class="comment">/* 通过闭包的特性， defineProperties函数内可以访问到父级变量*/</span></span><br><span class="line">       name:&#123;</span><br><span class="line">           <span class="function"><span class="title">get</span>(<span class="params"></span>)</span>&#123; <span class="keyword">return</span> data.name; &#125;,</span><br><span class="line">           <span class="function"><span class="title">set</span>(<span class="params">value</span>)</span>&#123; data.name = value; &#125;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> u = <span class="keyword">new</span> User();<span class="comment">//u:User:&#123;&#125; 看不见name和age，数据私有被保护</span></span><br><span class="line">u.name = <span class="string">&#x27;li&#x27;</span>;<span class="comment">//u:User:&#123;&#125;,但是u.name输出为：li</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>class</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">name,age</span>)</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>.data = &#123; name,age &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">get</span> <span class="title">name</span>()&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>.data.name;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">set</span> <span class="title">name</span>(<span class="params">value</span>)&#123;</span><br><span class="line">        <span class="built_in">this</span>.data.name = value;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> u = <span class="keyword">new</span> User(<span class="string">&quot;li&quot;</span>,<span class="number">22</span>);<span class="comment">//User &#123;data: &#123;…&#125;&#125;,想要data不被外界访问到，可以使用Symbol：将data = Symbol();</span></span><br></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JS对象</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/03/07/JS-%E5%AF%B9%E8%B1%A1-2/">展开全文 >></a>
         </p>
       
 
@@ -1206,14 +1094,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">异步编程</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Promise</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">移动端</a>
               </li>
              
@@ -1238,14 +1118,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Promsie实现</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">跨域</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">防抖</a>
               </li>
              
@@ -1263,6 +1135,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Web协议详解与实包</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">JS基础</a>
               </li>
             
             <div class="clearfix"></div>
