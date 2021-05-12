@@ -152,6 +152,213 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Nodejs-NPM" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/04/02/Nodejs-NPM/">Nodejs-NPM</a>
+    </h1>
+  
+
+        
+        <a href="/2021/04/02/Nodejs-NPM/" class="archive-article-date">
+  	<time datetime="2021-04-02T00:55:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-04-02</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="笔记：使用npm-第三方库"><a href="#笔记：使用npm-第三方库" class="headerlink" title="笔记：使用npm 第三方库"></a>笔记：使用npm 第三方库</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> v = <span class="built_in">require</span>(<span class="string">&#x27;packageName&#x27;</span>);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>会先查找是否是core module</li>
+<li>是否是 File / folder(没用./等路径代替就不是)</li>
+<li>是否是node_module</li>
+</ul>
+<p>Semantic Versioning：2.3.4<br>major version. minor version.patch version<br>^2.3.4 &lt;=&gt;2.x<br>~2.3.4 &lt;=&gt;2.3.x<br>2.3.4 &lt;=&gt;2.3.4</p>
+<ul>
+<li>列出所有已下载的包及其版本：npm list</li>
+</ul>
+<p>npm list –depth=0//仅显示你下载的包，不显示依赖包<br>npm view 包名<br>npm view 包名 versions/dependency<br>npm i 包名@版本号</p>
+<ul>
+<li>找出outdated包<br>npm outdated<br>npm update //update minor&amp;patch version</li>
+</ul>
+<p>npm i -g npm-check-updates//更新到最新版本<br>ncu -u //to upgeade package.json<br>npm i //下载更新的包</p>
+<p>DevDependency：<br>有的时候我们在开发时需要使用一些依赖：测试包，打包工具等，这些依赖关系是开发依赖，他们不应在在生产环境中使用，所以我们就把这些依赖单独的放入Devdependency中</p>
+<p>npm i jshint –save-dev<br>都下载到node_module文件夹中</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Nodejs</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/04/02/Nodejs-NPM/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Node-js-module" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/03/28/Node-js-module/">Node.js-module</a>
+    </h1>
+  
+
+        
+        <a href="/2021/03/28/Node-js-module/" class="archive-article-date">
+  	<time datetime="2021-03-28T09:19:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-28</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="module"><a href="#module" class="headerlink" title="module"></a>module</h3><h4 id="module的基本概念"><a href="#module的基本概念" class="headerlink" title="module的基本概念"></a>module的基本概念</h4><ul>
+<li><p>为了构建实用和可维护（maintainable）的应用，应该避免在global中创建变量和函数<br>Node中每一个文件被认为是一个module（module中的变量的作用域仅在本文件中–相当于OOP中的类的private，如果外部想要使用module中的变量，就需要export它，变为public）</p>
+</li>
+<li><p>每一个文件是一个作用域，在这个作用域中有一个对象（并不是global的属性）module</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>:Module &#123;</span><br><span class="line">  id: <span class="string">&#x27;.&#x27;</span>,</span><br><span class="line">  path: <span class="string">&#x27;D:\\CSS&amp;HTML练习&#x27;</span>,</span><br><span class="line">  <span class="built_in">exports</span>: &#123;&#125;,</span><br><span class="line">  parent: <span class="literal">null</span>,</span><br><span class="line">  filename: <span class="string">&#x27;D:\\CSS&amp;HTML练习\\global.js&#x27;</span>,</span><br><span class="line">  loaded: <span class="literal">false</span>,</span><br><span class="line">  children: [],</span><br><span class="line">  paths: [ <span class="string">&#x27;D:\\CSS&amp;HTML练习\\node_modules&#x27;</span>, <span class="string">&#x27;D:\\node_modules&#x27;</span> ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>main module：相当于主类</p>
+</li>
+</ul>
+<h4 id="创建和加载一个module"><a href="#创建和加载一个module" class="headerlink" title="创建和加载一个module"></a>创建和加载一个module</h4><ul>
+<li><p>创建一个module只需要新建一个文件即可，如果要export 一个function或variable，使用module.exports.xx=xxx;|| module.export = xx;</p>
+</li>
+<li><p>加载module：require（’path’）;这样就引入了path路径文件中的module.exports对象</p>
+</li>
+</ul>
+<h4 id="module是如何实现的？"><a href="#module是如何实现的？" class="headerlink" title="module是如何实现的？"></a>module是如何实现的？</h4><ul>
+<li>为什么每个文件是一个独立的作用域？</li>
+</ul>
+<p>其实就是在每个文件中创建了一个函数作用域<br>像这样 :(<br>function(exports,require,module,__filename,__dirname){<br>//在这里写入代码<br>}<br>)();</p>
+<ul>
+<li>这也就是为什么在每个文件中都可用require引入（但是require又不是global的属性）,因为require作为参数传入了每一个module中</li>
+</ul>
+<h4 id="nodejs内置module："><a href="#nodejs内置module：" class="headerlink" title="nodejs内置module："></a>nodejs内置module：</h4><ul>
+<li>fs（file system）:里面所有的API都有async,sync模式，async（异步）都有一个callback函数</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>);</span><br><span class="line"><span class="keyword">let</span> url = <span class="string">&#x27;www&#x27;</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">log</span>(<span class="params">msg</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(msg);</span><br><span class="line">    fs.readdir(<span class="string">&#x27;./&#x27;</span>,<span class="function">(<span class="params">err,result</span>)=&gt;</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(err) <span class="built_in">console</span>.log(<span class="string">&#x27;error: &#x27;</span>,err);</span><br><span class="line">        <span class="keyword">else</span>    <span class="built_in">console</span>.log(<span class="string">&#x27;result：&#x27;</span>,result,result <span class="keyword">instanceof</span> <span class="built_in">Array</span>);</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">exports</span>.log = log;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>Events module</p>
+</li>
+<li><p>Class：EventEmitter（是一个类）=&gt;require(‘events’);</p>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> emitter = <span class="keyword">new</span> EventEmitter();</span><br><span class="line"><span class="comment">// raise a event</span></span><br><span class="line">emitter.emit(<span class="string">&#x27;haha&#x27;</span>);<span class="comment">//但是没有监听器监听这个事件的话，就什么都不会发生，所以在发射事件之前，先要注册该事件的监听器</span></span><br><span class="line"></span><br><span class="line">emitter.emit(<span class="string">&#x27;logger&#x27;</span>);</span><br><span class="line">emitter.addListener(<span class="string">&#x27;logger&#x27;</span>,<span class="function">()=&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;logger listener open&#x27;</span>);</span><br><span class="line">&#125;)<span class="comment">//这样写，事件不会被监听：当我们emit一个事件时，emitter会遍历所有registered listener，并同步的调用他们</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>event传参</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">emitter.addListener(<span class="string">&#x27;logger&#x27;</span>,<span class="function">(<span class="params">eventArg</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;logger listener open: &#x27;</span>,eventArg);</span><br><span class="line">&#125;);</span><br><span class="line">emitter.emit(<span class="string">&#x27;logger&#x27;</span>,&#123; <span class="attr">data</span>:<span class="number">1</span> &#125;);</span><br></pre></td></tr></table></figure>
+<p>在一个对象中的emit和listener才能使listener生效<br>所以在一个module中创建EventEmitter对象调用emit。并在另一个module中创建EventEmitter对象on来监听是无效的。<br>这就用到了封装的思想。当 一个对象可能触发事件时，我们可以给他封装上eventEmitter</p>
+<p>在log.js中：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> EventEmitter = <span class="built_in">require</span>(<span class="string">&#x27;events&#x27;</span>);</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Logger</span> <span class="keyword">extends</span> <span class="title">EventEmitter</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="title">log</span>(<span class="params">msg</span>)</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="built_in">this</span>)</span><br><span class="line">        <span class="built_in">this</span>.emit(<span class="string">&#x27;logging&#x27;</span>,&#123;<span class="attr">data</span>:<span class="number">1</span>&#125;); </span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;log: &#x27;</span>,msg);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">module</span>.exports = Logger;</span><br></pre></td></tr></table></figure>
+<p>在main.js中</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Logger = <span class="built_in">require</span>(<span class="string">&#x27;./global&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> log = <span class="keyword">new</span> Logger();</span><br><span class="line">log.on(<span class="string">&#x27;logging&#x27;</span>,<span class="function">(<span class="params">msg</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;listener &#x27;</span>,msg);</span><br><span class="line">&#125;)</span><br><span class="line">log.log(<span class="string">&#x27;using&#x27;</span>);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>HTTP Module</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">&#x27;http&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> server = http.createServer(<span class="function">(<span class="params">req,res</span>)=&gt;</span>&#123;</span><br><span class="line">   <span class="comment">/*  if(req.path == &#x27;/&#x27;)&#123; */</span></span><br><span class="line">        res.setHeader(<span class="string">&#x27;content-type&#x27;</span>,<span class="string">&#x27;text/html;charset=utf-8&#x27;</span>);<span class="comment">//告诉客户端我的相应数据类型以及所用的字符集</span></span><br><span class="line">       <span class="comment">// req.setEncoding(&#x27;utf-8&#x27;)</span></span><br><span class="line">        res.write(<span class="string">&#x27;你好&#x27;</span>,<span class="string">&#x27;utf-8&#x27;</span>);</span><br><span class="line">        res.end();<span class="comment">//响应完成后应该主动结束，不占用链路资源</span></span><br><span class="line">    <span class="comment">/* &#125; */</span></span><br><span class="line">&#125;);<span class="comment">//server extends net.Server(This class is used to create a TCP or IPC server),but ner.Server extends EventEmitter</span></span><br><span class="line">server.listen(<span class="number">3000</span>);<span class="comment">//Starts the HTTP server listening for connections. This method is identical to server.listen() from net.Server.</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Node.js</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/03/28/Node-js-module/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-CSS-link-import" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -796,158 +1003,9 @@
 
 
   
-    <article id="post-JS-对象-3" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/03/08/JS-%E5%AF%B9%E8%B1%A1-3/">JS-对象-3</a>
-    </h1>
-  
-
-        
-        <a href="/2021/03/08/JS-%E5%AF%B9%E8%B1%A1-3/" class="archive-article-date">
-  	<time datetime="2021-03-08T01:52:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-08</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="Proxy语法介绍"><a href="#Proxy语法介绍" class="headerlink" title="Proxy语法介绍"></a>Proxy语法介绍</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* */</span></span><br><span class="line"><span class="comment">/* const p = new Proxy(target, handler); */</span></span><br><span class="line"><span class="keyword">let</span> user = &#123; <span class="attr">name</span>:<span class="string">&#x27;li&#x27;</span>,<span class="attr">age</span>:<span class="number">12</span> &#125;;</span><br><span class="line"><span class="keyword">let</span> p = <span class="keyword">new</span> <span class="built_in">Proxy</span>(user,&#123;</span><br><span class="line">    <span class="function"><span class="title">get</span>(<span class="params">obj,prop</span>)</span>&#123;<span class="comment">/* 代理user getter :</span></span><br><span class="line"><span class="comment">    其中的两个参数：obj:被代理的数据，prop:当用户获取obj的某属性时prop就是这个属性名*/</span></span><br><span class="line">        <span class="keyword">return</span> obj[prop];</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="function"><span class="title">set</span>(<span class="params">obj,prop,value</span>)</span>&#123;</span><br><span class="line">        <span class="comment">/* setter 比get多出的一个参数：value:要给属性设置的值 */</span></span><br><span class="line">        obj[prop] = value;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line">p.name;<span class="comment">//&quot;li&quot;</span></span><br><span class="line">p.name=<span class="string">&#x27;ll&#x27;</span></span><br></pre></td></tr></table></figure>
-<p>在Proxy的构造函数中有两个参数</p>
-<ul>
-<li><p>target<br>要使用 Proxy 包装的目标对象（可以是任何类型的对象，包括原生数组，函数，甚至另一个代理）。</p>
-</li>
-<li><p>handler<br>一个通常以函数作为属性的<strong>对象</strong>，各属性中的函数分别定义了在执行各种操作时代理 p 的行为。</p>
-</li>
-</ul>
-<h5 id="使用代理控制函数"><a href="#使用代理控制函数" class="headerlink" title="使用代理控制函数"></a>使用代理控制函数</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sum</span>(<span class="params">a,b</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a+b;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* handler.apply() 方法用于拦截函数的调用 */</span></span><br><span class="line"><span class="keyword">let</span> handler = &#123;</span><br><span class="line">    <span class="comment">/* 三个参数：target目标对象（函数）thisArg被调用时的上下文对象 argumentsList被调用时的参数数组*/</span></span><br><span class="line">    <span class="function"><span class="title">apply</span>(<span class="params">target,thisArg,argumentsList</span>)</span>&#123;</span><br><span class="line">        <span class="comment">/* 在此处进行要代理的行为 */</span><span class="built_in">console</span>.log(<span class="string">`<span class="subst">$&#123;target&#125;</span>-<span class="subst">$&#123;thisArg&#125;</span>-<span class="subst">$&#123;argumentsList&#125;</span>`</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> p = <span class="keyword">new</span> <span class="built_in">Proxy</span>(sum,handler);</span><br><span class="line">p(<span class="number">1</span>,<span class="number">2</span>);<span class="comment">//输出函数，undefined，1,2</span></span><br><span class="line">p.apply(<span class="built_in">window</span>,[<span class="number">1</span>,<span class="number">2</span>]);<span class="comment">//此时thisArg：window</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h5 id="使用代理控制数组"><a href="#使用代理控制数组" class="headerlink" title="使用代理控制数组"></a>使用代理控制数组</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> lesson = [</span><br><span class="line">    &#123; <span class="attr">title</span>:<span class="string">&quot;响应式布局 JS&quot;</span>,<span class="attr">price</span>:<span class="number">200</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">title</span>:<span class="string">&quot;服务器渲染&quot;</span>,<span class="attr">price</span>:<span class="number">200</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">title</span>:<span class="string">&quot;响应式布局2 JS&quot;</span>,<span class="attr">price</span>:<span class="number">220</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">title</span>:<span class="string">&quot;响应式布局3 JS&quot;</span>,<span class="attr">price</span>:<span class="number">300</span> &#125;,</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> p = <span class="keyword">new</span> <span class="built_in">Proxy</span>(lesson,&#123;</span><br><span class="line">    <span class="function"><span class="title">get</span>(<span class="params">array,index</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">const</span> title = array[index].title;</span><br><span class="line">        <span class="built_in">console</span>.log(title);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line">p[<span class="number">0</span>];<span class="comment">//响应式布局 JS</span></span><br></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Proxy</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/03/08/JS-%E5%AF%B9%E8%B1%A1-3/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-移动端-无缝滑屏-2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/03/07/%E7%A7%BB%E5%8A%A8%E7%AB%AF-%E6%97%A0%E7%BC%9D%E6%BB%91%E5%B1%8F-2/">移动端-无缝滑屏-2</a>
-    </h1>
-  
-
-        
-        <a href="/2021/03/07/%E7%A7%BB%E5%8A%A8%E7%AB%AF-%E6%97%A0%E7%BC%9D%E6%BB%91%E5%B1%8F-2/" class="archive-article-date">
-  	<time datetime="2021-03-07T07:28:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-07</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="设置滑屏事件"><a href="#设置滑屏事件" class="headerlink" title="设置滑屏事件"></a>设置滑屏事件</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 滑屏相关 */</span></span><br><span class="line"><span class="keyword">let</span> touchStartX = <span class="number">0</span>,</span><br><span class="line">  touchdis = <span class="number">0</span>;</span><br><span class="line"><span class="comment">/* 滑动的元素的起始位置 */</span></span><br><span class="line"><span class="keyword">let</span> ulX = <span class="number">0</span>;</span><br><span class="line"><span class="comment">/* 图片的下标 */</span></span><br><span class="line"><span class="keyword">let</span> imgIndex = <span class="number">0</span>;</span><br><span class="line"><span class="comment">/* 添加移动端事件 */</span></span><br><span class="line">[...carouselWrap].forEach(<span class="function">(<span class="params">item</span>) =&gt;</span> &#123;</span><br><span class="line">  item.addEventListener(<span class="string">&quot;touchstart&quot;</span>, <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> touch = e.changedTouches[<span class="number">0</span>]; <span class="comment">/* TouchList 接口代表一个触摸平面上所有触点的列表。例如，如果一个用户用三根手指接触屏幕（或者触控板），与之对应的 TouchList 会包含每根手指的 Touch 对象，总共三个 */</span></span><br><span class="line">    touchStartX = touch.clientX;</span><br><span class="line">    ulX = ul.offsetLeft;</span><br><span class="line">  &#125;);</span><br><span class="line">  item.addEventListener(<span class="string">&quot;touchmove&quot;</span>, <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> touch = e.changedTouches[<span class="number">0</span>];</span><br><span class="line">    touchdis = touch.clientX - touchStartX;</span><br><span class="line">    ul.style.left = ulX + touchdis + <span class="string">&quot;px&quot;</span>;</span><br><span class="line">  &#125;);</span><br><span class="line">  item.addEventListener(<span class="string">&quot;touchend&quot;</span>, <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (touchdis &gt; <span class="number">0</span>) &#123;</span><br><span class="line">      <span class="comment">/* 向右划 */</span></span><br><span class="line">      imgIndex--;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">/* 向左划 */</span></span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (<span class="built_in">Math</span>.abs(touchdis) &gt;= <span class="built_in">document</span>.documentElement.clientWidth / <span class="number">2</span>) &#123;</span><br><span class="line">        <span class="comment">/* 移动距离大于视口的一半 */</span></span><br><span class="line">        imgIndex++;</span><br><span class="line">        ul.style.left =</span><br><span class="line">          -imgIndex * <span class="built_in">document</span>.documentElement.clientWidth +</span><br><span class="line">          <span class="string">&quot;px&quot;</span>; <span class="comment">/* 每次移动一个视口的宽度 */</span></span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        ul.style.left = ulX + <span class="string">&quot;px&quot;</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>将imgIndex抽象成图片的索引，发现判断左滑右划不方便，决定升级index，抽象成ul的实时位置</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 滑屏相关 */</span></span><br><span class="line">   <span class="keyword">let</span> touchStartX = <span class="number">0</span>,touchdis = <span class="number">0</span>;</span><br><span class="line">   <span class="comment">/* 滑动的元素的起始位置 */</span></span><br><span class="line">   <span class="keyword">let</span> ulX = <span class="number">0</span>;</span><br><span class="line">   <span class="comment">/* 图片的下标 */</span></span><br><span class="line">   <span class="comment">/* let imgIndex = 0; */</span></span><br><span class="line">   <span class="comment">/* 添加移动端事件 */</span></span><br><span class="line">   [...carouselWrap].forEach(<span class="function"><span class="params">item</span>=&gt;</span>&#123;</span><br><span class="line">     item.addEventListener(<span class="string">&#x27;touchstart&#x27;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123; </span><br><span class="line">       <span class="keyword">let</span> touch = e.changedTouches[<span class="number">0</span>];<span class="comment">/* TouchList 接口代表一个触摸平面上所有触点的列表。例如，如果一个用户用三根手指接触屏幕（或者触控板），与之对应的 TouchList 会包含每根手指的 Touch 对象，总共三个 */</span></span><br><span class="line">       touchStartX = touch.clientX;</span><br><span class="line">       ulX = ul.offsetLeft;</span><br><span class="line">     &#125;);</span><br><span class="line">     item.addEventListener(<span class="string">&#x27;touchmove&#x27;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123; </span><br><span class="line">       <span class="keyword">let</span> touch = e.changedTouches[<span class="number">0</span>];</span><br><span class="line">       touchdis = touch.clientX - touchStartX;</span><br><span class="line">       ul.style.left =ulX+touchdis+<span class="string">&#x27;px&#x27;</span>;</span><br><span class="line">      &#125;);</span><br><span class="line">     item.addEventListener(<span class="string">&#x27;touchend&#x27;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;</span><br><span class="line">     <span class="comment">/* 修改位置 */</span></span><br><span class="line">       <span class="keyword">let</span> index = ul.offsetLeft/<span class="built_in">document</span>.documentElement.clientWidth;<span class="comment">/* 用ul的实时位置抽象成下标，若index的下标为负：向左滑，为正：向右滑 */</span></span><br><span class="line">       index=<span class="built_in">Math</span>.round(index)</span><br><span class="line">       <span class="keyword">if</span>(index&gt;<span class="number">0</span>)&#123;</span><br><span class="line">         <span class="comment">/* 往右划 */</span></span><br><span class="line">         ul.style.left = index*(<span class="built_in">document</span>.documentElement.clientWidth)+<span class="string">&#x27;px&#x27;</span>;<span class="built_in">console</span>.log(index);</span><br><span class="line"></span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">else</span>&#123;</span><br><span class="line">         <span class="comment">/* 向左划 */</span></span><br><span class="line">         <span class="keyword">if</span>(<span class="built_in">Math</span>.abs(touchdis)&gt;=<span class="built_in">document</span>.documentElement.clientWidth/<span class="number">2</span>)&#123; <span class="comment">/* 移动距离大于视口的一半 */</span></span><br><span class="line">            ul.style.left = index*(<span class="built_in">document</span>.documentElement.clientWidth)+<span class="string">&#x27;px&#x27;</span>;<span class="built_in">console</span>.log(index);<span class="comment">/* 每次移动一个视口的宽度  Math.round(index):四舍五入返回整数*/</span></span><br><span class="line">         &#125;</span><br><span class="line">         <span class="keyword">else</span>&#123;</span><br><span class="line">           ul.style.left =ulX+<span class="string">&#x27;px&#x27;</span>;</span><br><span class="line">         &#125;</span><br><span class="line">            </span><br><span class="line">       &#125;</span><br><span class="line">     &#125;);</span><br><span class="line">   &#125;)   </span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h4 id="设置无限轮播的效果（思想）"><a href="#设置无限轮播的效果（思想）" class="headerlink" title="设置无限轮播的效果（思想）"></a>设置无限轮播的效果（思想）</h4><img src="/img/wuxian.png"/>
-
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/03/07/%E7%A7%BB%E5%8A%A8%E7%AB%AF-%E6%97%A0%E7%BC%9D%E6%BB%91%E5%B1%8F-2/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">Next &amp;raquo;</a>
+      <a class="extend prev" rel="prev" href="/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/">Next &amp;raquo;</a>
     </nav>
   
 

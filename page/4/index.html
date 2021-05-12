@@ -6,23 +6,15 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>JS-基础-4-函数 | suilfly的博客</title>
+  <title>suilfly的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="函数基础函数的基本写法 12function test()&amp;#123;&amp;#125; 表达式定义   12345678910var test &#x3D; function()&amp;#123;&amp;#125;&#x2F;*  * 如果用 var test &#x3D; function test1()&amp;#123;&amp;#125; * test1(); * 这样执行会报错。可知这样赋值不会声明test1变量，但是* test1可以在内部调用t">
-<meta property="og:type" content="article">
-<meta property="og:title" content="JS-基础-4-函数">
-<meta property="og:url" content="http://example.com/2021/05/01/JS-%E5%9F%BA%E7%A1%80-4-%E5%87%BD%E6%95%B0/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="suilfly的博客">
+<meta property="og:url" content="http://example.com/page/4/index.html">
 <meta property="og:site_name" content="suilfly的博客">
-<meta property="og:description" content="函数基础函数的基本写法 12function test()&amp;#123;&amp;#125; 表达式定义   12345678910var test &#x3D; function()&amp;#123;&amp;#125;&#x2F;*  * 如果用 var test &#x3D; function test1()&amp;#123;&amp;#125; * test1(); * 这样执行会报错。可知这样赋值不会声明test1变量，但是* test1可以在内部调用t">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/img/AO-2.png">
-<meta property="og:image" content="http://example.com/img/AO-1.png">
-<meta property="article:published_time" content="2021-04-30T23:28:17.000Z">
-<meta property="article:modified_time" content="2021-05-12T02:32:16.929Z">
 <meta property="article:author" content="John Doe">
-<meta property="article:tag" content="JS基础">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/img/AO-2.png">
   
     <link rel="alternative" href="/atom.xml" title="suilfly的博客" type="application/atom+xml">
   
@@ -158,101 +150,42 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-JS-基础-4-函数" class="article article-type-post " itemscope itemprop="blogPost">
+            
+  
+    <article id="post-css3媒体查询" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 class="article-title" itemprop="name">
-      JS-基础-4-函数
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/02/27/css3%E5%AA%92%E4%BD%93%E6%9F%A5%E8%AF%A2/">CSS媒体查询</a>
     </h1>
   
 
         
-        <a href="/2021/05/01/JS-%E5%9F%BA%E7%A1%80-4-%E5%87%BD%E6%95%B0/" class="archive-article-date">
-  	<time datetime="2021-04-30T23:28:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-01</time>
+        <a href="/2021/02/27/css3%E5%AA%92%E4%BD%93%E6%9F%A5%E8%AF%A2/" class="archive-article-date">
+  	<time datetime="2021-02-27T06:38:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-27</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="函数基础"><a href="#函数基础" class="headerlink" title="函数基础"></a>函数基础</h3><h4 id="函数的基本写法"><a href="#函数的基本写法" class="headerlink" title="函数的基本写法"></a>函数的基本写法</h4><ol>
-<li><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
-<li><p>表达式定义</p>
-</li>
-</ol>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> test = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment"> * 如果用 var test = function test1()&#123;&#125;</span></span><br><span class="line"><span class="comment"> * test1();</span></span><br><span class="line"><span class="comment"> * 这样执行会报错。可知这样赋值不会声明test1变量，但是* test1可以在内部调用tes1函数</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * test.name =&gt; &#x27;test1&#x27;;test1不能再外部调用，但是test函数的name属性值却是test1</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h4 id="函数的组成部分：函数名，-参数-，-返回值-，return"><a href="#函数的组成部分：函数名，-参数-，-返回值-，return" class="headerlink" title="函数的组成部分：函数名，[参数]，[返回值]，return"></a>函数的组成部分：函数名，[参数]，[返回值]，return</h4><ul>
-<li><h5 id="形参与实参"><a href="#形参与实参" class="headerlink" title="形参与实参"></a>形参与实参</h5></li>
-<li><h6 id="形参：参数占位符"><a href="#形参：参数占位符" class="headerlink" title="形参：参数占位符"></a>形参：参数占位符</h6><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 获取形参的长度 */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params">a,b,c</span>)</span>&#123;&#125;</span><br><span class="line"><span class="built_in">console</span>.log(test.length); <span class="comment">// 3</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><h6 id="实参：实际传递的参数"><a href="#实参：实际传递的参数" class="headerlink" title="实参：实际传递的参数"></a>实参：实际传递的参数</h6><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/* 获取实参的信息：arguments */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* 获取实参的长度 */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params">a,b</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="built_in">arguments</span>)</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="built_in">arguments</span>.length);</span><br><span class="line">&#125;</span><br><span class="line">test(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>); <span class="comment">// 3，可以看出实参和形参的个数不一定相等</span></span><br></pre></td></tr></table></figure></li>
-<li><p>arguments反映了实参和形参的映射关系</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params">a,b</span>)</span>&#123;</span><br><span class="line">    a = <span class="number">3</span>;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="built_in">arguments</span>[<span class="number">0</span>]);</span><br><span class="line">&#125;</span><br><span class="line">test(<span class="number">1</span>,<span class="number">2</span>); <span class="comment">// 3</span></span><br><span class="line"></span><br><span class="line">test(); <span class="comment">// undefined</span></span><br><span class="line"><span class="comment">/* 总结：</span></span><br><span class="line"><span class="comment"> * 1.形参被赋了值的,arguments对应的值可以修改</span></span><br><span class="line"><span class="comment"> * 2.没有被赋值的形参，其对应的arguments值不可改，值为undefined</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params">a,b</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">arguments</span>[<span class="number">0</span>] = <span class="number">3</span>;</span><br><span class="line">    <span class="built_in">console</span>.log(a);</span><br><span class="line">&#125;</span><br><span class="line">test(<span class="number">1</span>,<span class="number">2</span>); <span class="comment">// 3</span></span><br><span class="line"></span><br><span class="line">test(); <span class="comment">// undefined</span></span><br><span class="line"><span class="comment">/* 总结：</span></span><br><span class="line"><span class="comment"> * 1.形参被赋了值的可以被arguments修改</span></span><br><span class="line"><span class="comment"> * 2.没有被赋值的形参不可改，值为undefined</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
-<li><h6 id="初始化参数"><a href="#初始化参数" class="headerlink" title="初始化参数"></a>初始化参数</h6><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params">a = <span class="number">1</span>,b = <span class="number">2</span></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="built_in">arguments</span>[<span class="number">0</span>],a);</span><br><span class="line">&#125;</span><br><span class="line">test(<span class="literal">undefined</span>,<span class="number">3</span>); <span class="comment">// undefined 1</span></span><br><span class="line"><span class="comment">/* 对形参初始化，a = 1</span></span><br><span class="line"><span class="comment"> * 但是对应的实参值是undefined所以arguments[0]=undefined */</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 兼容性写法 */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params">a,b</span>)</span>&#123;</span><br><span class="line">    a = <span class="built_in">arguments</span>[<span class="number">0</span>] || <span class="number">1</span>;</span><br><span class="line">    b = <span class="built_in">arguments</span>[<span class="number">1</span>] || <span class="number">2</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 或</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params">a,b</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">typeof</span> <span class="built_in">arguments</span>[<span class="number">0</span>] == <span class="string">&#x27;undefined&#x27;</span>)</span><br><span class="line">        a = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">typeof</span> <span class="built_in">arguments</span>[<span class="number">1</span>] == <span class="string">&#x27;undefined&#x27;</span>)</span><br><span class="line">        b = <span class="number">1</span>;    </span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//或</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params">a,b</span>)</span>&#123;</span><br><span class="line">    a = <span class="keyword">typeof</span> <span class="built_in">arguments</span>[<span class="number">0</span>] == <span class="string">&#x27;undefined&#x27;</span>? <span class="number">1</span> : a;</span><br><span class="line">    b = <span class="keyword">typeof</span> <span class="built_in">arguments</span>[<span class="number">1</span>] == <span class="string">&#x27;undefined&#x27;</span>? <span class="number">2</span> : b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-</li>
-</ul>
-<ul>
-<li><h5 id="函数的返回"><a href="#函数的返回" class="headerlink" title="函数的返回"></a>函数的返回</h5></li>
-</ul>
-<blockquote>
-<ol>
-<li>return的作用：①终止函数执行 ②返回值，作为函数执行的结果</li>
-<li>不指定return语句的函数，默认返回undefined</li>
-<li>构造函数被实例化后返回this</li>
-</ol>
+        <h2 id="出现的意义"><a href="#出现的意义" class="headerlink" title="出现的意义"></a>出现的意义</h2><blockquote>
+<p>为了应对不同尺寸的屏幕显示的样式，通常把媒体设备分类两大类：screen 和 print</p>
 </blockquote>
-<blockquote>
-<h3 id="函数基础总结"><a href="#函数基础总结" class="headerlink" title="函数基础总结"></a>函数基础总结</h3><p>函数式编程：一个固定的功能或程序段被封装的过程，在这个封装体中需要一个入口（参数）和出口（返回）<br>函数的作用：把抽象重复的代码独立出来且有模块的单一责任制（希望一个功能出一个模块，并且希望这个模块不依赖其他模块，具有独立性），解耦合</p>
-</blockquote>
-<h2 id="函数进阶"><a href="#函数进阶" class="headerlink" title="函数进阶"></a>函数进阶</h2><h3 id="变量提升和函数提升"><a href="#变量提升和函数提升" class="headerlink" title="变量提升和函数提升"></a>变量提升和函数提升</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">test(); <span class="comment">// 函数正常执行</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">// undefined</span></span><br><span class="line"><span class="keyword">var</span> a = <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
-
-<h3 id="预编译"><a href="#预编译" class="headerlink" title="预编译"></a>预编译</h3><blockquote>
-<p>JS引擎：①通篇检查语法错误  ②预编译 ③ 解释一行执行一行</p>
-</blockquote>
-<ul>
-<li><h4 id="创建GO（Global-Object）全局上下文"><a href="#创建GO（Global-Object）全局上下文" class="headerlink" title="创建GO（Global Object）全局上下文"></a>创建GO（Global Object）全局上下文</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">// undefined</span></span><br><span class="line"><span class="keyword">var</span> a = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">var</span> b = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;</span><br></pre></td></tr></table></figure>
-<img src="/img/AO-2.png" width="50%"/>
-</li>
-<li><p>这也就解释了为什么console.log(a)输出undefined</p>
-</li>
-<li><h4 id="函数预编译：-创建AO（Active-Object）函数上下文"><a href="#函数预编译：-创建AO（Active-Object）函数上下文" class="headerlink" title="函数预编译： 创建AO（Active Object）函数上下文"></a>函数预编译： 创建AO（Active Object）函数上下文</h4></li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params">a</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(a); <span class="comment">// ①</span></span><br><span class="line">    <span class="keyword">var</span> a = <span class="number">1</span>;</span><br><span class="line">    <span class="built_in">console</span>.log(a); <span class="comment">// ②</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">a</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line">    <span class="built_in">console</span>.log(a); <span class="comment">// ③</span></span><br><span class="line">    <span class="keyword">var</span> b = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line">    <span class="built_in">console</span>.log(b); <span class="comment">// ④</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">d</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line">test(<span class="number">2</span>);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>上述代码AO创建的过程<br><img src="/img/AO-1.png" width="50%"/><br>所以①输出f a(){} ②输出1 ③输出1 ④输出f (){}</p>
-</blockquote>
-<p>学习了AO，GO，就自然而然的引出了<a href="/2021/05/12/JS-基础-5-作用域与作用域链/" title="点击查看本节内容">作用域与作用域链</a></p>
-
+<h4 id="style中使用不同的媒体设备样式"><a href="#style中使用不同的媒体设备样式" class="headerlink" title="style中使用不同的媒体设备样式"></a>style中使用不同的媒体设备样式</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;style media&#x3D;&quot;screen&quot;&gt;</span><br><span class="line">...其中的样式将会引用到屏幕设备中</span><br><span class="line">&lt;&#x2F;style&gt;</span><br><span class="line">&lt;style media&#x3D;&quot;print&quot;&gt;</span><br><span class="line">...其中的样式将会引用到打印机设备中</span><br><span class="line">&lt;&#x2F;style&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="LINK引入css样式表"><a href="#LINK引入css样式表" class="headerlink" title="LINK引入css样式表"></a>LINK引入css样式表</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;  link media&#x3D;&quot;screen&quot; href&#x3D;&quot;...&quot;&#x2F;&gt;</span><br><span class="line">&lt;  link media&#x3D;&quot;print&quot; href&#x3D;&quot;...&quot;&#x2F;&gt;</span><br></pre></td></tr></table></figure>
+<p>** 但是这样引入会显得页面杂乱，于是出现了@import来简化页面多文件引入 **</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">    @import url(common.css);</span><br><span class="line">    @import url(screen.css) screen;</span><br><span class="line">    @import url(print.css) print;</span><br><span class="line">&#x2F;*  url()会根据当前test.css的位置，来搜索css文件</span><br><span class="line">*&#x2F;</span><br></pre></td></tr></table></figure>
+<h2 id="media设置某部分的样式随媒体的属性变化–局部定义响应查询"><a href="#media设置某部分的样式随媒体的属性变化–局部定义响应查询" class="headerlink" title="@media设置某部分的样式随媒体的属性变化–局部定义响应查询"></a>@media设置某部分的样式随媒体的属性变化–局部定义响应查询</h2><h3 id="media-AND条件判断响应式使用"><a href="#media-AND条件判断响应式使用" class="headerlink" title="@media AND条件判断响应式使用"></a>@media AND条件判断响应式使用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;style media&#x3D;&quot;screen and (min-width:768px)&quot;&gt;</span><br><span class="line">&#x2F;* 条件语句用()包裹，min-width:768px &lt;&#x3D;&gt; 屏幕的最小宽度为768px,即屏幕宽度&gt;&#x3D;768px *&#x2F;</span><br><span class="line">&lt;style media&#x3D;&quot;screen and (max-width:768px)&quot;&gt;</span><br><span class="line">&#x2F;* max-width:768px &lt;&#x3D;&gt; 屏幕宽度&lt;&#x3D;768px*&#x2F;</span><br></pre></td></tr></table></figure>
+<p>** 那么当两个条件都写时，当屏幕为768px时，样式由谁决定？：优先级按照顺序排序越往后写优先级越高，所以按照max-width:768px</p>
+<h3 id="media-逻辑或的使用"><a href="#media-逻辑或的使用" class="headerlink" title="@media 逻辑或的使用"></a>@media 逻辑或的使用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">css中的逻辑或用 , 表示</span><br><span class="line">    &lt;style media&#x3D;&quot;screen and (orientation: landscape)</span><br><span class="line">    ,screen and(min-width:768px)&quot;&gt;</span><br><span class="line">    &#x2F;* 意思是当屏幕为横屏或者屏幕的宽度&gt;&#x3D;768px时，使用以上样式*&#x2F;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="media-非的使用"><a href="#media-非的使用" class="headerlink" title="@media 非的使用"></a>@media 非的使用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;style&gt;</span><br><span class="line">    @media screen and (min-width:768px) and (max-width:1000px)&#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">    当屏幕宽度在[768px,1000px]时使用上面的样式，那么区间之外的想要再设置一个不同的样式该怎样写呢？如下</span><br><span class="line">    @media not screen and (min-width:768px) and (max-width:1000px)</span><br><span class="line">&lt;&#x2F;style&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="使用-only排除低端浏览器"><a href="#使用-only排除低端浏览器" class="headerlink" title="使用 only排除低端浏览器"></a>使用 only排除低端浏览器</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@media only ....</span><br><span class="line">&#x2F;* 意思是仅当浏览器支持媒体查询时使用 *&#x2F;</span><br></pre></td></tr></table></figure>
       
 
-      
-        <div class="page-reward">
-          <a href="javascript:;" class="page-reward-btn tooltip-top">
-            <div class="tooltip tooltip-east">
-            <span class="tooltip-item">
-              赏
-            </span>
-            <span class="tooltip-content">
-              <span class="tooltip-text">
-                <span class="tooltip-inner">
-                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
-                  <div class="reward-box">
-                    
-                    
-                  </div>
-                </span>
-              </span>
-            </span>
-          </div>
-          </a>
-        </div>
       
     </div>
     <div class="article-info article-info-index">
@@ -263,7 +196,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JS基础</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">CSS</a>
         		</li>
       		
 		</ul>
@@ -272,84 +205,16 @@
       
 
       
-
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/02/27/css3%E5%AA%92%E4%BD%93%E6%9F%A5%E8%AF%A2/">展开全文 >></a>
+        </p>
       
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
-        </div>
-      </div>
-    </span>
-  </div>
-</div>
 
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2021/05/01/JS-%E5%9F%BA%E7%A1%80-4-%E5%87%BD%E6%95%B0/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
-
-  
-<nav id="article-nav">
-  
-    <a href="/2021/05/06/JS%E5%9F%BA%E7%A1%80-%E5%8E%9F%E5%9E%8B/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          JS基础-原型
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2021/04/27/JS-%E5%9F%BA%E7%A1%80-3/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">JS-基础-3-数据类型转换</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -369,14 +234,97 @@
 
 
 
-  
-  
-  
 
   
-
+    <article id="post-移动端-无缝滑屏" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/03/06/%E7%A7%BB%E5%8A%A8%E7%AB%AF-%E6%97%A0%E7%BC%9D%E6%BB%91%E5%B1%8F/">移动端-无缝滑屏-1</a>
+    </h1>
   
 
+        
+        <a href="/2020/03/06/%E7%A7%BB%E5%8A%A8%E7%AB%AF-%E6%97%A0%E7%BC%9D%E6%BB%91%E5%B1%8F/" class="archive-article-date">
+  	<time datetime="2020-03-06T06:30:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-06</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在PC端，轮播组件在设计的时候只需要考虑横向上的设计，但是在移动端需要考虑横纵上的设计：比如在 移动端的轮播图上竖向划屏，是应该触发轮播图的事件还是APP页面的上划移动，这种冲突就是抖动。</p>
+<p>所以我这次的目标是实现一个防抖动的无缝滑屏</p>
+<h4 id="初步布局"><a href="#初步布局" class="headerlink" title="初步布局"></a>初步布局</h4><p>HTML：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;X-UA-Compatible&quot;</span> <span class="attr">content</span>=<span class="string">&quot;IE=edge&quot;</span> /&gt;</span></span><br><span class="line">    &lt;meta</span><br><span class="line">      name=&quot;viewport&quot;</span><br><span class="line">      content=&quot;width=device-width, initial-scale=1.0,user-scalable=no&quot;</span><br><span class="line">    /&gt;</span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>无缝滑屏<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line">      * &#123;</span><br><span class="line"><span class="css">        <span class="attribute">margin</span>: <span class="number">0</span>;</span></span><br><span class="line"><span class="css">        <span class="attribute">padding</span>: <span class="number">0</span>;</span></span><br><span class="line">      &#125;</span><br><span class="line"><span class="css">      <span class="selector-tag">html</span>,</span></span><br><span class="line"><span class="css">      <span class="selector-tag">body</span>,</span></span><br><span class="line">      #wrap &#123;</span><br><span class="line"><span class="css">        <span class="attribute">overflow</span>: hidden;</span></span><br><span class="line"><span class="css">        <span class="attribute">height</span>: <span class="number">100%</span>;</span></span><br><span class="line">      &#125;</span><br><span class="line">      .carousel-wrap&gt;.my-list &#123;</span><br><span class="line"><span class="css">        <span class="attribute">width</span>: <span class="number">500%</span>;</span></span><br><span class="line"><span class="css">        <span class="comment">/* ul里的li浮动后，ul高度塌陷，所以要清除浮动 */</span></span></span><br><span class="line"><span class="css">        <span class="attribute">overflow</span>: hidden; <span class="comment">/* 移动端清除浮动的方式 */</span></span></span><br><span class="line">      &#125;</span><br><span class="line"><span class="css">      <span class="selector-class">.my-list</span> &gt; <span class="selector-tag">li</span> &#123;</span></span><br><span class="line"><span class="css">        <span class="attribute">width</span>: <span class="number">20%</span>;</span></span><br><span class="line"><span class="css">        <span class="attribute">list-style</span>: none;</span></span><br><span class="line"><span class="css">        <span class="attribute">float</span>: left; <span class="comment">/* 父级元素ul的宽度不够如此设置依然不能成为一行 */</span></span></span><br><span class="line">      &#125;</span><br><span class="line"><span class="css">      <span class="selector-class">.my-list</span> &gt; <span class="selector-tag">li</span> &gt; <span class="selector-tag">a</span>,</span></span><br><span class="line"><span class="css">      <span class="selector-class">.my-list</span> &gt; <span class="selector-tag">li</span> &gt; <span class="selector-tag">a</span> &gt; <span class="selector-tag">img</span> &#123;</span></span><br><span class="line"><span class="css">        <span class="attribute">display</span>: block; <span class="comment">/* 不写这个有空隙 */</span></span></span><br><span class="line">      &#125;</span><br><span class="line"><span class="css">      <span class="selector-class">.my-list</span> &gt; <span class="selector-tag">li</span> &gt; <span class="selector-tag">a</span> &gt; <span class="selector-tag">img</span> &#123;</span></span><br><span class="line"><span class="css">        <span class="attribute">width</span>: <span class="number">100%</span>; <span class="comment">/* 一层层寻找设置宽度的父级元素，并以此为标准 */</span></span></span><br><span class="line">      &#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;wrap&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;carousel-wrap&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">&quot;my-list&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;javascript:;&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;/img/1.jpg&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;javascript:;&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;/img/2.jpg&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;javascript:;&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;/img/3.jpg&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;javascript:;&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;/img/4.jpg&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;javascript:;&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;/img/5.jpg&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line">  </span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<p>初步的效果，但是问题来了：1.要封装成一个组件，图片的数量和内容都不能是静态写死的 2.要暴露出一个让用户使用无缝滑屏的接口 3.my-list类的宽度不能是静态的</p>
+<img height="300px" src="/img/移动端-1.png"/>
+
+<h5 id="先解决问题3：动态创建节点和动态设置宽度"><a href="#先解决问题3：动态创建节点和动态设置宽度" class="headerlink" title="先解决问题3：动态创建节点和动态设置宽度"></a>先解决问题3：动态创建节点和动态设置宽度</h5><p>首先css要做修改</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* css */</span></span><br><span class="line"> * &#123;</span><br><span class="line">        <span class="attribute">margin</span>: <span class="number">0</span>;</span><br><span class="line">        <span class="attribute">padding</span>: <span class="number">0</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="selector-tag">html</span>,</span><br><span class="line">      <span class="selector-tag">body</span>,</span><br><span class="line">      <span class="selector-id">#wrap</span> &#123;</span><br><span class="line">        <span class="attribute">overflow</span>: hidden;</span><br><span class="line">        <span class="attribute">height</span>: <span class="number">100%</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="selector-class">.carousel-wrap</span>&gt;<span class="selector-class">.my-list</span> &#123;</span><br><span class="line">        <span class="comment">/* display: flex;也可以使用弹性盒+盒子宽度500% */</span></span><br><span class="line">       <span class="comment">/*  width: 500%; */</span></span><br><span class="line">        <span class="comment">/* ul里的li浮动后，ul高度塌陷，所以要清除浮动 */</span></span><br><span class="line">        <span class="attribute">overflow</span>: hidden; <span class="comment">/* 移动端清除浮动的方式 */</span></span><br><span class="line">        <span class="comment">/* 脱离文档流，carousel-wrap高度塌陷 */</span></span><br><span class="line">        <span class="attribute">position</span>: absolute;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="selector-class">.my-list</span> &gt; <span class="selector-tag">li</span> &#123;</span><br><span class="line">        <span class="comment">/* width: 20%; */</span></span><br><span class="line">        <span class="attribute">list-style</span>: none;</span><br><span class="line">        <span class="attribute">float</span>: left; <span class="comment">/* 父级元素ul的宽度不够如此设置依然不能成为一行 */</span></span><br><span class="line">      &#125;</span><br><span class="line">      <span class="selector-class">.my-list</span> &gt; <span class="selector-tag">li</span> &gt; <span class="selector-tag">a</span>,</span><br><span class="line">      <span class="selector-class">.my-list</span> &gt; <span class="selector-tag">li</span> &gt; <span class="selector-tag">a</span> &gt; <span class="selector-tag">img</span> &#123;</span><br><span class="line">        <span class="attribute">display</span>: block; <span class="comment">/* 不写这个有空隙 */</span></span><br><span class="line">      &#125;</span><br><span class="line">      <span class="selector-class">.my-list</span> &gt; <span class="selector-tag">li</span> &gt; <span class="selector-tag">a</span> &gt; <span class="selector-tag">img</span> &#123;</span><br><span class="line">        <span class="attribute">width</span>: <span class="number">100%</span>; <span class="comment">/* 一层层寻找设置宽度的父级元素，并以此为标准 */</span></span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* js */</span></span><br><span class="line"><span class="comment">/* 模拟从后台拿到的数据 */</span></span><br><span class="line"><span class="keyword">let</span> src = [</span><br><span class="line">      <span class="string">&quot;/img/1.jpg&quot;</span>,</span><br><span class="line">      <span class="string">&quot;/img/2.jpg&quot;</span>,</span><br><span class="line">      <span class="string">&quot;/img/3.jpg&quot;</span>,</span><br><span class="line">      <span class="string">&quot;/img/4.jpg&quot;</span>,</span><br><span class="line">      <span class="string">&quot;/img/5.jpg&quot;</span>,</span><br><span class="line">    ];</span><br><span class="line"><span class="keyword">let</span> carouselWrap = <span class="built_in">document</span>.querySelector(<span class="string">&quot;.carousel-wrap&quot;</span>);</span><br><span class="line"><span class="comment">/* 使用插件的用户的存放图片path的数组不一定名：src，所以通过一个函数来规定 */</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">carousel</span>(<span class="params">src=[<span class="string">&quot;/img/1.jpg&quot;</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">      <span class="string">&quot;/img/2.jpg&quot;</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">      <span class="string">&quot;/img/3.jpg&quot;</span>]</span>) </span>&#123;</span><br><span class="line">    <span class="comment">/* 如果页面中有.carousel-wrap */</span></span><br><span class="line">      <span class="keyword">if</span> (carouselWrap) &#123;</span><br><span class="line">        <span class="keyword">let</span> ul = <span class="built_in">document</span>.createElement(<span class="string">&quot;ul&quot;</span>);</span><br><span class="line">        <span class="keyword">let</span> ulWidth = src.length*<span class="number">100</span>;</span><br><span class="line">        <span class="keyword">let</span> liWidth = <span class="number">100</span>/src.length;</span><br><span class="line">        <span class="keyword">let</span> liFromUl = ul.getElementsByTagName(<span class="string">&#x27;li&#x27;</span>);</span><br><span class="line">        ul.classList.add(<span class="string">&#x27;my-list&#x27;</span>);</span><br><span class="line">        <span class="comment">/* 动态创建DOM节点 */</span></span><br><span class="line">        src.forEach(<span class="function">(<span class="params">i</span>) =&gt;</span> &#123;</span><br><span class="line">          ul.innerHTML += <span class="string">`&lt;li&gt;&lt;a href=&quot;javascript:;&quot;&gt;&lt;img src=&quot;<span class="subst">$&#123;i&#125;</span>&quot; alt=&quot;&quot;&gt;&lt;/a&gt;&lt;/li&gt;`</span>;</span><br><span class="line">        &#125;);</span><br><span class="line">        <span class="comment">/* 动态计算滑动容器的宽度 */</span></span><br><span class="line">        ul.style.width = ulWidth+<span class="string">&#x27;%&#x27;</span>;</span><br><span class="line">        [...liFromUl].forEach(<span class="function">(<span class="params">item</span>)=&gt;</span>&#123;</span><br><span class="line">            item.style.width = liWidth+<span class="string">&#x27;%&#x27;</span>;</span><br><span class="line">        &#125;)</span><br><span class="line">        </span><br><span class="line">       <span class="comment">/* 解决carouselWrap高度塌陷问题 */</span></span><br><span class="line">        [...carouselWrap].forEach(<span class="function"><span class="params">item</span>=&gt;</span>&#123;</span><br><span class="line">            item.appendChild(ul);</span><br><span class="line">            <span class="comment">/* let img = document.querySelector(&#x27;.my-list &gt; li &gt; a &gt; img&#x27;);console.dir(img.clientHeight);高度为0的原因：调试可知：在执行到这个语句时DOM节点还未渲染出来，所以没有高度。问题解决：异步编程 */</span></span><br><span class="line">            <span class="keyword">let</span> imgTime = <span class="built_in">setTimeout</span>(<span class="function">()=&gt;</span>&#123;</span><br><span class="line">            <span class="keyword">let</span> img = <span class="built_in">document</span>.querySelector(<span class="string">&#x27;.my-list &gt; li &gt; a &gt; img&#x27;</span>);</span><br><span class="line">            item.style.height = img.clientHeight+<span class="string">&#x27;px&#x27;</span>;</span><br><span class="line">            <span class="built_in">clearInterval</span>(imgTime);</span><br><span class="line">            &#125;,<span class="number">0</span>)</span><br><span class="line">            <span class="comment">/* 获取ul&gt;li中的img的高度赋值给carouselWrap */</span></span><br><span class="line">        &#125;)   </span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">移动端</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/03/06/%E7%A7%BB%E5%8A%A8%E7%AB%AF-%E6%97%A0%E7%BC%9D%E6%BB%91%E5%B1%8F/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+  
+    <nav id="page-nav">
+      <a class="extend prev" rel="prev" href="/page/3/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span>
+    </nav>
   
 
 
@@ -399,8 +347,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: false,
-		isPost: true,
+		isHome: true,
+		isPost: false,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
