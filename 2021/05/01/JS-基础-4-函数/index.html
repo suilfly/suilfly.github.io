@@ -8,17 +8,17 @@
   <link rel="dns-prefetch" href="http://example.com">
   <title>JS-基础-4-函数 | suilfly的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="函数基础函数的基本写法 12function test()&amp;#123;&amp;#125; 表达式定义   12345678910var test &#x3D; function()&amp;#123;&amp;#125;&#x2F;*  * 如果用 var test &#x3D; function test1()&amp;#123;&amp;#125; * test1(); * 这样执行会报错。可知这样赋值不会声明test1变量，但是* test1可以在内部调用t">
+  <meta name="description" content="函数基础函数的基本写法 12function test()&amp;#123;&amp;#125; 表达式定义   12345678910var test &#x3D; function()&amp;#123;&amp;#125;&#x2F;*  * 如果用 var test &#x3D; function test1()&amp;#123;&amp;#125; * test1(); * 这样执行会报错。可知这样赋值不会声明test1变量，但是test1可以在内部调用tes">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JS-基础-4-函数">
 <meta property="og:url" content="http://example.com/2021/05/01/JS-%E5%9F%BA%E7%A1%80-4-%E5%87%BD%E6%95%B0/index.html">
 <meta property="og:site_name" content="suilfly的博客">
-<meta property="og:description" content="函数基础函数的基本写法 12function test()&amp;#123;&amp;#125; 表达式定义   12345678910var test &#x3D; function()&amp;#123;&amp;#125;&#x2F;*  * 如果用 var test &#x3D; function test1()&amp;#123;&amp;#125; * test1(); * 这样执行会报错。可知这样赋值不会声明test1变量，但是* test1可以在内部调用t">
+<meta property="og:description" content="函数基础函数的基本写法 12function test()&amp;#123;&amp;#125; 表达式定义   12345678910var test &#x3D; function()&amp;#123;&amp;#125;&#x2F;*  * 如果用 var test &#x3D; function test1()&amp;#123;&amp;#125; * test1(); * 这样执行会报错。可知这样赋值不会声明test1变量，但是test1可以在内部调用tes">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://example.com/img/AO-2.png">
 <meta property="og:image" content="http://example.com/img/AO-1.png">
 <meta property="article:published_time" content="2021-04-30T23:28:17.000Z">
-<meta property="article:modified_time" content="2021-05-12T02:32:16.929Z">
+<meta property="article:modified_time" content="2021-05-12T23:51:54.320Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="JS基础">
 <meta name="twitter:card" content="summary">
@@ -183,9 +183,8 @@
 <li><p>表达式定义</p>
 </li>
 </ol>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> test = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment"> * 如果用 var test = function test1()&#123;&#125;</span></span><br><span class="line"><span class="comment"> * test1();</span></span><br><span class="line"><span class="comment"> * 这样执行会报错。可知这样赋值不会声明test1变量，但是* test1可以在内部调用tes1函数</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * test.name =&gt; &#x27;test1&#x27;;test1不能再外部调用，但是test函数的name属性值却是test1</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h4 id="函数的组成部分：函数名，-参数-，-返回值-，return"><a href="#函数的组成部分：函数名，-参数-，-返回值-，return" class="headerlink" title="函数的组成部分：函数名，[参数]，[返回值]，return"></a>函数的组成部分：函数名，[参数]，[返回值]，return</h4><ul>
-<li><h5 id="形参与实参"><a href="#形参与实参" class="headerlink" title="形参与实参"></a>形参与实参</h5></li>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> test = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment"> * 如果用 var test = function test1()&#123;&#125;</span></span><br><span class="line"><span class="comment"> * test1();</span></span><br><span class="line"><span class="comment"> * 这样执行会报错。可知这样赋值不会声明test1变量，但是test1可以在内部调用tes1函数</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * test.name =&gt; &#x27;test1&#x27;;test1不能再外部调用，但是test函数的name属性值却是test1</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="函数的组成部分：函数名，-参数-，-返回值-，return"><a href="#函数的组成部分：函数名，-参数-，-返回值-，return" class="headerlink" title="函数的组成部分：函数名，[参数]，[返回值]，return"></a>函数的组成部分：函数名，[参数]，[返回值]，return</h4><h5 id="形参与实参"><a href="#形参与实参" class="headerlink" title="形参与实参"></a>形参与实参</h5><ul>
 <li><h6 id="形参：参数占位符"><a href="#形参：参数占位符" class="headerlink" title="形参：参数占位符"></a>形参：参数占位符</h6><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 获取形参的长度 */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params">a,b,c</span>)</span>&#123;&#125;</span><br><span class="line"><span class="built_in">console</span>.log(test.length); <span class="comment">// 3</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><h6 id="实参：实际传递的参数"><a href="#实参：实际传递的参数" class="headerlink" title="实参：实际传递的参数"></a>实参：实际传递的参数</h6><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/* 获取实参的信息：arguments */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* 获取实参的长度 */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params">a,b</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="built_in">arguments</span>)</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="built_in">arguments</span>.length);</span><br><span class="line">&#125;</span><br><span class="line">test(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>); <span class="comment">// 3，可以看出实参和形参的个数不一定相等</span></span><br></pre></td></tr></table></figure></li>
@@ -198,10 +197,7 @@
 
 </li>
 </ul>
-<ul>
-<li><h5 id="函数的返回"><a href="#函数的返回" class="headerlink" title="函数的返回"></a>函数的返回</h5></li>
-</ul>
-<blockquote>
+<h5 id="函数的返回"><a href="#函数的返回" class="headerlink" title="函数的返回"></a>函数的返回</h5><blockquote>
 <ol>
 <li>return的作用：①终止函数执行 ②返回值，作为函数执行的结果</li>
 <li>不指定return语句的函数，默认返回undefined</li>
@@ -217,9 +213,23 @@
 <p>JS引擎：①通篇检查语法错误  ②预编译 ③ 解释一行执行一行</p>
 </blockquote>
 <ul>
-<li><h4 id="创建GO（Global-Object）全局上下文"><a href="#创建GO（Global-Object）全局上下文" class="headerlink" title="创建GO（Global Object）全局上下文"></a>创建GO（Global Object）全局上下文</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">// undefined</span></span><br><span class="line"><span class="keyword">var</span> a = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">var</span> b = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;</span><br></pre></td></tr></table></figure>
-<img src="/img/AO-2.png" width="50%"/>
+<li><h4 id="创建GO（Global-Object）全局上下文"><a href="#创建GO（Global-Object）全局上下文" class="headerlink" title="创建GO（Global Object）全局上下文"></a>创建GO（Global Object）全局上下文</h4><ul>
+<li><p><strong>暗示全局变量</strong>（imply global variable）</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a = <span class="number">1</span>; <span class="comment">// 未被声明就定义</span></span><br><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">// 1</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>)</span>&#123; <span class="keyword">var</span> a = b = <span class="number">1</span> &#125;</span><br><span class="line">test();</span><br><span class="line"><span class="built_in">console</span>.log(b); <span class="comment">// 1</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>在全局中不管是否声明(var)变量都为window的属性</strong></p>
+</blockquote>
 </li>
+</ul>
+</li>
+</ul>
+<p>代码示例</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">// undefined</span></span><br><span class="line"><span class="keyword">var</span> a = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">var</span> b = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;</span><br></pre></td></tr></table></figure>
+<img src="/img/AO-2.png" width="50%"/>
+
+<ul>
 <li><p>这也就解释了为什么console.log(a)输出undefined</p>
 </li>
 <li><h4 id="函数预编译：-创建AO（Active-Object）函数上下文"><a href="#函数预编译：-创建AO（Active-Object）函数上下文" class="headerlink" title="函数预编译： 创建AO（Active Object）函数上下文"></a>函数预编译： 创建AO（Active Object）函数上下文</h4></li>
